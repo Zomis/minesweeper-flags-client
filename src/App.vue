@@ -18,6 +18,16 @@
     <v-content>
       <HelloWorld/>
     </v-content>
+    <v-footer fixed app>
+      <span>&copy; 2019 Simon Forsberg
+        - <a href="https://github.com/Zomis/minesweeper-flags-client">GitHub</a>
+        - {{ buildProps.environment }}
+        - {{ buildProps.gitBranch }}
+        - build {{ buildProps.buildNumber }}
+        - commit {{ buildProps.commitHash }}
+        - {{ buildProps.timestamp }}
+      </span>
+    </v-footer>
   </v-app>
 </template>
 
@@ -29,9 +39,15 @@ export default {
   components: {
     HelloWorld
   },
-  data () {
-    return {
-      //
+  computed: {
+    buildProps() {
+      return {
+        environment: process.env.NODE_ENV,
+        timestamp: process.env.VUE_APP_BUILD_TIME,
+        buildNumber: process.env.VUE_APP_BUILD_NUMBER,
+        commitHash: process.env.VUE_APP_GIT_COMMIT,
+        gitBranch: process.env.VUE_APP_GIT_BRANCH
+      }
     }
   }
 }
