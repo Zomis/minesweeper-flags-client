@@ -12,6 +12,19 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Environment Vars') {
+            steps {
+                script {
+                    sh 'rm -f .env.local'
+                    def timestamp = new Date().format("yyyy-MM-dd HH:mm:ss", TimeZone.getTimeZone('UTC'))
+                    sh "echo 'VUE_APP_BUILD_TIME=$timestamp' >> .env.local"
+                    sh "echo 'VUE_APP_BUILD_NUMBER=$env.BUILD_NUMBER' >> .env.local"
+                    sh "echo 'VUE_APP_GIT_COMMIT=$env.GIT_COMMIT' >> .env.local"
+                    sh "echo 'VUE_APP_GIT_BRANCH=$env.GIT_BRANCH' >> .env.local"
+                    sh 'cat .env.local'
+                }
+            }
+        }
         stage('Build') {
             steps {
                 sh 'npm install'

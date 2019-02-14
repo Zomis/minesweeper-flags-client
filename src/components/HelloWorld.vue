@@ -28,6 +28,7 @@
       <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
     </ul>
+    <div>Build info: {{ buildProps }}</div>
   </div>
 </template>
 
@@ -36,6 +37,17 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  computed: {
+    buildProps() {
+      return {
+        environment: process.env.NODE_ENV,
+        timestamp: process.env.VUE_APP_BUILD_TIME,
+        buildNumber: process.env.VUE_APP_BUILD_NUMBER,
+        commitHash: process.env.VUE_APP_GIT_COMMIT,
+        gitBranch: process.env.VUE_APP_GIT_BRANCH
+      }
+    }
   }
 }
 </script>
