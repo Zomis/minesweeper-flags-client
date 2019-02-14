@@ -2,21 +2,22 @@
   <v-app>
     <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
+        <span>Minesweeper Flags Extreme</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn
-        flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
+      <v-btn flat to="/">
+        <span class="mr-2">Home</span>
+      </v-btn>
+      <v-btn flat to="/stats">
+        <span class="mr-2">Statistics</span>
+      </v-btn>
+      <v-btn flat to="/lobby">
+        <span class="mr-2">Lobby</span>
       </v-btn>
     </v-toolbar>
 
     <v-content>
-      <HelloWorld/>
+      <router-view/>
     </v-content>
     <v-footer fixed app>
       <span>&copy; 2019 Simon Forsberg
