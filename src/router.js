@@ -1,7 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import Statistics from './views/Statistics.vue'
 
+import VueAxios from "vue-axios";
+import axios from "axios";
+
+Vue.use(VueAxios, axios);
 Vue.use(Router)
 
 export default new Router({
@@ -12,6 +17,11 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/stats',
+      name: 'stats',
+      component: Statistics
     },
     {
       path: '/about',
