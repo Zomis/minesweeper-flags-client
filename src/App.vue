@@ -8,7 +8,7 @@
       <v-btn flat to="/">
         <span class="mr-2">Home</span>
       </v-btn>
-      <v-btn flat to="/stats">
+      <v-btn flat to="/stats/summary">
         <span class="mr-2">Statistics</span>
       </v-btn>
       <v-btn flat to="/lobby">
