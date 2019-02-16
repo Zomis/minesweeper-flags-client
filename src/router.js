@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
-import Statistics from "./views/Statistics.vue";
+import Statistics from "./views/statistics/Statistics.vue";
 
 import VueAxios from "vue-axios";
 //import VueAuthenticate from "vue-authenticate";
