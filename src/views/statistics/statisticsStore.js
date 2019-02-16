@@ -38,7 +38,7 @@ export default {
   },
   actions: {
     query(context, data) {
-      axios.post("http://localhost:8082/query", data).then(response =>
+      axios.post(process.env.VUE_APP_URL + "query", data).then(response =>
         context.commit("queryResponse", {
           query: data,
           response: response.data
