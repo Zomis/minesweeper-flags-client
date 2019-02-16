@@ -70,7 +70,6 @@ export default {
   },
   toRouterLink(query) {
     let clonedQuery = deepCopy(query);
-    console.log(clonedQuery);
     Object.keys(clonedQuery).forEach(key => {
       if (clonedQuery[key] === null) {
         delete clonedQuery[key];

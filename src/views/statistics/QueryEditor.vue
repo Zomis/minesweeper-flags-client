@@ -7,6 +7,7 @@
       label="Players"
       placeholder="#AI_Nightmare"
       v-for="(player, index) in query.players"
+      :key="index"
       v-model="query.players[index]"
     ></v-text-field>
     <v-text-field label="Result type" v-model="query.resultType"></v-text-field>
