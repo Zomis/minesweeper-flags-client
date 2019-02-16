@@ -15,7 +15,7 @@
         </v-alert>
       </template>
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.gameid }}</td>
+        <td><GameIdField :gameId="props.item.gameid" /></td>
         <td>{{ props.item.player }}</td>
         <td>{{ props.item.playerRating }}</td>
         <td>{{ props.item.playerResult }}</td>
@@ -28,9 +28,12 @@
   </div>
 </template>
 <script>
+import GameIdField from "./GameIdField";
+
 export default {
   name: "GamesTable",
   props: ["data"],
+  components: { GameIdField },
   data() {
     return {
       headers: [
