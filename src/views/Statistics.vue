@@ -5,7 +5,7 @@
     <v-btn @click="request">Fetch</v-btn>
 
     <v-data-table
-      v-if="response && response.summary"
+      v-if="queryResult && queryResult.summary"
       :headers="headers.summary"
       :items="dataItems"
       class="elevation-1"
@@ -16,7 +16,7 @@
         indeterminate
       ></v-progress-linear>
       <template slot="no-data">
-        <v-alert :value="response.error" color="error" icon="warning">
+        <v-alert :value="queryResult.error" color="error" icon="warning">
           An error occurred when retrieving data
         </v-alert>
         <v-alert :value="true" color="warning" icon="warning">
@@ -34,7 +34,7 @@
   </div>
 </template>
 <script>
-import axios from "axios";
+import { mapState } from "vuex";
 
 export default {
   name: "Statistics",
@@ -64,30 +64,20 @@ export default {
         resultType: "summary",
         page: 0,
         pageSize: 100
-      },
-      response: null
+      }
     };
   },
   methods: {
     request() {
-      axios
-        .post("http://localhost:8082/query", this.queryBody)
-        .then(response => (this.response = this.treatData(response.data)));
-    },
-    treatData(data) {
-      if (data.summary) {
-        data.summary.forEach(it => {
-          it.gamesPlayed = it.playerWins + it.oppWins;
-          it.winPercent = it.playerWins / it.gamesPlayed;
-        });
-        data.summary = data.summary.filter(it => it.gamesPlayed > 0);
-      }
-      return data;
+      this.$store.dispatch("statistics/query", this.queryBody);
     }
   },
   computed: {
+    ...mapState("statistics", {
+      queryResult: state => state.queryResult
+    }),
     dataItems() {
-      return this.response ? this.response.summary : [];
+      return this.queryResult ? this.queryResult.summary : [];
     }
   }
 };
