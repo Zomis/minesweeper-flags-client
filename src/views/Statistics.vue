@@ -10,6 +10,19 @@
       :items="dataItems"
       class="elevation-1"
     >
+      <v-progress-linear
+        slot="progress"
+        color="blue"
+        indeterminate
+      ></v-progress-linear>
+      <template slot="no-data">
+        <v-alert :value="response.error" color="error" icon="warning">
+          An error occurred when retrieving data
+        </v-alert>
+        <v-alert :value="true" color="warning" icon="warning">
+          No data found
+        </v-alert>
+      </template>
       <template slot="items" slot-scope="props">
         <td>{{ props.item.player }}</td>
         <td>{{ props.item.gamesPlayed }}</td>
