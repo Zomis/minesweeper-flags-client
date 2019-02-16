@@ -15,7 +15,7 @@
         </v-alert>
       </template>
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.player }}</td>
+        <td><PlayerField :player="props.item.player" :query="query" /></td>
         <td>{{ props.item.gamesPlayed }}</td>
         <td>{{ props.item.playerWins }}</td>
         <td>{{ props.item.oppWins }}</td>
@@ -25,9 +25,12 @@
   </div>
 </template>
 <script>
+import PlayerField from "./PlayerField";
+
 export default {
   name: "SummaryTable",
-  props: ["data"],
+  props: ["data", "query"],
+  components: { PlayerField },
   data() {
     return {
       headers: [

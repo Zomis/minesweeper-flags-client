@@ -14,10 +14,12 @@
     <SummaryTable
       v-if="queryResult && queryResult.summary"
       :data="queryResult.summary"
+      :query="query"
     />
     <GamesTable
       v-if="queryResult && queryResult.games"
       :data="queryResult.games"
+      :query="query"
     />
   </div>
 </template>
@@ -65,7 +67,8 @@ export default {
       };
     },
     ...mapState("statistics", {
-      queryResult: state => state.queryResult
+      queryResult: state => state.queryResult,
+      query: state => state.query
     })
   }
 };

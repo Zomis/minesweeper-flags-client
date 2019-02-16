@@ -3,10 +3,13 @@ import axios from "axios";
 export default {
   namespaced: true,
   state: {
+    query: null,
     queryResult: null
   },
   mutations: {
     queryResponse(state, data) {
+      state.query = data.query;
+      data = data.response;
       if (data.summary) {
         data.summary.forEach(it => {
           it.gamesPlayed = it.playerWins + it.oppWins;
@@ -35,9 +38,12 @@ export default {
   },
   actions: {
     query(context, data) {
-      axios
-        .post("http://localhost:8082/query", data)
-        .then(response => context.commit("queryResponse", response.data));
+      axios.post("http://localhost:8082/query", data).then(response =>
+        context.commit("queryResponse", {
+          query: data,
+          response: response.data
+        })
+      );
     }
   }
 };

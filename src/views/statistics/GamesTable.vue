@@ -16,10 +16,10 @@
       </template>
       <template slot="items" slot-scope="props">
         <td><GameIdField :gameId="props.item.gameid" /></td>
-        <td>{{ props.item.player }}</td>
+        <td><PlayerField :player="props.item.player" :query="query" /></td>
         <td>{{ props.item.playerRating }}</td>
         <td>{{ props.item.playerResult }}</td>
-        <td>{{ props.item.opponent }}</td>
+        <td><PlayerField :player="props.item.opponent" :query="query" /></td>
         <td>{{ props.item.opponentRating }}</td>
         <td>{{ props.item.opponentResult }}</td>
         <td>{{ props.item.time }}</td>
@@ -29,11 +29,12 @@
 </template>
 <script>
 import GameIdField from "./GameIdField";
+import PlayerField from "./PlayerField";
 
 export default {
   name: "GamesTable",
-  props: ["data"],
-  components: { GameIdField },
+  props: ["data", "query"],
+  components: { GameIdField, PlayerField },
   data() {
     return {
       headers: [
