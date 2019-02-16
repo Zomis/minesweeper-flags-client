@@ -23,15 +23,7 @@ export default new Router({
       path: "/stats/:resultType",
       name: "stats",
       props: route => ({
-        resultType: route.params.resultType,
-        players: route.query.players,
-        tags: route.query.tags,
-        withoutTags: route.query.withoutTags,
-        plugin: route.query.plugin,
-        after: route.query.after,
-        before: route.query.before,
-        pageSize: route.query.pageSize,
-        page: route.query.page
+        query2: { ...route.query, resultType: route.params.resultType }
       }),
       component: Statistics
     },

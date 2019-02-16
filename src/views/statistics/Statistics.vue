@@ -1,52 +1,40 @@
 <template>
   <div>
-    Statistics
+    <div>{{ query }}</div>
+    <div>{{ queryBody }}</div>
 
-    <v-text-field
-      label="Players"
-      placeholder="#AI_Nightmare"
-      v-model="queryPlayers"
-    ></v-text-field>
-    <v-text-field label="Result type" v-model="queryType"></v-text-field>
+    <QueryEditor :query="query" />
 
     <v-btn @click="request">Fetch</v-btn>
 
     <SummaryTable
       v-if="queryResult && queryResult.summary"
       :data="queryResult.summary"
-      :query="query"
+      :query="lastQuery"
     />
     <GamesTable
       v-if="queryResult && queryResult.games"
       :data="queryResult.games"
-      :query="query"
+      :query="lastQuery"
     />
   </div>
 </template>
 <script>
+import QueryEditor from "./QueryEditor";
 import SummaryTable from "./SummaryTable";
 import GamesTable from "./GamesTable";
 import { mapState } from "vuex";
-
-function nullIfEmpty(value) {
-  if (value === "") {
-    return null;
-  }
-  if (Array.isArray(value) && value.length === 1 && value[0] === "") {
-    return null;
-  }
-  return value;
-}
+import statsQuery from "./statsQuery";
 
 export default {
   name: "Statistics",
+  props: ["query2"],
   data() {
     return {
-      queryType: "games",
-      queryPlayers: "#AI_Nightmare"
+      query: statsQuery.fromUrlParams(this.query2)
     };
   },
-  components: { SummaryTable, GamesTable },
+  components: { QueryEditor, SummaryTable, GamesTable },
   methods: {
     request() {
       this.$store.dispatch("statistics/query", this.queryBody);
@@ -54,21 +42,11 @@ export default {
   },
   computed: {
     queryBody() {
-      return {
-        players: nullIfEmpty(this.queryPlayers.split(",")),
-        plugin: null,
-        tags: null,
-        withoutTags: null,
-        after: null,
-        before: null,
-        resultType: this.queryType,
-        page: 0,
-        pageSize: 100
-      };
+      return statsQuery.toServerRequestBody(this.query);
     },
     ...mapState("statistics", {
       queryResult: state => state.queryResult,
-      query: state => state.query
+      lastQuery: state => state.query
     })
   }
 };
