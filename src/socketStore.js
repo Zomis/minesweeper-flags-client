@@ -58,6 +58,16 @@ export default {
         // login OK
         context.commit("loggedIn", param.trim());
       }
+      if (type === "CHAT") {
+        context.commit(
+          "lobby/chatMessage",
+          {
+            timestamp: new Date().toLocaleString(),
+            message: param
+          },
+          ROOT
+        );
+      }
       if (type === "CONN") {
         context.commit(
           "lobby/connected",
