@@ -17,16 +17,15 @@
     </v-toolbar>
 
     <v-content>
-      <router-view/>
+      <router-view />
     </v-content>
     <v-footer fixed app>
-      <span>&copy; 2019 Simon Forsberg
-        - <a href="https://github.com/Zomis/minesweeper-flags-client">GitHub</a>
-        - {{ buildProps.environment }}
-        - {{ buildProps.gitBranch }}
-        - build {{ buildProps.buildNumber }}
-        - commit {{ buildProps.commitHash }}
-        - {{ buildProps.timestamp }}
+      <span
+        >&copy; 2019 Simon Forsberg -
+        <a href="https://github.com/Zomis/minesweeper-flags-client">GitHub</a> -
+        {{ buildProps.environment }} - {{ buildProps.gitBranch }} - build
+        {{ buildProps.buildNumber }} - commit {{ buildProps.commitHash }} -
+        {{ buildProps.timestamp }}
       </span>
     </v-footer>
   </v-app>
@@ -34,7 +33,7 @@
 
 <script>
 export default {
-  name: 'App',
+  name: "App",
   computed: {
     buildProps() {
       return {
@@ -43,8 +42,8 @@ export default {
         buildNumber: process.env.VUE_APP_BUILD_NUMBER,
         commitHash: process.env.VUE_APP_GIT_COMMIT,
         gitBranch: process.env.VUE_APP_GIT_BRANCH
-      }
+      };
     }
   }
-}
+};
 </script>
