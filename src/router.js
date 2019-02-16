@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
+import Lobby from "./views/Lobby";
 import Statistics from "./views/statistics/Statistics.vue";
 
 import VueAxios from "vue-axios";
@@ -19,6 +20,7 @@ export default new Router({
       name: "home",
       component: Home
     },
+    { path: "/lobby", name: "Lobby", component: Lobby },
     {
       path: "/stats/:resultType",
       name: "stats",
