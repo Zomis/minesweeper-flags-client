@@ -37,7 +37,6 @@ function listify(value) {
     return [value];
   }
   return value;
-  //  return value.split(",");
 }
 
 export default {
