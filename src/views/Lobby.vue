@@ -61,11 +61,6 @@ export default {
   },
   methods: {
     invite(user) {
-      console.log("compare " + user.userName + " with " + this.loggedIn);
-      if (user.userName === this.loggedIn) {
-        window.alert("You can't invite yourself!");
-        return;
-      }
       this.$store.dispatch("invites/sendInvite", {
         target: user,
         plugin: "PluginClassicGame"

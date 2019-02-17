@@ -79,7 +79,7 @@
           <v-btn
             v-if="!inviteWaiting.cancelled"
             color="error"
-            @click="inviteResponse(inviteWaiting, false)"
+            @click="inviteCancel(inviteWaiting)"
             >Cancel invite</v-btn
           >
           <v-btn
@@ -99,6 +99,9 @@ import { mapState } from "vuex";
 export default {
   name: "Invites",
   methods: {
+    inviteCancel(invite) {
+      this.$store.dispatch("invites/cancel");
+    },
     inviteResponse(invite, response) {
       this.$store.dispatch("invites/respondTo", {
         invite: invite,

@@ -1,3 +1,5 @@
+import Vue from "vue";
+
 let ROOT = { root: true };
 
 export default {
@@ -19,16 +21,27 @@ export default {
       state.inviteWaiting = data;
     },
     onInviteResponse(state, response) {
+      if (state.inviteWaiting === null) {
+        console.log(
+          "Got invite response without an invite waiting: " + response.userName
+        );
+        return;
+      }
       delete state.inviteWaiting.invited[response.userName];
+
       if (response.accepted) {
-        state.inviteWaiting.accepted[response.userName] = true;
+        state.inviteWaiting.accepted.push(response.userName);
       } else {
-        state.inviteWaiting.declined[response.userName] = true;
+        state.inviteWaiting.declined.push(response.userName);
       }
     }
   },
 
   actions: {
+    cancel(context) {
+      context.dispatch("socket/send", "INVC", ROOT);
+      context.commit("setInviteWaiting", null);
+    },
     respondTo(context, data) {
       let responseCode = data.response ? "INVY" : "INVN";
       context.dispatch(
@@ -45,8 +58,8 @@ export default {
       invited[userName] = true;
       context.commit("setInviteWaiting", {
         invited: invited,
-        accepted: {},
-        declined: {}
+        accepted: [],
+        declined: []
       });
     }
   }
