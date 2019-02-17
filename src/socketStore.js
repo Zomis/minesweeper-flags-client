@@ -4,6 +4,18 @@ let socket = null;
 let ROOT = { root: true };
 let sendOnOpen = [];
 
+import SoundClick from "@/assets/sound/click.mp3";
+import SoundMine from "@/assets/sound/mine.mp3";
+import SoundInvite from "@/assets/sound/invite.mp3";
+import SoundBomb from "@/assets/sound/bomb.mp3";
+
+let audios = {
+  mine: () => new Audio(SoundMine),
+  invite: () => new Audio(SoundInvite),
+  bomb: () => new Audio(SoundBomb),
+  field: () => new Audio(SoundClick)
+};
+
 const messageTypes = {
   USRK: { commit: "socket/loggedIn", handler: e => e.fullParam },
   CHAT: {
@@ -131,6 +143,11 @@ export default {
         fullParam: param,
         params: params
       };
+
+      if (type === "ADIO") {
+        audios[param]().play();
+        return;
+      }
 
       let handler = messageTypes[type];
       if (typeof handler === "undefined") {
