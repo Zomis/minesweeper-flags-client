@@ -4,6 +4,50 @@ let socket = null;
 let ROOT = { root: true };
 let sendOnOpen = [];
 
+const messageTypes = {
+  USRK: { commit: "socket/loggedIn", handler: e => e.fullParam },
+  CHAT: {
+    commit: "lobby/chatMessage",
+    extra: e => ({
+      timestamp: new Date().toLocaleString(),
+      message: e.fullParam
+    })
+  },
+  CONN: {
+    commit: "lobby/connected",
+    params: ["userName", "rating", "country"]
+  },
+  INVT: {
+    commit: "invites/addInvite",
+    params: ["host", "plugin"],
+    extra: () => ({
+      response: null
+    })
+  },
+  INVY: {
+    commit: "invites/onInviteResponse",
+    params: ["userName"],
+    extra: () => ({
+      accepted: true
+    })
+  },
+  INVN: {
+    commit: "invites/onInviteResponse",
+    params: ["userName"],
+    extra: () => ({
+      accepted: false
+    })
+  },
+  GAME: {
+    commit: "games/activeGame",
+    params: ["gameId", "playerIndex"]
+  },
+  USER: {
+    commit: "lobby/online",
+    params: ["userName", "rating", "country"]
+  }
+};
+
 export default {
   namespaced: true,
   state: {
@@ -58,83 +102,34 @@ export default {
         param = param.substring(0, param.length - 1);
       }
       let params = param.split(" ");
-      if (type === "USRK") {
-        // login OK
-        context.commit("loggedIn", param);
+
+      let e = {
+        fullParam: param,
+        params: params
+      };
+
+      let handler = messageTypes[type];
+      if (typeof handler === "undefined") {
+        console.log("No handler for " + type);
+        return;
       }
-      if (type === "CHAT") {
-        context.commit(
-          "lobby/chatMessage",
-          {
-            timestamp: new Date().toLocaleString(),
-            message: param
-          },
-          ROOT
-        );
+
+      let data = null;
+      if (handler.handler) {
+        data = handler.handler(e);
+      } else {
+        data = {};
+        if (handler.extra) {
+          data = handler.extra(e);
+        }
+        if (handler.params) {
+          handler.params.forEach(
+            (value, index) => (data[value] = e.params[index])
+          );
+        }
       }
-      if (type === "CONN") {
-        context.commit(
-          "lobby/connected",
-          {
-            userName: params[0],
-            rating: params[1],
-            country: params[2]
-          },
-          ROOT
-        );
-      }
-      if (type === "INVT") {
-        context.commit(
-          "invites/addInvite",
-          {
-            host: params[0],
-            plugin: params[1],
-            response: null
-          },
-          ROOT
-        );
-      }
-      if (type === "INVY") {
-        context.commit(
-          "invites/onInviteResponse",
-          {
-            userName: params[0],
-            accepted: true
-          },
-          ROOT
-        );
-      }
-      if (type === "INVN") {
-        context.commit(
-          "invites/onInviteResponse",
-          {
-            userName: params[0],
-            accepted: false
-          },
-          ROOT
-        );
-      }
-      if (type === "GAME") {
-        context.commit(
-          "games/activeGame",
-          {
-            gameId: params[0],
-            playerIndex: params[1]
-          },
-          ROOT
-        );
-      }
-      if (type === "USER") {
-        context.commit(
-          "lobby/online",
-          {
-            userName: params[0],
-            rating: params[1],
-            country: params[2]
-          },
-          ROOT
-        );
-      }
+
+      context.commit(handler.commit, data, ROOT);
     },
     connect(context) {
       let url = process.env.VUE_APP_URL + "websocket";
