@@ -53,15 +53,14 @@ export default {
     onSocketMessage(context, event) {
       console.log(" IN: " + event.data);
       let type = event.data.substring(0, 4);
-      let param = event.data.substring(5);
+      let param = event.data.substring(5).trim();
+      if (param.charCodeAt(param.length - 1) == 0) {
+        param = param.substring(0, param.length - 1);
+      }
       let params = param.split(" ");
       if (type === "USRK") {
         // login OK
-        let userName = params[0].trim();
-        if (userName.charCodeAt(userName.length - 1) == 0) {
-          userName = userName.substring(0, userName.length - 1);
-        }
-        context.commit("loggedIn", userName);
+        context.commit("loggedIn", param);
       }
       if (type === "CHAT") {
         context.commit(
