@@ -57,7 +57,8 @@ export default {
       let params = param.split(" ");
       if (type === "USRK") {
         // login OK
-        context.commit("loggedIn", param.trim());
+        console.log("set logged in to '" + params[0].trim() + "'");
+        context.commit("loggedIn", params[0].trim());
       }
       if (type === "CHAT") {
         context.commit(
@@ -76,6 +77,47 @@ export default {
             userName: params[0],
             rating: params[1],
             country: params[2]
+          },
+          ROOT
+        );
+      }
+      if (type === "INVT") {
+        context.commit(
+          "invites/addInvite",
+          {
+            host: params[0],
+            plugin: params[1],
+            response: null
+          },
+          ROOT
+        );
+      }
+      if (type === "INVY") {
+        context.commit(
+          "invites/onInviteResponse",
+          {
+            userName: params[0],
+            accepted: true
+          },
+          ROOT
+        );
+      }
+      if (type === "INVN") {
+        context.commit(
+          "invites/onInviteResponse",
+          {
+            userName: params[0],
+            accepted: false
+          },
+          ROOT
+        );
+      }
+      if (type === "GAME") {
+        context.commit(
+          "games/activeGame",
+          {
+            gameId: params[0],
+            playerIndex: params[1]
           },
           ROOT
         );

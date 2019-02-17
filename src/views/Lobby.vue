@@ -1,5 +1,6 @@
 <template>
   <div class="lobby">
+    <Invites />
     <v-container fluid>
       <v-layout align-space-around justify-start column fill-height>
         <div>
@@ -30,7 +31,11 @@
                       ></v-list-tile-title>
                     </v-list-tile-content>
                     <v-list-tile-action>
-                      <v-icon @click="invite(user)">extension</v-icon>
+                      <v-icon
+                        @click="invite(user)"
+                        v-if="user.userName !== loggedIn"
+                        >extension</v-icon
+                      >
                     </v-list-tile-action>
                   </v-list-tile></v-list
                 >
@@ -45,12 +50,27 @@
 <script>
 import { mapState } from "vuex";
 import Messages from "./lobby/Messages";
+import Invites from "./lobby/Invites";
 
 export default {
   name: "Lobby",
-  components: { Messages },
-  computed: mapState("lobby", ["messages", "onlineUsers"]),
+  components: { Messages, Invites },
+  computed: {
+    ...mapState("socket", ["loggedIn"]),
+    ...mapState("lobby", ["messages", "onlineUsers"])
+  },
   methods: {
+    invite(user) {
+      console.log("compare " + user.userName + " with " + this.loggedIn);
+      if (user.userName === this.loggedIn) {
+        window.alert("You can't invite yourself!");
+        return;
+      }
+      this.$store.dispatch("invites/sendInvite", {
+        target: user,
+        plugin: "PluginClassicGame"
+      });
+    },
     sendChat(message) {
       this.$store.dispatch("lobby/sendChat", message);
     }
