@@ -1,7 +1,12 @@
 <template>
   <div class="lobby">
-    <v-container grid-list-md text-xs-left>
-      <v-layout row wrap>
+    <v-container
+      id="message-container"
+      grid-list-md
+      text-xs-left
+      class="messages"
+    >
+      <v-layout id="message-content" row wrap>
         <template v-for="(item, index) in messages">
           <v-flex xs2 :key="'time-' + index">
             {{ item.timestamp }}
@@ -32,6 +37,14 @@ export default {
     };
   },
   computed: mapState("lobby", ["messages"]),
+  watch: {
+    messages(val) {
+      this.$nextTick(() => {
+        let container = document.getElementById("message-container");
+        container.scrollTop = container.scrollHeight;
+      });
+    }
+  },
   methods: {
     sendChat() {
       if (event.keyCode !== 13) {
