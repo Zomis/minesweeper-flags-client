@@ -57,8 +57,11 @@ export default {
       let params = param.split(" ");
       if (type === "USRK") {
         // login OK
-        console.log("set logged in to '" + params[0].trim() + "'");
-        context.commit("loggedIn", params[0].trim());
+        let userName = params[0].trim();
+        if (userName.charCodeAt(userName.length - 1) == 0) {
+          userName = userName.substring(0, userName.length - 1);
+        }
+        context.commit("loggedIn", userName);
       }
       if (type === "CHAT") {
         context.commit(
