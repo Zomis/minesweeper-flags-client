@@ -1,8 +1,9 @@
 <template>
   <v-app>
     <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Minesweeper Flags Extreme</span>
+      <v-toolbar-title class="headline">
+        <span class="text-uppercase">Minesweeper Flags Extreme</span>
+        <span v-if="loggedIn"> - {{ loggedIn }}</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn flat to="/">
@@ -30,11 +31,13 @@
     </v-footer>
   </v-app>
 </template>
-
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "App",
   computed: {
+    ...mapState("socket", ["loggedIn"]),
     buildProps() {
       return {
         environment: process.env.NODE_ENV,
