@@ -17,21 +17,9 @@ export default {
     };
   },
   mounted() {
-    this.$store.dispatch("socket/connect");
-
-    let lastUsedProvider = localStorage.lastUsedProvider;
-    if (typeof localStorage.guestName === "undefined") {
-      localStorage.guestName = this.guestName =
-        "v" + (Math.floor(Math.random() * 90000) + 10000);
-    } else {
-      this.guestName = localStorage.guestName;
-    }
-    if (this.lastUsedProvider !== null) {
-      this.$store.dispatch("socket/login", {
-        provider: lastUsedProvider,
-        guestName: this.guestName
-      });
-    }
+    this.$nextTick(() => {
+      this.autoLogin();
+    });
   },
   watch: {
     loggedIn(newValue) {
@@ -43,12 +31,29 @@ export default {
   },
   computed: mapState("socket", ["loggedIn"]),
   methods: {
-    authenticateGuest: function() {
+    autoLogin() {
+      this.$store.dispatch("socket/connect");
+
+      let lastUsedProvider = localStorage.lastUsedProvider;
+      if (typeof localStorage.guestName === "undefined") {
+        localStorage.guestName = this.guestName =
+          "v" + (Math.floor(Math.random() * 90000) + 10000);
+      } else {
+        this.guestName = localStorage.guestName;
+      }
+      if (this.lastUsedProvider !== null) {
+        this.$store.dispatch("socket/login", {
+          provider: lastUsedProvider,
+          guestName: this.guestName
+        });
+      }
+    },
+    authenticateGuest() {
       localStorage.lastUsedProvider = "guest";
       let auth = { provider: "guest", guestName: this.guestName };
       this.$store.dispatch("socket/login", auth);
     },
-    authenticate: function(provider) {
+    authenticate(provider) {
       localStorage.lastUsedProvider = provider;
       this.$store.dispatch("socket/authenticate", provider);
     },
