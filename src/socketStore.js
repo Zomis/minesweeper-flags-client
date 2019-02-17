@@ -38,7 +38,7 @@ export default {
       console.log(auth);
       if (auth.provider === "guest") {
         let userName = "guest_" + auth.guestName;
-        context.dispatch("send", "USER 20000 " + userName + " -42 XX");
+        context.dispatch("send", "USER 30000 " + userName + " -42 XX");
       }
       // token
     },
