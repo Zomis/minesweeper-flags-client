@@ -1,7 +1,5 @@
 <template>
   <div class="outer-map">
-    <span>Mines Remaining: {{ game.minesRemaining }}</span>
-    <span>Map Size: {{ game.width }} x {{ game.height }}</span>
     <div class="map">
       <div class="fields fields-bg">
         <template v-for="y in game.height">
