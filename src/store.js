@@ -6,8 +6,6 @@ import lobbyStore from "./views/lobbyStore";
 
 Vue.use(Vuex);
 
-let socket;
-
 export default new Vuex.Store({
   modules: {
     statistics: statisticsStore,

@@ -1,3 +1,5 @@
+import Vue from "vue";
+
 let socket = null;
 let ROOT = { root: true };
 let sendOnOpen = [];
@@ -17,7 +19,7 @@ export default {
     loggedIn(state, value) {
       state.loggedIn = value;
     },
-    error(state, event) {}
+    error(/*state, event*/) {}
   },
   actions: {
     authenticate(context, provider) {
