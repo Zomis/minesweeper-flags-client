@@ -33,6 +33,14 @@ export default {
     }
   },
   mutations: {
+    changeGameId(state, newGameId) {
+      // When a game has been saved in database. Order is important here
+      let game = state.activeGames[state.activeGameId];
+      game.gameId = newGameId;
+      Vue.set(state.activeGames, newGameId, game);
+      delete state.activeGames[state.activeGameId];
+      state.activeGameId = newGameId;
+    },
     mapData(state, data) {
       let game = state.activeGames[data.gameId];
       if (data.type === "turn") {
@@ -101,6 +109,7 @@ export default {
       players.push(producer(data.player2));
     },
     newGame(state, gameInfo) {
+      // Use gameId as String
       Vue.set(state.activeGames, gameInfo.gameId, {
         gameId: gameInfo.gameId,
         yourIndex: parseInt(gameInfo.yourIndex, 10),

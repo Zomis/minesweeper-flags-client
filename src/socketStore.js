@@ -78,6 +78,10 @@ const messageTypes = {
     commit: "games/newGame",
     params: ["gameId", "yourIndex"]
   },
+  SEND: {
+    commit: "games/changeGameId",
+    extra: e => e.fullParam
+  },
   USER: {
     commit: "lobby/online",
     params: ["userName", "rating", "country"]

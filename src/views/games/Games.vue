@@ -2,7 +2,7 @@
   <div>
     <v-container fluid>
       <v-layout align-center justify-center column fill-height>
-        <h1>Game {{ gameInfo.gameId }}</h1>
+        <h1>Game {{ game.gameId }}</h1>
         <GameResult :game="game" :yourIndex="game.yourIndex" />
         <v-container fluid>
           <v-layout align-space-around justify-center row fill-height>
@@ -36,7 +36,7 @@ import { mapState, mapGetters } from "vuex";
 
 export default {
   name: "Games",
-  props: ["gameInfo"],
+  props: [],
   components: { PlayerView, MapView, GameResult },
   methods: {},
   computed: {
