@@ -99,7 +99,7 @@ import { mapState } from "vuex";
 export default {
   name: "Invites",
   methods: {
-    inviteCancel(invite) {
+    inviteCancel() {
       this.$store.dispatch("invites/cancel");
     },
     inviteResponse(invite, response) {

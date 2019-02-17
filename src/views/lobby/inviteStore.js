@@ -1,5 +1,3 @@
-import Vue from "vue";
-
 let ROOT = { root: true };
 
 export default {
