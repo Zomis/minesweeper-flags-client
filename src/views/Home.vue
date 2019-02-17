@@ -21,10 +21,11 @@ export default {
 
     let lastUsedProvider = localStorage.lastUsedProvider;
     if (typeof localStorage.guestName === "undefined") {
-      localStorage.guestName =
+      localStorage.guestName = this.guestName =
         "v" + (Math.floor(Math.random() * 90000) + 10000);
+    } else {
+      this.guestName = localStorage.guestName;
     }
-    this.guestName = localStorage.guestName;
     if (this.lastUsedProvider !== null) {
       this.$store.dispatch("socket/login", {
         provider: lastUsedProvider,
@@ -44,7 +45,7 @@ export default {
   methods: {
     authenticateGuest: function() {
       localStorage.lastUsedProvider = "guest";
-      let auth = { provider: "guest" };
+      let auth = { provider: "guest", guestName: this.guestName };
       this.$store.dispatch("socket/login", auth);
     },
     authenticate: function(provider) {
