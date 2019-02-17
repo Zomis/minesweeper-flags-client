@@ -81,6 +81,14 @@ export default {
         console.log("Unknown Player Data type: " + data.type);
       }
     },
+    playerEliminated(state, data) {
+      let game = state.activeGames[data.gameId];
+      game.eliminations.push(data);
+    },
+    yourElimination(state, data) {
+      let game = state.activeGames[data.gameId];
+      game.yourResult = data.result;
+    },
     setNames(state, data) {
       let players = state.activeGames[data.gameId].players;
       let producer = name => ({
@@ -95,12 +103,14 @@ export default {
     newGame(state, gameInfo) {
       Vue.set(state.activeGames, gameInfo.gameId, {
         gameId: gameInfo.gameId,
-        yourIndex: gameInfo.yourIndex,
+        yourIndex: parseInt(gameInfo.yourIndex, 10),
         fields: createMap(16, 16),
         minesRemaining: 51,
         width: 16,
         height: 16,
         players: [],
+        eliminations: [],
+        yourResult: null,
         currentPlayer: 0
       });
       state.activeGameId = gameInfo.gameId;

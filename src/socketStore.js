@@ -33,6 +33,14 @@ const messageTypes = {
     commit: "games/fieldData",
     params: ["gameId", "x", "y", "type", "playerIndex", "values"]
   },
+  YEND: {
+    commit: "games/yourElimination",
+    params: ["gameId", "result"]
+  },
+  ELIM: {
+    commit: "games/playerEliminated",
+    params: ["gameId", "name", "score", "winPosition"]
+  },
   INVT: {
     commit: "invites/addInvite",
     params: ["host", "plugin"],
