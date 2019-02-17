@@ -55,7 +55,6 @@ export default {
       let type = event.data.substring(0, 4);
       let param = event.data.substring(5);
       let params = param.split(" ");
-      console.log(`event of type ${type} with params ${params}`);
       if (type === "USRK") {
         // login OK
         context.commit("loggedIn", param.trim());
