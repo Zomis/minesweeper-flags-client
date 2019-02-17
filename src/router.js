@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Lobby from "./views/Lobby";
+import Games from "./views/games/Games";
 import Statistics from "./views/statistics/Statistics.vue";
 
 import VueAxios from "vue-axios";
@@ -28,6 +29,14 @@ export default new Router({
         query2: { ...route.query, resultType: route.params.resultType }
       }),
       component: Statistics
+    },
+    {
+      path: "/games/:gameId",
+      name: "games",
+      props: route => ({
+        gameInfo: { ...route.params }
+      }),
+      component: Games
     },
     {
       path: "/about",

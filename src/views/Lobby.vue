@@ -48,7 +48,7 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import Messages from "./lobby/Messages";
 import Invites from "./lobby/Invites";
 
@@ -57,7 +57,13 @@ export default {
   components: { Messages, Invites },
   computed: {
     ...mapState("socket", ["loggedIn"]),
+    ...mapGetters("games", ["activeGame"]),
     ...mapState("lobby", ["messages", "onlineUsers"])
+  },
+  watch: {
+    activeGame(value) {
+      this.$router.push("/games/" + value.gameId);
+    }
   },
   methods: {
     invite(user) {

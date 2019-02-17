@@ -17,6 +17,22 @@ const messageTypes = {
     commit: "lobby/connected",
     params: ["userName", "rating", "country"]
   },
+  NAME: {
+    commit: "games/setNames",
+    params: ["gameId", "player1", "player2"] // TODO: Fix to support more players, use "e.restParams(1)"
+  },
+  MDAT: {
+    commit: "games/mapData",
+    params: ["gameId", "type", "value"]
+  },
+  PDAT: {
+    commit: "games/playerData",
+    params: ["gameId", "playerIndex", "type", "value"]
+  },
+  FDAT: {
+    commit: "games/fieldData",
+    params: ["gameId", "x", "y", "type", "playerIndex", "values"]
+  },
   INVT: {
     commit: "invites/addInvite",
     params: ["host", "plugin"],
@@ -39,8 +55,8 @@ const messageTypes = {
     })
   },
   GAME: {
-    commit: "games/activeGame",
-    params: ["gameId", "playerIndex"]
+    commit: "games/newGame",
+    params: ["gameId", "yourIndex"]
   },
   USER: {
     commit: "lobby/online",
