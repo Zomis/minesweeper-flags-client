@@ -46,3 +46,10 @@ export default {
   }
 };
 </script>
+<style scoped>
+.messages {
+  height: 600px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+</style>
