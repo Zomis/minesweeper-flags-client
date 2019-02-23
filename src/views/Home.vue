@@ -2,6 +2,9 @@
   <div>
     This is start screen
     <v-btn @click="authenticateGuest()">Guest {{ guestName }}</v-btn>
+    <v-btn color="info" @click="authenticate('github')">Github</v-btn>
+    <v-btn color="info" @click="authenticate('google')">Google</v-btn>
+    <v-btn color="info" @click="authenticate('facebook')">Facebook</v-btn>
   </div>
 </template>
 
@@ -41,8 +44,9 @@ export default {
       } else {
         this.guestName = localStorage.guestName;
       }
-      if (this.lastUsedProvider !== null) {
+      if (lastUsedProvider) {
         this.$store.dispatch("socket/login", {
+          token: this.$auth.getToken(),
           provider: lastUsedProvider,
           guestName: this.guestName
         });
@@ -54,8 +58,16 @@ export default {
       this.$store.dispatch("socket/login", auth);
     },
     authenticate(provider) {
-      localStorage.lastUsedProvider = provider;
-      this.$store.dispatch("socket/authenticate", provider);
+      console.log("trying to authenticate with " + provider);
+      this.$auth.authenticate(provider).then(() => {
+        console.log("Authenticated with " + provider);
+        let auth = {
+          token: this.$auth.getToken(),
+          provider: provider
+        };
+        localStorage.lastUsedProvider = provider;
+        this.$store.dispatch("socket/login", auth);
+      });
     },
     getToken() {
       if (this.$auth.isAuthenticated()) {

@@ -106,17 +106,6 @@ export default {
     error(/*state, event*/) {}
   },
   actions: {
-    authenticate(context, provider) {
-      console.log("trying to authenticate with " + provider);
-      Vue.auth.authenticate(provider).then(() => {
-        console.log("Authenticated with " + provider);
-        let auth = {
-          token: Vue.auth.getToken(),
-          provider: provider
-        };
-        context.dispatch("socket/login", auth);
-      });
-    },
     login(context, auth) {
       console.log("login");
       console.log(auth);
@@ -124,7 +113,10 @@ export default {
         let userName = "guest_" + auth.guestName;
         context.dispatch("send", "USER 30000 " + userName + " -42 XX");
       }
-      // token
+      context.dispatch(
+        "send",
+        "AUTH 30000 " + auth.provider + " " + auth.token
+      );
     },
     send(context, data) {
       if (socket.readyState === 1) {

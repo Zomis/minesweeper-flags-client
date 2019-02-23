@@ -6,10 +6,29 @@ import Games from "./views/games/Games";
 import Statistics from "./views/statistics/Statistics.vue";
 
 import VueAxios from "vue-axios";
-//import VueAuthenticate from "vue-authenticate";
+import VueAuthenticate from "vue-authenticate";
 import axios from "axios";
 
+console.log("Using redirectUri " + process.env.VUE_APP_AUTH_REDIRECT_URL);
+
 Vue.use(VueAxios, axios);
+Vue.use(VueAuthenticate, {
+  baseUrl: process.env.VUE_APP_AUTH_API_URL,
+  providers: {
+    github: {
+      clientId: process.env.VUE_APP_AUTH_CLIENT_ID_GITHUB,
+      redirectUri: process.env.VUE_APP_AUTH_REDIRECT_URL
+    },
+    google: {
+      clientId: process.env.VUE_APP_AUTH_CLIENT_ID_GOOGLE,
+      redirectUri: process.env.VUE_APP_AUTH_REDIRECT_URL
+    },
+    facebook: {
+      clientId: process.env.VUE_APP_AUTH_CLIENT_ID_FACEBOOK,
+      redirectUri: process.env.VUE_APP_AUTH_REDIRECT_URL
+    }
+  }
+});
 Vue.use(Router);
 
 export default new Router({
