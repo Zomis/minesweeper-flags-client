@@ -1,7 +1,7 @@
 <template>
   <div class="outer-map">
     <div class="map">
-      <div class="fields fields-bg">
+      <div class="fields fields-bg field-views">
         <template v-for="y in game.height">
           <FieldView
             v-for="x in game.width"
@@ -11,7 +11,7 @@
           />
         </template>
       </div>
-      <div class="fields fields-bg">
+      <div class="fields fields-bg selectors">
         <div
           v-for="selector in selectors"
           class="selector"
@@ -57,6 +57,10 @@ export default {
 };
 </script>
 <style scoped>
+.selectors {
+  pointer-events: none;
+}
+
 .selector {
   width: 64px;
   height: 64px;
