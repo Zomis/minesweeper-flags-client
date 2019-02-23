@@ -11,6 +11,14 @@
           />
         </template>
       </div>
+      <div class="fields fields-bg">
+        <div
+          v-for="selector in selectors"
+          class="selector"
+          :class="'selector-' + selector.playerIndex"
+          v-bind:style="{ gridArea: selector.y + 1 + '/' + (selector.x + 1) }"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -29,10 +37,40 @@ export default {
         field: field
       });
     }
+  },
+  computed: {
+    selectors() {
+      return this.game.players
+        .map((player, index) => {
+          if (player.lastClicked === null) {
+            return null;
+          }
+          return {
+            playerIndex: index,
+            x: parseInt(player.lastClicked.x, 10),
+            y: parseInt(player.lastClicked.y, 10)
+          };
+        })
+        .filter(s => s !== null);
+    }
   }
 };
 </script>
 <style scoped>
+.selector {
+  width: 64px;
+  height: 64px;
+  border: 5px solid #000000;
+}
+
+.selector-0 {
+  border-color: #0000ff;
+}
+
+.selector-1 {
+  border-color: #ff0000;
+}
+
 .fields {
   display: grid;
   position: absolute;
