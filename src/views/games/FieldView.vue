@@ -35,6 +35,10 @@ export default {
 };
 </script>
 <style scoped>
+.field:hover {
+  opacity: 0.5;
+}
+
 .field {
   width: 64px;
   height: 64px;
