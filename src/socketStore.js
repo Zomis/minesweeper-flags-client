@@ -74,6 +74,10 @@ const messageTypes = {
       accepted: false
     })
   },
+  INCG: {
+    commit: "games/incomplete",
+    params: ["gameId", "players", "scores", "clicks", "lastActive"]
+  },
   GAME: {
     commit: "games/newGame",
     params: ["gameId", "yourIndex"]

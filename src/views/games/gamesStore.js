@@ -21,6 +21,7 @@ function createMap(width, height) {
 export default {
   namespaced: true,
   state: {
+    incompleteGames: [],
     activeGameId: -1,
     activeGames: {}
   },
@@ -40,6 +41,10 @@ export default {
       Vue.set(state.activeGames, newGameId, game);
       delete state.activeGames[state.activeGameId];
       state.activeGameId = newGameId;
+    },
+    incomplete(state, data) {
+      // params: ["gameId", "players", "scores", "clicks", "lastActive"]
+      state.incompleteGames.push(data);
     },
     mapData(state, data) {
       let game = state.activeGames[data.gameId];
@@ -126,6 +131,9 @@ export default {
     }
   },
   actions: {
+    resume(context, gameId) {
+      context.dispatch("socket/send", "RESU " + gameId, ROOT);
+    },
     makeMove(context, move) {
       console.log(move);
       let gameId = move.game.gameId;

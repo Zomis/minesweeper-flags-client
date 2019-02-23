@@ -4,8 +4,11 @@
     <v-container fluid>
       <v-layout align-space-around justify-start column fill-height>
         <div>
-          <!-- Running games -->
-          Some random stuff
+          <IncompleteGame
+            v-for="game in incompleteGames"
+            :game="game"
+            :key="game.gameId"
+          />
         </div>
         <div>
           <v-container fluid>
@@ -51,12 +54,14 @@
 import { mapState, mapGetters } from "vuex";
 import Messages from "./lobby/Messages";
 import Invites from "./lobby/Invites";
+import IncompleteGame from "./lobby/IncompleteGame";
 
 export default {
   name: "Lobby",
-  components: { Messages, Invites },
+  components: { Messages, Invites, IncompleteGame },
   computed: {
     ...mapState("socket", ["loggedIn"]),
+    ...mapState("games", ["incompleteGames"]),
     ...mapGetters("games", ["activeGame"]),
     ...mapState("lobby", ["messages", "onlineUsers"])
   },
