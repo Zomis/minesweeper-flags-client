@@ -35,6 +35,6 @@ export default {
 </script>
 <style scoped>
 .player-view {
-  width: 600px;
+  width: 100%;
 }
 </style>

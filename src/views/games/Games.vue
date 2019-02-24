@@ -5,15 +5,20 @@
         <h1>Game {{ game.gameId }}</h1>
         <GameResult :game="game" :yourIndex="game.yourIndex" />
         <v-container fluid>
-          <v-layout align-space-around justify-center row fill-height>
-            <v-flex shrink>
+          <v-layout
+            align-space-around
+            justify-center
+            :fill-height="$vuetify.breakpoint.lgAndUp"
+            :column="$vuetify.breakpoint.mdAndDown"
+          >
+            <v-flex xs12 lg4 xl6>
               <v-container fluid>
                 <v-layout
                   align-center
                   justify-center
-                  column
-                  fill-height
-                  style="height: 1048px"
+                  :column="$vuetify.breakpoint.lgAndUp"
+                  :fill-height="$vuetify.breakpoint.lgAndUp"
+                  style="height: 100%"
                 >
                   <PlayerView
                     :player="game.players[0]"
@@ -28,7 +33,9 @@
                 </v-layout>
               </v-container>
             </v-flex>
-            <MapView :game="game" :highlightWeapon="highlightWeapon" />
+            <v-flex xs12 lg8 xl6>
+              <MapView :game="game" :highlightWeapon="highlightWeapon" />
+            </v-flex>
           </v-layout>
         </v-container>
       </v-layout>

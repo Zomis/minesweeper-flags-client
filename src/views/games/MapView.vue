@@ -1,28 +1,30 @@
 <template>
   <div class="outer-map">
-    <div class="map">
-      <div class="fields fields-bg field-views">
-        <template v-for="y in game.height">
-          <FieldView
-            v-for="x in game.width"
-            :key="'field' + y + '-' + x"
-            :onClick="clickedField"
-            :highlighted="highlightedFields[y - 1][x - 1]"
-            :onHighlight="onHighlight"
-            :field="game.fields[y - 1][x - 1]"
+    <v-responsive :aspect-ratio="1 / 1">
+      <div class="map">
+        <div class="fields fields-bg field-views">
+          <template v-for="y in game.height">
+            <FieldView
+              v-for="x in game.width"
+              :key="'field' + y + '-' + x"
+              :onClick="clickedField"
+              :highlighted="highlightedFields[y - 1][x - 1]"
+              :onHighlight="onHighlight"
+              :field="game.fields[y - 1][x - 1]"
+            />
+          </template>
+        </div>
+        <div class="fields fields-bg selectors">
+          <div
+            v-for="selector in selectors"
+            class="selector"
+            :key="selector.playerIndex"
+            :class="'selector-' + selector.playerIndex"
+            v-bind:style="{ gridArea: selector.y + 1 + '/' + (selector.x + 1) }"
           />
-        </template>
+        </div>
       </div>
-      <div class="fields fields-bg selectors">
-        <div
-          v-for="selector in selectors"
-          class="selector"
-          :key="selector.playerIndex"
-          :class="'selector-' + selector.playerIndex"
-          v-bind:style="{ gridArea: selector.y + 1 + '/' + (selector.x + 1) }"
-        />
-      </div>
-    </div>
+    </v-responsive>
   </div>
 </template>
 <script>
@@ -107,8 +109,8 @@ export default {
 }
 
 .selector {
-  width: 64px;
-  height: 64px;
+  width: 100%;
+  height: 100%;
   border: 5px solid #000000;
 }
 
@@ -122,7 +124,6 @@ export default {
 
 .fields {
   display: grid;
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -130,8 +131,8 @@ export default {
 }
 
 .map {
-  width: 1048px;
-  height: 1048px;
+  width: 100%;
+  height: 100%;
 
   position: relative;
   overflow: hidden;
@@ -141,7 +142,7 @@ export default {
 }
 
 .map .fields {
-  grid-template-columns: repeat(16, 1fr);
-  grid-template-rows: repeat(16, 1fr);
+  grid-template-columns: repeat(16, minmax(16px, 1fr));
+  grid-template-rows: repeat(16, minmax(16px, 1fr));
 }
 </style>
