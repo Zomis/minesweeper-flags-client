@@ -2,22 +2,6 @@ import Vue from "vue";
 
 let ROOT = { root: true };
 
-const createField = (x, y) => ({
-  x: x,
-  y: y,
-  clicked: false,
-  value: 0,
-  mine: false,
-  blocked: false,
-  clickedBy: null
-});
-
-function createMap(width, height) {
-  return Array.apply(null, Array(height)).map((_, y) =>
-    Array.apply(null, Array(width)).map((_, x) => createField(x, y))
-  );
-}
-
 export default {
   namespaced: true,
   state: {
@@ -103,30 +87,16 @@ export default {
       game.yourResult = data.result;
     },
     setNames(state, data) {
-      let players = state.activeGames[data.gameId].players;
-      let producer = name => ({
-        name: name,
-        score: 0,
-        lastClicked: null,
-        weapons: { B: 1, P: -1 }
-      });
-      players.push(producer(data.player1));
-      players.push(producer(data.player2));
+      let game = state.activeGames[data.gameId];
+      gameTools.addPlayers(game, [data.player1, data.player2]);
     },
     newGame(state, gameInfo) {
       // Use gameId as String
-      Vue.set(state.activeGames, gameInfo.gameId, {
-        gameId: gameInfo.gameId,
-        yourIndex: parseInt(gameInfo.yourIndex, 10),
-        fields: createMap(16, 16),
-        minesRemaining: 51,
-        width: 16,
-        height: 16,
-        players: [],
-        eliminations: [],
-        yourResult: null,
-        currentPlayer: 0
-      });
+      Vue.set(
+        state.activeGames,
+        gameInfo.gameId,
+        gamesTools.createGame(gameInfo)
+      );
       state.activeGameId = gameInfo.gameId;
     }
   },

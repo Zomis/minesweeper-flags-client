@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Lobby from "./views/Lobby";
-import Games from "./views/games/Games";
+import ActiveGame from "./views/games/ActiveGame";
 import Statistics from "./views/statistics/Statistics.vue";
 
 import VueAxios from "vue-axios";
@@ -55,7 +55,7 @@ export default new Router({
       props: route => ({
         gameInfo: { ...route.params }
       }),
-      component: Games
+      component: ActiveGame
     },
     {
       path: "/about",

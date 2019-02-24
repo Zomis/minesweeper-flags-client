@@ -3,7 +3,6 @@
     <v-container fluid>
       <v-layout align-center justify-center column fill-height>
         <h1>Game {{ game.gameId }}</h1>
-        <GameResult :game="game" :yourIndex="game.yourIndex" />
         <v-container fluid>
           <v-layout
             align-space-around
@@ -22,13 +21,13 @@
                 >
                   <PlayerView
                     :player="game.players[0]"
-                    :controllable="activeGame.yourIndex == 0"
+                    :controllable="game.yourIndex == 0"
                     :onWeaponChange="weaponChange"
                   />
                   <h1 class="mines-remaining">{{ game.minesRemaining }}</h1>
                   <PlayerView
                     :player="game.players[1]"
-                    :controllable="activeGame.yourIndex == 1"
+                    :controllable="game.yourIndex == 1"
                     :onWeaponChange="weaponChange"
                   />
                 </v-layout>
@@ -46,27 +45,19 @@
 <script>
 import PlayerView from "./PlayerView";
 import MapView from "./MapView";
-import GameResult from "./GameResult";
-import { mapGetters } from "vuex";
 
 export default {
   name: "Games",
-  props: [],
+  props: ["game"],
   data() {
     return {
       highlightWeapon: "P"
     };
   },
-  components: { PlayerView, MapView, GameResult },
+  components: { PlayerView, MapView },
   methods: {
     weaponChange(newWeapon) {
       this.highlightWeapon = newWeapon;
-    }
-  },
-  computed: {
-    ...mapGetters("games", ["activeGame"]),
-    game() {
-      return this.activeGame;
     }
   }
 };
