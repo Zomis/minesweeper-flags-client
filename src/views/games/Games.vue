@@ -39,7 +39,7 @@
 import PlayerView from "./PlayerView";
 import MapView from "./MapView";
 import GameResult from "./GameResult";
-import { mapState, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Games",

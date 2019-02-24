@@ -17,6 +17,7 @@
         <div
           v-for="selector in selectors"
           class="selector"
+          :key="selector.playerIndex"
           :class="'selector-' + selector.playerIndex"
           v-bind:style="{ gridArea: selector.y + 1 + '/' + (selector.x + 1) }"
         />
@@ -63,7 +64,7 @@ export default {
       let weapon = this.highlightWeapon;
       let range = weapon == "P" ? 0 : 2;
 
-      let func = (x, y) => false;
+      let func = () => false;
       let field = this.highlightedField;
       if (field !== null) {
         let fieldX = ensureRange(range, field.x, this.game.width - range - 1);
