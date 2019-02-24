@@ -11,12 +11,12 @@
           />
         </div>
         <div>
-          <v-container fluid>
-            <v-layout row>
-              <v-flex xs8>
+          <v-container>
+            <v-layout :column="$vuetify.breakpoint.smAndDown">
+              <v-flex xs12 md8>
                 <Messages @send="sendChat" :messages="messages" />
               </v-flex>
-              <v-flex xs4>
+              <v-flex xs12 md4>
                 <!-- User list -->
                 <v-list>
                   <v-list-tile
