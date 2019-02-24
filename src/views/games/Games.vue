@@ -29,6 +29,7 @@
                   <PlayerView
                     :player="game.players[1]"
                     :controllable="activeGame.yourIndex == 1"
+                    :onWeaponChange="weaponChange"
                   />
                 </v-layout>
               </v-container>
