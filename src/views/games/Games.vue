@@ -15,13 +15,20 @@
                   fill-height
                   style="height: 1048px"
                 >
-                  <PlayerView :player="game.players[0]" />
+                  <PlayerView
+                    :player="game.players[0]"
+                    :controllable="activeGame.yourIndex == 0"
+                    :onWeaponChange="weaponChange"
+                  />
                   <h1 class="mines-remaining">{{ game.minesRemaining }}</h1>
-                  <PlayerView :player="game.players[1]" />
+                  <PlayerView
+                    :player="game.players[1]"
+                    :controllable="activeGame.yourIndex == 1"
+                  />
                 </v-layout>
               </v-container>
             </v-flex>
-            <MapView :game="game" />
+            <MapView :game="game" :highlightWeapon="highlightWeapon" />
           </v-layout>
         </v-container>
       </v-layout>
@@ -37,8 +44,17 @@ import { mapState, mapGetters } from "vuex";
 export default {
   name: "Games",
   props: [],
+  data() {
+    return {
+      highlightWeapon: "P"
+    };
+  },
   components: { PlayerView, MapView, GameResult },
-  methods: {},
+  methods: {
+    weaponChange(newWeapon) {
+      this.highlightWeapon = newWeapon;
+    }
+  },
   computed: {
     ...mapGetters("games", ["activeGame"]),
     game() {

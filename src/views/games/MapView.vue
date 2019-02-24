@@ -7,6 +7,8 @@
             v-for="x in game.width"
             :key="'field' + y + '-' + x"
             :onClick="clickedField"
+            :highlighted="highlightedFields[y - 1][x - 1]"
+            :onHighlight="onHighlight"
             :field="game.fields[y - 1][x - 1]"
           />
         </template>
@@ -25,20 +27,62 @@
 <script>
 import FieldView from "./FieldView";
 
+function ensureRange(low, value, high) {
+  if (value < low) {
+    return low;
+  }
+  if (value > high) {
+    return high;
+  }
+  return value;
+}
+
 export default {
   name: "MapView",
-  props: ["game"],
+  props: ["game", "highlightWeapon"],
   components: { FieldView },
+  data() {
+    return {
+      highlightedField: null
+    };
+  },
   methods: {
+    onHighlight(field) {
+      this.highlightedField = field;
+    },
     clickedField(field) {
       this.$store.dispatch("games/makeMove", {
         game: this.game,
-        weapon: "P",
+        weapon: this.highlightWeapon,
         field: field
       });
     }
   },
   computed: {
+    highlightedFields() {
+      let weapon = this.highlightWeapon;
+      let range = weapon == "P" ? 0 : 2;
+
+      let func = (x, y) => false;
+      let field = this.highlightedField;
+      if (field !== null) {
+        let fieldX = ensureRange(range, field.x, this.game.width - range - 1);
+        let fieldY = ensureRange(range, field.y, this.game.height - range - 1);
+        field = this.game.fields[fieldY][fieldX];
+        func = (x, y) => {
+          if (field == null) {
+            return false;
+          }
+          let distance = Math.max(Math.abs(x - field.x), Math.abs(y - field.y));
+          return distance <= range;
+        };
+      }
+
+      let result = Array.apply(null, Array(this.game.height)).map((_, y) =>
+        Array.apply(null, Array(this.game.width)).map((_, x) => func(x, y))
+      );
+      return result;
+    },
     selectors() {
       return this.game.players
         .map((player, index) => {

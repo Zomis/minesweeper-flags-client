@@ -3,7 +3,10 @@
     <img
       :src="require(`@/assets/images/classic_${fieldImage}.png`)"
       class="field"
+      :class="{ highlighted: highlighted }"
       v-bind:style="{ gridArea: field.y + 1 + '/' + (field.x + 1) }"
+      @mouseover="mouseover()"
+      @mouseleave="mouseleave()"
       @click="click()"
     />
   </transition>
@@ -11,10 +14,22 @@
 <script>
 export default {
   name: "FieldView",
-  props: ["field", "onClick"],
+  props: ["field", "onClick", "onHighlight", "highlighted"],
   methods: {
-    click: function() {
-      this.onClick(this.field);
+    mouseover() {
+      if (this.onHighlight) {
+        this.onHighlight(this.field);
+      }
+    },
+    mouseleave() {
+      if (this.onHighlight) {
+        this.onHighlight(null);
+      }
+    },
+    click() {
+      if (this.onClick) {
+        this.onClick(this.field);
+      }
     }
   },
   computed: {
@@ -35,7 +50,7 @@ export default {
 };
 </script>
 <style scoped>
-.field:hover {
+.highlighted {
   opacity: 0.5;
 }
 

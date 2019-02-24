@@ -5,7 +5,7 @@
         <v-layout align-center justify-center column>
           <h1>{{ player.name }}</h1>
           <h2>{{ player.score }}</h2>
-          <v-card-actions>
+          <v-card-actions v-if="controllable">
             <v-btn-toggle v-model="activeWeaponIndex" mandatory>
               <v-btn>Click</v-btn>
               <v-btn>Bomb</v-btn>
@@ -19,11 +19,17 @@
 <script>
 export default {
   name: "PlayerView",
-  props: ["player"],
+  props: ["player", "controllable", "onWeaponChange"],
   data() {
     return {
+      weapons: ["P", "B"],
       activeWeaponIndex: 0
     };
+  },
+  watch: {
+    activeWeaponIndex(newValue) {
+      this.onWeaponChange(this.weapons[newValue]);
+    }
   }
 };
 </script>
