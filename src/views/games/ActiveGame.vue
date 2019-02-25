@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="fill-height">
     <GameResult :game="activeGame" :yourIndex="activeGame.yourIndex" />
 
     <GameView :game="activeGame" />
