@@ -18,8 +18,7 @@
                 :field="game.fields[y - 1][x - 1]"
               />
             </template>
-          </div>
-          <div class="fields fields-bg selectors">
+
             <div
               v-for="selector in selectors"
               class="selector"
@@ -126,6 +125,7 @@ export default {
   width: 100%;
   height: 100%;
   border: 5px solid #000000;
+  pointer-events: none;
 }
 
 .selector-0 {
@@ -142,11 +142,6 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-}
-
-.selectors {
-  pointer-events: none;
-  display: none;
 }
 
 .fields {
