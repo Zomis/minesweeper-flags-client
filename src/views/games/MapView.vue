@@ -1,5 +1,6 @@
 <template>
   <div class="map-rect">
+    <resize-observer @notify="updateMapRect" />
     <div class="map-square" :style="{height: mapRect + 'px', width: mapRect + 'px'}">
       <div class="map-reset">
         <div class="map">
@@ -51,11 +52,6 @@ export default {
       highlightedField: null,
       mapRect: 280,
     };
-  },
-  mounted() {
-      this.$nextTick(() => {
-          new ResizeObserver(() => {this.updateMapRect()}).observe(this.$el);
-      });
   },
   methods: {
     updateMapRect() {
