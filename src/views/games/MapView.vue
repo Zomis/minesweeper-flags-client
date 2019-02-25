@@ -59,6 +59,11 @@ export default {
       mapRect: 280
     };
   },
+  mounted() {
+    this.$nextTick(() => {
+      this.updateMapRect();
+    });
+  },
   methods: {
     updateMapRect() {
       this.mapRect = Math.min(this.$el.clientHeight, this.$el.clientWidth);
