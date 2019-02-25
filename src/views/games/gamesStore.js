@@ -1,4 +1,5 @@
 import Vue from "vue";
+import gameTools from "./gameTools";
 
 let ROOT = { root: true };
 
@@ -95,7 +96,7 @@ export default {
       Vue.set(
         state.activeGames,
         gameInfo.gameId,
-        gamesTools.createGame(gameInfo)
+        gameTools.createGame(gameInfo)
       );
       state.activeGameId = gameInfo.gameId;
     }

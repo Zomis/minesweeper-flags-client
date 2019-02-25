@@ -12,7 +12,7 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "ActiveGame",
-  components: { GameView },
+  components: { GameView, GameResult },
   computed: {
     ...mapGetters("games", ["activeGame"])
   }

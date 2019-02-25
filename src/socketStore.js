@@ -1,5 +1,3 @@
-import Vue from "vue";
-
 let socket = null;
 let ROOT = { root: true };
 let sendOnOpen = [];

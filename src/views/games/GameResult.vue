@@ -39,9 +39,9 @@ export default {
       }
     }),
     winnerName() {
-      let elimination = eliminations.find(e => e.winPosition === 1);
+      let elimination = this.eliminations.find(e => e.winPosition === 1);
       if (elimination !== null) {
-        return e.name;
+        return elimination.name;
       }
       return null;
     },
