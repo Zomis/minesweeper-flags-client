@@ -1,6 +1,6 @@
 <template>
   <div class="map-rect">
-    <div class="map-square">
+    <div class="map-square" :style="{height: mapRect + 'px', width: mapRect + 'px'}">
       <div class="map-reset">
         <div class="map">
           <div class="fields fields-bg field-views">
@@ -48,10 +48,19 @@ export default {
   components: { FieldView },
   data() {
     return {
-      highlightedField: null
+      highlightedField: null,
+      mapRect: 280,
     };
   },
+  mounted() {
+      this.$nextTick(() => {
+          new ResizeObserver(() => {this.updateMapRect()}).observe(this.$el);
+      });
+  },
   methods: {
+    updateMapRect() {
+        this.mapRect = Math.min(this.$el.clientHeight, this.$el.clientWidth);
+    },
     onHighlight(field) {
       this.highlightedField = field;
     },
@@ -106,10 +115,6 @@ export default {
 };
 </script>
 <style scoped>
-.selectors {
-  pointer-events: none;
-}
-
 .selector {
   width: 100%;
   height: 100%;
@@ -130,6 +135,11 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.selectors {
+    pointer-events: none;
+    display: none;
 }
 
 .fields {
