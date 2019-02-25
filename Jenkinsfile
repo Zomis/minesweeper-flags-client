@@ -33,19 +33,14 @@ pipeline {
         }
 
         stage('Docker') {
-            when {
-                branch 'master'
-            }
             steps {
-                script {
-                    // Stop running containers
-                    sh 'docker ps -q --filter name="mfe_client" | xargs -r docker stop'
+                // Stop running containers
+                sh 'docker ps -q --filter name="mfe_client" | xargs -r docker stop'
 
-                    // Deploy client
-                    sh "rm -rf /home/zomis/jenkins/mfe/client/$env.GIT_BRANCH"
-                    sh "cp -r \$(pwd)/dist /home/zomis/jenkins/mfe/client/$env.GIT_BRANCH"
-                    sh 'docker run -d --rm --name mfe_client -v /home/zomis/jenkins/mfe/client:/usr/share/nginx/html:ro -p 64637:80 nginx'
-                }
+                // Deploy client
+                sh "rm -rf /home/zomis/jenkins/mfe/client/$env.GIT_BRANCH"
+                sh "cp -r \$(pwd)/dist /home/zomis/jenkins/mfe/client/$env.GIT_BRANCH"
+                sh 'docker run -d --rm --name mfe_client -v /home/zomis/jenkins/mfe/client:/usr/share/nginx/html:ro -p 64637:80 nginx'
             }
         }
     }
