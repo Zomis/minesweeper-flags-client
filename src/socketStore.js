@@ -96,11 +96,14 @@ export default {
     connected: false,
     authProvider: null,
     authToken: null,
-    loggedIn: false
+    loggedIn: null
   },
   mutations: {
     setConnected(state, value) {
       state.connected = value;
+      if (!value) {
+        state.loggedIn = null;
+      }
     },
     loggedIn(state, value) {
       state.loggedIn = value;
@@ -170,7 +173,7 @@ export default {
 
       context.commit(handler.commit, data, ROOT);
     },
-    disconnect(context, reconnect) {
+    disconnect() {
       if (socket && socket.readyState == 1) {
         socket.close();
       }

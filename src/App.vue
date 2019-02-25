@@ -21,6 +21,17 @@
     </v-toolbar>
 
     <v-content>
+      <v-snackbar
+        v-model="snackbarDisconnected"
+        color="warning"
+        :timeout="5000"
+        top
+      >
+        Disconnected from server
+        <v-btn dark flat @click="snackbarDisconnected = false">
+          Close
+        </v-btn>
+      </v-snackbar>
       <router-view />
     </v-content>
     <v-footer fixed app>
@@ -39,8 +50,21 @@ import { mapState } from "vuex";
 
 export default {
   name: "App",
+  data() {
+    return {
+      snackbarDisconnected: false
+    };
+  },
+  watch: {
+    connected(value) {
+      console.log("connected is now " + value);
+      if (!value) {
+        this.snackbarDisconnected = true;
+      }
+    }
+  },
   computed: {
-    ...mapState("socket", ["loggedIn"]),
+    ...mapState("socket", ["loggedIn", "connected"]),
     buildProps() {
       return {
         environment: process.env.NODE_ENV,
