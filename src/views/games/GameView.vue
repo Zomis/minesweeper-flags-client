@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <div class="map-flex">
     <v-container fluid>
-      <v-layout align-center justify-center column fill-height>
+      <v-layout map-flex align-center justify-center column fill-height>
         <h1>Game {{ game.gameId }}</h1>
         <v-container fluid>
           <v-layout
+            map-flex
             align-space-around
             justify-center
             :fill-height="$vuetify.breakpoint.lgAndUp"
@@ -33,7 +34,7 @@
                 </v-layout>
               </v-container>
             </v-flex>
-            <v-flex xs12 lg8 xl6>
+            <v-flex xs12 lg8 xl6 map-flex>
               <MapView :game="game" :highlightWeapon="highlightWeapon" />
             </v-flex>
           </v-layout>
@@ -65,5 +66,11 @@ export default {
 <style>
 .mines-remaining {
   margin: 42px 0 42px 0;
+}
+.container {
+  height: 100%;
+}
+.map-flex {
+  height: 100%;
 }
 </style>
