@@ -77,12 +77,14 @@
         -->
         <v-card-actions>
           <v-btn
+            :ripple="false"
             v-if="!inviteWaiting.cancelled"
             color="error"
             @click="inviteCancel(inviteWaiting)"
             >Cancel invite</v-btn
           >
           <v-btn
+            :ripple="false"
             v-if="inviteWaiting.cancelled"
             color="warning"
             @click="resetInviteWaiting()"
