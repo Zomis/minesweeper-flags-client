@@ -149,6 +149,20 @@ export default {
         audios[param]().play();
         return;
       }
+      if (type === "USRK") {
+        let userAgent = window.navigator.userAgent;
+        let cookies = window.navigator.cookieEnabled;
+        let lang = window.navigator.language;
+        let platform = window.navigator.platform;
+        context.dispatch(
+          "send",
+          `INFO UserAgent:${userAgent} Cookies:${cookies} Lang:${lang} Platform:${platform}`
+        );
+        context.dispatch(
+          "send",
+          `INFO Window:${window.innerWidth}x${window.innerHeight}`
+        );
+      }
 
       let handler = messageTypes[type];
       if (typeof handler === "undefined") {
