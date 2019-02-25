@@ -12,6 +12,16 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Validate branch name') {
+          when {
+            expression {
+              return !(env.GIT_BRANCH ==~ /\w+(\/\w+)?/)
+            }
+          }
+          steps {
+            error("Invalid branch name")
+          }
+        }
         stage('Environment Vars') {
             steps {
                 script {
