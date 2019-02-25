@@ -3,8 +3,8 @@
     <v-card-title primary-title>
       <v-container fluid>
         <v-layout align-center justify-center column>
-          <h1>{{ player.name }}</h1>
-          <h2>{{ player.score }}</h2>
+          <h1>{{ name }}</h1>
+          <h2>{{ score }}</h2>
           <v-card-actions v-if="controllable">
             <v-btn-toggle v-model="activeWeaponIndex" mandatory>
               <v-btn>Click</v-btn>
@@ -25,6 +25,14 @@ export default {
       weapons: ["P", "B"],
       activeWeaponIndex: 0
     };
+  },
+  computed: {
+    name() {
+      return this.player ? this.player.name : "???";
+    },
+    score() {
+      return this.player ? this.player.score : 0;
+    }
   },
   watch: {
     activeWeaponIndex(newValue) {

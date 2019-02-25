@@ -1,6 +1,6 @@
 <template>
   <div>
-    <GameResult :game="game" :yourIndex="game.yourIndex" />
+    <GameResult :game="activeGame" :yourIndex="activeGame.yourIndex" />
 
     <GameView :game="activeGame" />
   </div>
