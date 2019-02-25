@@ -46,7 +46,9 @@ export default {
         environment: process.env.NODE_ENV,
         timestamp: process.env.VUE_APP_BUILD_TIME,
         buildNumber: process.env.VUE_APP_BUILD_NUMBER,
-        commitHash: process.env.VUE_APP_GIT_COMMIT,
+        commitHash: process.env.VUE_APP_GIT_COMMIT
+          ? process.env.VUE_APP_GIT_COMMIT.substring(0, 8)
+          : "",
         gitBranch: process.env.VUE_APP_GIT_BRANCH
       };
     }
