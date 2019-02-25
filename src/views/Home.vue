@@ -1,10 +1,25 @@
 <template>
   <div>
-    This is start screen
-    <v-btn @click="authenticateGuest()">Guest {{ guestName }}</v-btn>
-    <v-btn color="info" @click="authenticate('github')">Github</v-btn>
-    <v-btn color="info" @click="authenticate('google')">Google</v-btn>
-    <v-btn color="info" @click="authenticate('facebook')">Facebook</v-btn>
+    <v-container fluid>
+      <v-layout column align-center justify-center class="login-options">
+        <h1>Minesweeper Flags Extreme</h1>
+        <img class="logo" :src="require('@/assets/icon1024.png')" />
+        <h2>Choose your login option</h2>
+        <img
+          :src="require('@/assets/logos/google.png')"
+          @click="authenticate('google')"
+        />
+        <img
+          :src="require('@/assets/logos/facebook.png')"
+          @click="authenticate('facebook')"
+        />
+        <img
+          :src="require('@/assets/logos/github.png')"
+          @click="authenticate('github')"
+        />
+        <v-btn color="info" @click="authenticateGuest()">Guest</v-btn>
+      </v-layout>
+    </v-container>
   </div>
 </template>
 <script>
@@ -82,3 +97,13 @@ export default {
   }
 };
 </script>
+<style scoped>
+.logo {
+  width: 128px;
+  height: 128px;
+}
+
+.login-options * {
+  margin: 10px;
+}
+</style>
