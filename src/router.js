@@ -8,9 +8,11 @@ import Statistics from "./views/statistics/Statistics.vue";
 import VueAxios from "vue-axios";
 import VueAuthenticate from "vue-authenticate";
 import axios from "axios";
+import VueResize from "vue-resize";
 
 console.log("Using redirectUri " + process.env.VUE_APP_AUTH_REDIRECT_URL);
 
+Vue.use(VueResize);
 Vue.use(VueAxios, axios);
 Vue.use(VueAuthenticate, {
   baseUrl: process.env.VUE_APP_AUTH_API_URL,

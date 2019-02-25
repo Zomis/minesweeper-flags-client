@@ -32,6 +32,7 @@
 </template>
 <script>
 import FieldView from "./FieldView";
+import "vue-resize/dist/vue-resize.css";
 
 function ensureRange(low, value, high) {
   if (value < low) {
