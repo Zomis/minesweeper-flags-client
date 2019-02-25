@@ -40,6 +40,17 @@ export default new Router({
     {
       path: "/",
       name: "home",
+      props: {
+        logout: false
+      },
+      component: Home
+    },
+    {
+      path: "/logout",
+      name: "logout",
+      props: {
+        logout: true
+      },
       component: Home
     },
     { path: "/lobby", name: "Lobby", component: Lobby },

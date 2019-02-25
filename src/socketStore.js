@@ -170,6 +170,11 @@ export default {
 
       context.commit(handler.commit, data, ROOT);
     },
+    disconnect(context, reconnect) {
+      if (socket && socket.readyState == 1) {
+        socket.close();
+      }
+    },
     connect(context) {
       let url = process.env.VUE_APP_URL + "websocket";
       url = url.replace(/^http/g, "ws");

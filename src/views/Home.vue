@@ -7,21 +7,33 @@
     <v-btn color="info" @click="authenticate('facebook')">Facebook</v-btn>
   </div>
 </template>
-
 <script>
 import { mapState } from "vuex";
 
 export default {
   name: "Home",
-  props: [],
+  props: ["logout"],
   data() {
+    let guestName = Math.floor(Math.random() * 90000) + 10000;
+    if (typeof localStorage.guestName === "undefined") {
+      localStorage.guestName = guestName;
+    } else {
+      guestName = localStorage.guestName;
+    }
     return {
-      guestName: null
+      guestName: guestName
     };
   },
   mounted() {
     this.$nextTick(() => {
-      this.autoLogin();
+      if (!this.logout) {
+        this.$store.dispatch("socket/connect");
+        this.autoLogin();
+      } else {
+        this.$store.dispatch("socket/disconnect");
+        this.$store.dispatch("socket/connect");
+        delete localStorage.lastUsedProvider;
+      }
     });
   },
   watch: {
@@ -35,15 +47,7 @@ export default {
   computed: mapState("socket", ["loggedIn"]),
   methods: {
     autoLogin() {
-      this.$store.dispatch("socket/connect");
-
       let lastUsedProvider = localStorage.lastUsedProvider;
-      if (typeof localStorage.guestName === "undefined") {
-        localStorage.guestName = this.guestName =
-          "v" + (Math.floor(Math.random() * 90000) + 10000);
-      } else {
-        this.guestName = localStorage.guestName;
-      }
       if (lastUsedProvider) {
         this.$store.dispatch("socket/login", {
           token: this.$auth.getToken(),

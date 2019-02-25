@@ -15,6 +15,9 @@
       <v-btn flat to="/lobby">
         <span class="mr-2">Lobby</span>
       </v-btn>
+      <v-btn flat to="/logout">
+        <span class="mr-2">Logout</span>
+      </v-btn>
     </v-toolbar>
 
     <v-content>
