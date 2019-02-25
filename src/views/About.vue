@@ -38,6 +38,6 @@ export default {
   height: 70vmax;
 }
 .minigame {
-  height: 100%
+  height: 100%;
 }
 </style>

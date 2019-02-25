@@ -1,28 +1,33 @@
 <template>
   <div class="map-rect">
     <resize-observer @notify="updateMapRect" />
-    <div class="map-square" :style="{height: mapRect + 'px', width: mapRect + 'px'}">
+    <div
+      class="map-square"
+      :style="{ height: mapRect + 'px', width: mapRect + 'px' }"
+    >
       <div class="map-reset">
         <div class="map">
           <div class="fields fields-bg field-views">
             <template v-for="y in game.height">
               <FieldView
-                      v-for="x in game.width"
-                      :key="'field' + y + '-' + x"
-                      :onClick="clickedField"
-                      :highlighted="highlightedFields[y - 1][x - 1]"
-                      :onHighlight="onHighlight"
-                      :field="game.fields[y - 1][x - 1]"
+                v-for="x in game.width"
+                :key="'field' + y + '-' + x"
+                :onClick="clickedField"
+                :highlighted="highlightedFields[y - 1][x - 1]"
+                :onHighlight="onHighlight"
+                :field="game.fields[y - 1][x - 1]"
               />
             </template>
           </div>
           <div class="fields fields-bg selectors">
             <div
-                    v-for="selector in selectors"
-                    class="selector"
-                    :key="selector.playerIndex"
-                    :class="'selector-' + selector.playerIndex"
-                    v-bind:style="{ gridArea: selector.y + 1 + '/' + (selector.x + 1) }"
+              v-for="selector in selectors"
+              class="selector"
+              :key="selector.playerIndex"
+              :class="'selector-' + selector.playerIndex"
+              v-bind:style="{
+                gridArea: selector.y + 1 + '/' + (selector.x + 1)
+              }"
             />
           </div>
         </div>
@@ -51,12 +56,12 @@ export default {
   data() {
     return {
       highlightedField: null,
-      mapRect: 280,
+      mapRect: 280
     };
   },
   methods: {
     updateMapRect() {
-        this.mapRect = Math.min(this.$el.clientHeight, this.$el.clientWidth);
+      this.mapRect = Math.min(this.$el.clientHeight, this.$el.clientWidth);
     },
     onHighlight(field) {
       this.highlightedField = field;
@@ -135,8 +140,8 @@ export default {
 }
 
 .selectors {
-    pointer-events: none;
-    display: none;
+  pointer-events: none;
+  display: none;
 }
 
 .fields {
@@ -209,7 +214,7 @@ https://stackoverflow.com/a/20117454
 }
 
 .map {
-  position:  absolute;
+  position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
