@@ -129,7 +129,7 @@ export default {
       console.log("login");
       console.log(auth);
       if (auth.provider === "guest") {
-        let userName = "guest_" + auth.guestName;
+        let userName = "guest_v" + auth.guestName;
         context.dispatch("send", "USER 30000 " + userName + " -42 XX");
       }
       context.dispatch(
