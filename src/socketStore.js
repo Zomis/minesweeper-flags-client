@@ -28,6 +28,10 @@ const messageTypes = {
     commit: "lobby/connected",
     params: ["userName", "rating", "country"]
   },
+  GONE: {
+    commit: "lobby/disconnected",
+    params: ["userName"]
+  },
   NAME: {
     commit: "games/setNames",
     params: ["gameId", "player1", "player2"] // TODO: Fix to support more players, use "e.restParams(1)"

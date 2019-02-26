@@ -28,6 +28,13 @@ export default {
         message: data.userName + " is now online"
       });
     },
+    disconnected(state, data) {
+      delete state.onlineUsers[data.userName];
+      state.messages.push({
+        timestamp: new Date().toLocaleString(),
+        message: data.userName + " is now offline"
+      });
+    },
     online(state, data) {
       setOnline(state, data);
     },
