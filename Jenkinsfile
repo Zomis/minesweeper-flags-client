@@ -47,15 +47,20 @@ pipeline {
                 // Stop running containers
                 sh 'docker ps -q --filter name="mfe_client" | xargs -r docker stop'
 
-                // Deploy client
                 sh "rm -rf /home/zomis/jenkins/mfe/client/$env.GIT_BRANCH"
                 script {
+                  def path = "/home/zomis/jenkins/mfe/client/$env.GIT_BRANCH"
                   if (env.GIT_BRANCH == 'master') {
-                    sh "cp -r \$(pwd)/dist /home/zomis/jenkins/mfe/client"
-                  } else {
-                    sh "cp -r \$(pwd)/dist /home/zomis/jenkins/mfe/client/$env.GIT_BRANCH"
+                    path = '/home/zomis/jenkins/mfe/client'
                   }
+
+                  // Copy files
+                  sh "cp -r \$(pwd)/dist/* $path"
+
+                  // The client is open source, let them be, but here we could move *.map files outside of client so that they are not visible
+                  // sh "mv $path/js/*.map $path../mapfiles/" //
                 }
+                // Start docker container
                 sh 'docker run -d --rm --name mfe_client -v /home/zomis/jenkins/mfe/client:/usr/share/nginx/html:ro -p 64637:80 nginx'
             }
         }
