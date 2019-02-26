@@ -13,12 +13,20 @@
               class="invite-accept-options"
               v-if="!invite.cancelled && invite.response === null"
             >
-              <v-btn color="success" @click="inviteResponse(invite, true)"
-                >Accept</v-btn
+              <v-btn
+                color="success"
+                @click="inviteResponse(invite, true)"
+                :ripple="false"
               >
-              <v-btn color="error" @click="inviteResponse(invite, false)"
-                >Decline</v-btn
+                Accept
+              </v-btn>
+              <v-btn
+                color="error"
+                @click="inviteResponse(invite, false)"
+                :ripple="false"
               >
+                Decline
+              </v-btn>
             </div>
             <div class="invite-response" v-if="invite.response !== null">
               <v-btn color="success" disabled v-if="invite.response"
