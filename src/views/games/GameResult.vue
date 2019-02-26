@@ -20,9 +20,13 @@
         </table>
       </v-card-text>
       <v-card-actions>
-        <v-btn color="info" @click="playAgain()">Play again</v-btn>
-        <v-btn color="warning" @click="showResult = false">View Map</v-btn>
-        <v-btn color="error" to="/lobby">Back to Lobby</v-btn>
+        <v-btn color="info" @click="playAgain()" :ripple="false">
+          Play again
+        </v-btn>
+        <v-btn color="warning" @click="showResult = false" :ripple="false">
+          View Map
+        </v-btn>
+        <v-btn color="error" to="/lobby" :ripple="false">Back to Lobby</v-btn>
       </v-card-actions>
       <Invites />
     </v-card>
