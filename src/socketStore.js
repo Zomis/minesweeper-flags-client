@@ -146,7 +146,9 @@ export default {
       };
 
       if (type === "ADIO") {
-        audios[param]().play();
+        let audio = audios[param]();
+        audio.volume = localStorage.volume;
+        audio.play();
         return;
       }
       if (type === "USRK") {

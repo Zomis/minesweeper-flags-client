@@ -6,6 +6,7 @@
         <span v-if="loggedIn"> - {{ loggedIn }}</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <SettingsView />
       <v-btn v-if="statistics" flat to="/stats/summary">
         <span class="mr-2">Statistics</span>
       </v-btn>
@@ -43,10 +44,12 @@
   </v-app>
 </template>
 <script>
+import SettingsView from "./views/SettingsView";
 import { mapState } from "vuex";
 
 export default {
   name: "App",
+  components: { SettingsView },
   data() {
     return {
       snackbarDisconnected: false
