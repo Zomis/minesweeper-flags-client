@@ -1,15 +1,32 @@
 <template>
-  <div class="game-over" v-if="yourResult">
-    <span class="you" v-if="yourIndex >= 0">YOU</span>
-    <span class="you" v-else>{{ winnerName }}</span>
-    <span v-if="winner" class="win">WIN</span>
-    <span v-if="!winner" class="loss">LOSE</span>
-    <div class="game-over-actions">
-      <router-link to="/lobby">Back to Lobby</router-link>
-      <v-btn color="info" @click="playAgain()">Play again</v-btn>
-    </div>
-    <Invites />
-  </div>
+  <v-dialog v-model="showResult" persistent width="30%">
+    <v-card>
+      <v-card-title class="headline">
+        <span class="you" v-if="yourIndex >= 0">You&nbsp;</span>
+        <span class="you" v-else>{{ winnerName }}&nbsp;</span>
+        <span v-if="winner">won</span>
+        <span v-if="!winner">
+          <span>lost&nbsp;</span>
+          <v-icon>mood_bad</v-icon>
+        </span>
+      </v-card-title>
+      <v-card-text>
+        <span>The match has ended with scores:</span>
+        <table>
+          <tr v-for="(player, index) in game.players">
+            <td>{{ player.name }}</td>
+            <td>{{ player.score }}</td>
+          </tr>
+        </table>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn color="info" @click="playAgain()">Play again</v-btn>
+        <v-btn color="warning" @click="showResult = false">View Map</v-btn>
+        <v-btn color="error" to="/lobby">Back to Lobby</v-btn>
+      </v-card-actions>
+      <Invites />
+    </v-card>
+  </v-dialog>
 </template>
 <script>
 import Invites from "../lobby/Invites";
@@ -18,6 +35,11 @@ import { mapState } from "vuex";
 export default {
   name: "GameResult",
   props: ["game", "yourIndex"],
+  data() {
+    return {
+      showResult: false
+    };
+  },
   components: { Invites },
   methods: {
     playAgain() {
@@ -27,6 +49,13 @@ export default {
         target: { userName: opponent },
         plugin: "PluginClassicGame"
       });
+    }
+  },
+  watch: {
+    yourResult(value) {
+      if (value) {
+        this.showResult = true;
+      }
     }
   },
   computed: {
@@ -58,17 +87,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-.game-over {
-  margin-top: 20px;
-  font-size: 2em;
-  font-weight: bolder;
-}
-
-.game-over .win {
-  color: green;
-}
-.game-over .loss {
-  color: red;
-}
-</style>
