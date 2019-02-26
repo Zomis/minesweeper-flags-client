@@ -6,10 +6,7 @@
         <span v-if="loggedIn"> - {{ loggedIn }}</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn flat to="/">
-        <span class="mr-2">Home</span>
-      </v-btn>
-      <v-btn flat to="/stats/summary">
+      <v-btn v-if="statistics" flat to="/stats/summary">
         <span class="mr-2">Statistics</span>
       </v-btn>
       <v-btn flat to="/lobby">
@@ -65,6 +62,9 @@ export default {
   },
   computed: {
     ...mapState("socket", ["loggedIn", "connected"]),
+    statistics() {
+      return process.env.VUE_APP_FEATURE_STATISTICS;
+    },
     buildProps() {
       return {
         environment: process.env.NODE_ENV,
