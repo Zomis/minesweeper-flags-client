@@ -30,7 +30,7 @@ function createGame(gameInfo) {
     yourIndex: parseInt(gameInfo.yourIndex, 10),
     clickable: true,
     fields: createMap(16, 16),
-    minesRemaining: 51,
+    minesCount: 51,
     width: 16,
     height: 16,
     players: [],

@@ -25,7 +25,7 @@
                     :controllable="game.yourIndex == 0"
                     :onWeaponChange="weaponChange"
                   />
-                  <h1 class="mines-remaining">{{ game.minesRemaining }}</h1>
+                  <h1 class="mines-remaining">{{ minesRemaining }}</h1>
                   <PlayerView
                     :player="game.players[1]"
                     :controllable="game.yourIndex == 1"
@@ -56,6 +56,16 @@ export default {
     };
   },
   components: { PlayerView, MapView },
+  computed: {
+    minesRemaining() {
+      return (
+        this.game.minesCount -
+        this.game.players
+          .map(pl => pl.score)
+          .reduce((acc, value) => acc + value)
+      );
+    }
+  },
   methods: {
     weaponChange(newWeapon) {
       this.highlightWeapon = newWeapon;
