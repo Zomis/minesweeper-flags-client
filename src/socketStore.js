@@ -16,6 +16,7 @@ let audios = {
 
 const messageTypes = {
   USRK: { commit: "socket/loggedIn", handler: e => e.fullParam },
+  PROT: { commit: "socket/loginError", handler: e => e.fullParam },
   CHAT: {
     commit: "lobby/chatMessage",
     extra: e => ({
@@ -96,6 +97,7 @@ export default {
     connected: false,
     authProvider: null,
     authToken: null,
+    loginError: null,
     loggedIn: null
   },
   mutations: {
@@ -105,8 +107,12 @@ export default {
         state.loggedIn = null;
       }
     },
+    loginError(state, value) {
+      state.loginError = value;
+    },
     loggedIn(state, value) {
       state.loggedIn = value;
+      state.loginError = null;
     },
     error(/*state, event*/) {}
   },

@@ -5,6 +5,9 @@
         <h1>Minesweeper Flags Extreme</h1>
         <img class="logo" :src="require('@/assets/icon1024.png')" />
         <h2>Choose your login option</h2>
+        <v-alert type="error" :value="loginError !== null">{{
+          loginError
+        }}</v-alert>
         <img
           :src="require('@/assets/logos/google.png')"
           @click="authenticate('google')"
@@ -59,7 +62,7 @@ export default {
       }
     }
   },
-  computed: mapState("socket", ["loggedIn"]),
+  computed: mapState("socket", ["loggedIn", "loginError"]),
   methods: {
     autoLogin() {
       let lastUsedProvider = localStorage.lastUsedProvider;
