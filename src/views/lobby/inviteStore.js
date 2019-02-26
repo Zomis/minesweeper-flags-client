@@ -32,6 +32,14 @@ export default {
       } else {
         state.inviteWaiting.declined.push(response.userName);
       }
+
+      if (
+        state.inviteWaiting.declined.length === 0 &&
+        Object.keys(state.inviteWaiting.invited).length === 0
+      ) {
+        // If no one has declined and no one else is being invited, remove invite.
+        state.inviteWaiting = null;
+      }
     }
   },
 
