@@ -24,6 +24,13 @@ const messageTypes = {
       message: e.fullParam
     })
   },
+  PLAY: {
+    commit: "lobby/chatMessage",
+    extra: e => ({
+      timestamp: new Date().toLocaleString(),
+      message: `Game #${e.params[0]} started! ${e.params[1]} vs. ${e.params[2]}`
+    })
+  },
   CONN: {
     commit: "lobby/connected",
     params: ["userName", "rating", "country"]
