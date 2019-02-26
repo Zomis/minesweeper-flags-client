@@ -7,7 +7,7 @@
     >
       <v-card class="invites-recieved" v-if="invites.length > 0">
         <v-list two-line>
-          <div v-for="(invite, index) in invites" :key="invite.host">
+          <div v-for="(invite, index) in invites" :key="index">
             {{ invite.host }} invites you to play {{ invite.plugin }}
             <div
               class="invite-accept-options"
