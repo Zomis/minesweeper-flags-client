@@ -224,6 +224,9 @@ export default {
         context.commit("error", e);
       };
       socket.onclose = e => {
+        context.commit("lobby/clear", null, ROOT);
+        context.commit("invites/clear", null, ROOT);
+        context.commit("games/clear", null, ROOT);
         console.log(e);
         context.commit("setConnected", false);
       };

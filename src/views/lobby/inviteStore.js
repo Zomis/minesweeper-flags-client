@@ -7,6 +7,10 @@ export default {
     inviteWaiting: null
   },
   mutations: {
+    clear(state) {
+      state.invites = [];
+      state.inviteWaiting = null;
+    },
     respond(state, data) {
       // data.invite.response = data.response;
       let index = state.invites.indexOf(data.invite);

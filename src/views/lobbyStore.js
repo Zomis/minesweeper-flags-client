@@ -17,6 +17,10 @@ export default {
     messages: []
   },
   mutations: {
+    clear(state) {
+      state.onlineUsers = {};
+      state.messages = [];
+    },
     connected(state, data) {
       setOnline(state, data);
       state.messages.push({

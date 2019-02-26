@@ -19,6 +19,11 @@ export default {
     }
   },
   mutations: {
+    clear(state) {
+      state.incompleteGames = [];
+      state.activeGameId = -1;
+      state.activeGames = {};
+    },
     changeGameId(state, newGameId) {
       // When a game has been saved in database. Order is important here
       let game = state.activeGames[state.activeGameId];
