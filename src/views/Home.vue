@@ -9,16 +9,11 @@
           loginError
         }}</v-alert>
         <img
-          :src="require('@/assets/logos/google.png')"
-          @click="authenticate('google')"
-        />
-        <img
-          :src="require('@/assets/logos/facebook.png')"
-          @click="authenticate('facebook')"
-        />
-        <img
-          :src="require('@/assets/logos/github.png')"
-          @click="authenticate('github')"
+          v-for="provider in ['google', 'facebook', 'github']"
+          :key="provider"
+          class="auth-provider"
+          :src="require('@/assets/logos/' + provider + '.png')"
+          @click="authenticate(provider)"
         />
         <v-btn color="info" @click="authenticateGuest()">Guest</v-btn>
       </v-layout>
