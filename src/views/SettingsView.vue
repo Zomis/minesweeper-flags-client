@@ -17,7 +17,7 @@
 export default {
   name: "SettingsView",
   data() {
-    let volume = parseInt(localStorage.volume || "0.42", 10);
+    let volume = parseInt(localStorage.volume || "42", 10);
     return {
       previousVolume: volume,
       volume: volume
