@@ -28,6 +28,7 @@ function createGame(gameInfo) {
   return {
     gameId: gameInfo.gameId,
     yourIndex: parseInt(gameInfo.yourIndex, 10),
+    clickable: true,
     fields: createMap(16, 16),
     minesRemaining: 51,
     width: 16,

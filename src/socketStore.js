@@ -77,6 +77,10 @@ const messageTypes = {
     commit: "games/incomplete",
     params: ["gameId", "players", "scores", "clicks", "lastActive"]
   },
+  GEND: {
+    commit: "games/endGame",
+    params: ["gameId"]
+  },
   GAME: {
     commit: "games/newGame",
     params: ["gameId", "yourIndex"]

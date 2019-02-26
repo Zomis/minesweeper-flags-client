@@ -27,6 +27,10 @@ export default {
       delete state.activeGames[state.activeGameId];
       state.activeGameId = newGameId;
     },
+    endGame(state, data) {
+      let game = state.activeGames[data.gameId];
+      game.clickable = false;
+    },
     incomplete(state, data) {
       // params: ["gameId", "players", "scores", "clicks", "lastActive"]
       state.incompleteGames.push(data);
@@ -106,6 +110,9 @@ export default {
       context.dispatch("socket/send", "RESU " + gameId, ROOT);
     },
     makeMove(context, move) {
+      if (!move.game.clickable) {
+        return;
+      }
       console.log(move);
       let gameId = move.game.gameId;
       let weapon = move.weapon;
