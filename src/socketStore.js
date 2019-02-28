@@ -24,6 +24,13 @@ const messageTypes = {
       message: e.fullParam
     })
   },
+  MESS: {
+    commit: "lobby/otherChatMessage",
+    extra: e => ({
+      timestamp: new Date().toLocaleString(),
+      message: e.fullParam
+    })
+  },
   PLAY: {
     commit: "lobby/chatMessage",
     extra: e => ({

@@ -13,6 +13,7 @@ function setOnline(state, user) {
 export default {
   namespaced: true,
   state: {
+    serverNotifications: [],
     onlineUsers: {},
     messages: []
   },
@@ -37,6 +38,19 @@ export default {
     },
     online(state, data) {
       setOnline(state, data);
+    },
+    clearServerNotifications(state) {
+      state.serverNotifications = [];
+    },
+    otherChatMessage(state, data) {
+      if (data.message.startsWith('<font color="#ff8000">')) {
+        data.message = data.message.substring('<font color="#ff8000">'.length);
+      }
+      if (data.message.startsWith("#Server: ")) {
+        data.message = data.message.substring("#Server: ");
+        console.log("Notification: " + data.message);
+        state.serverNotifications.push(data.message);
+      }
     },
     chatMessage(state, data) {
       state.messages.push(data);

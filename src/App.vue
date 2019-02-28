@@ -30,6 +30,23 @@
           Close
         </v-btn>
       </v-snackbar>
+      <v-snackbar
+        v-model="serverNotification"
+        color="info"
+        :timeout="30000"
+        top
+        auto-height
+        multi-line
+        vertical
+      >
+        <div v-for="(notification, index) in serverNotifications" :key="index">
+          {{ notification }}
+        </div>
+        <v-btn dark flat @click="serverNotification = false">
+          Close
+        </v-btn>
+      </v-snackbar>
+
       <router-view />
     </v-content>
     <v-footer fixed app>
@@ -52,10 +69,21 @@ export default {
   components: { SettingsView },
   data() {
     return {
+      serverNotification: false,
       snackbarDisconnected: false
     };
   },
   watch: {
+    serverNotifications(value) {
+      if (value.length > 0) {
+        this.serverNotification = true;
+      }
+    },
+    serverNotification(value) {
+      if (!value) {
+        this.$store.commit("lobby/clearServerNotifications");
+      }
+    },
     connected(value) {
       console.log("connected is now " + value);
       if (!value) {
@@ -65,6 +93,7 @@ export default {
   },
   computed: {
     ...mapState("socket", ["loggedIn", "connected"]),
+    ...mapState("lobby", ["serverNotifications"]),
     statistics() {
       return process.env.VUE_APP_FEATURE_STATISTICS;
     },
