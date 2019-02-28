@@ -62,7 +62,7 @@ export default {
         this.game.minesCount -
         this.game.players
           .map(pl => pl.score)
-          .reduce((acc, value) => acc + value)
+          .reduce((acc, value) => acc + value, 0)
       );
     }
   },
