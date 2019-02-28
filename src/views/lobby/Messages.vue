@@ -16,9 +16,9 @@
       label="Message"
       v-model="message"
       placeholder="Write a message"
-      @keyup.native="keyPress()"
+      @keyup.native.enter="sendMessage"
     ></v-text-field>
-    <v-btn @change="sendMessage()">Send</v-btn>
+    <v-btn @click="sendMessage">Send</v-btn>
   </div>
 </template>
 <script>
@@ -37,12 +37,6 @@ export default {
     }
   },
   methods: {
-    keyPress() {
-      if (event.keyCode !== 13) {
-        return;
-      }
-      this.sendMessage();
-    },
     sendMessage() {
       if (this.message.trim().length === 0) {
         return;
