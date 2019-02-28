@@ -2,6 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Lobby from "./views/Lobby";
+import Replay from "./views/replay/Replay";
 import ActiveGame from "./views/games/ActiveGame";
 import Statistics from "./views/statistics/Statistics.vue";
 
@@ -73,6 +74,11 @@ export default new Router({
         gameInfo: { ...route.params }
       }),
       component: ActiveGame
+    },
+    {
+      path: "/replay",
+      name: "replay",
+      component: Replay
     },
     {
       path: "/about",

@@ -7,5 +7,10 @@ if (process.env.NODE_ENV === "development") {
 }
 
 module.exports = {
+  chainWebpack: config => {
+    config.externals({
+      // klogging: "klogging"
+    });
+  },
   publicPath: "/" + branch
 };
