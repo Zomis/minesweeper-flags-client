@@ -12,6 +12,7 @@
           loginError
         }}</v-alert>
         <v-btn v-for="provider in ['google', 'facebook', 'github']"
+	       class="provider"
                @click="authenticate(provider)">
           <img
             height="30"
@@ -118,5 +119,9 @@ export default {
 
 .login-options * {
   margin: 10px;
+}
+
+.provider {
+  min-width: 300px;
 }
 </style>
