@@ -8,6 +8,9 @@
         <v-alert type="error" :value="usingHTTP">
           <span>You need to use HTTPS to sign in with a login provider.</span>
         </v-alert>
+        <v-alert type="warning" :value="currentVersion < latestVersion">
+          <span>There is a more recent version than the one you are using. Refresh your browser to use build {{ latestVersion }}</span>
+        </v-alert>
         <v-alert type="error" :value="loginError !== null">{{
           loginError
         }}</v-alert>
@@ -25,6 +28,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
+import axios from "axios";
 
 export default {
   name: "Home",
@@ -37,6 +41,7 @@ export default {
       guestName = localStorage.guestName;
     }
     return {
+      latestVersion: 0,
       guestName: guestName
     };
   },
@@ -51,6 +56,9 @@ export default {
         delete localStorage.lastUsedProvider;
       }
     });
+    axios
+      .get(process.env.VUE_APP_AUTH_REDIRECT_URL + '/version.json')
+      .then(response => (this.latestVersion = response.data))
   },
   watch: {
     loggedIn(newValue) {
@@ -61,6 +69,9 @@ export default {
     }
   },
   computed: {
+    currentVersion() {
+      return process.env.VUE_APP_BUILD_NUMBER;
+    },
     usingHTTP() {
       return !document.location.protocol.toLowerCase().startsWith("https");
     },

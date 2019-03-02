@@ -56,6 +56,7 @@ pipeline {
 
                   // Copy files
                   sh "cp -r \$(pwd)/dist/* $path"
+                  writeFile file: path + '/version.json', text: "$env.BUILD_NUMBER"
 
                   // The client is open source, let them be, but here we could move *.map files outside of client so that they are not visible
                   // sh "mv $path/js/*.map $path../mapfiles/" //
