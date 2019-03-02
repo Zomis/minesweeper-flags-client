@@ -7,7 +7,7 @@
           <h2>{{ score }}</h2>
           <v-card-actions v-if="controllable">
             <v-btn-toggle v-model="activeWeaponIndex" mandatory>
-              <v-btn v-for="weapon in playerWeapons">{{
+              <v-btn v-for="weapon in playerWeapons" :key="weapon.key">{{
                 weapon.displayName
               }}</v-btn>
             </v-btn-toggle>
@@ -18,8 +18,6 @@
   </v-card>
 </template>
 <script>
-import { mapState } from "vuex";
-
 export default {
   name: "PlayerView",
   props: ["player", "controllable"],

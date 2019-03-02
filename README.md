@@ -1,26 +1,13 @@
-# minesweeper-flags
+# Minesweeper Flags Extreme
 
-## Project setup
-```
-npm install
-```
+Play here: https://play.minesweeperflags.net
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Developing locally
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Clone project and run `npm install`
 
-### Lints and fixes files
-```
-npm run lint
-```
+Run `npm run serve` and go to http://localhost:8080
 
-### Run your unit tests
-```
-npm run test:unit
-```
+When developing and testing locally you can connect to a server dedicated for testing. No games played there will be saved in the database.
+
+_Note: Connecting to the test-server requires your client to run at localhost:8080._
