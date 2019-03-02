@@ -11,13 +11,20 @@
         <v-alert type="error" :value="loginError !== null">{{
           loginError
         }}</v-alert>
-        <img
-          v-for="provider in ['google', 'facebook', 'github']"
-          :key="provider"
-          class="auth-provider"
-          :src="require('@/assets/logos/' + provider + '.png')"
-          @click="authenticate(provider)"
-        />
+        <v-btn v-for="provider in ['google', 'facebook', 'github']"
+               @click="authenticate(provider)">
+          <img
+            height="30"
+            width="30"
+            :key="provider"
+            class="auth-provider"
+            :src="require('@/assets/logos/' + provider + '.svg')"
+            @click="authenticate(provider)"
+          />
+          &nbsp;Log in with {{ provider }}
+        </v-btn>
+      </v-layout>
+      <v-layout justify-center row>
         <v-btn color="info" @click="authenticateGuest()">Guest</v-btn>
       </v-layout>
     </v-container>
