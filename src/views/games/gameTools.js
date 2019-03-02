@@ -13,7 +13,18 @@ function addPlayers(game, players) {
     name: name,
     score: 0,
     lastClicked: null,
-    weapons: { B: 1, P: -1 }
+    selectedWeapon: 0,
+    weapons: [
+      {
+        key: "P",
+        displayName: "Click",
+        available: -1
+      }, {
+        key: "B",
+        displayName: "Bomb",
+        available: 1
+      }
+    ]
   });
   players.forEach(playerName => game.players.push(producer(playerName)));
 }

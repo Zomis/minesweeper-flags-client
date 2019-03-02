@@ -23,13 +23,11 @@
                   <PlayerView
                     :player="game.players[0]"
                     :controllable="game.yourIndex == 0"
-                    :onWeaponChange="weaponChange"
                   />
                   <h1 class="mines-remaining">{{ minesRemaining }}</h1>
                   <PlayerView
                     :player="game.players[1]"
                     :controllable="game.yourIndex == 1"
-                    :onWeaponChange="weaponChange"
                   />
                 </v-layout>
               </v-container>
@@ -48,15 +46,14 @@ import PlayerView from "./PlayerView";
 import MapView from "./MapView";
 
 export default {
-  name: "Games",
+  name: "GameView",
   props: ["game"],
-  data() {
-    return {
-      highlightWeapon: "P"
-    };
-  },
   components: { PlayerView, MapView },
   computed: {
+    highlightWeapon() {
+      let player = this.game.players[this.game.yourIndex];
+      return player ? player.weapons[player.selectedWeapon] : null;
+    },
     minesRemaining() {
       return (
         this.game.minesCount -
@@ -64,11 +61,6 @@ export default {
           .map(pl => pl.score)
           .reduce((acc, value) => acc + value, 0)
       );
-    }
-  },
-  methods: {
-    weaponChange(newWeapon) {
-      this.highlightWeapon = newWeapon;
     }
   }
 };

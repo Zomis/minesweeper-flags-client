@@ -19,6 +19,9 @@ export default {
     }
   },
   mutations: {
+    selectWeapon(_, data) {
+      data.player.selectedWeapon = data.selectedWeapon;
+    },
     clear(state) {
       state.incompleteGames = [];
       state.activeGameId = -1;
@@ -120,12 +123,19 @@ export default {
       }
       console.log(move);
       let gameId = move.game.gameId;
-      let weapon = move.weapon;
+      let weapon = move.weapon.key;
       context.dispatch(
         "socket/send",
         `WEAP ${gameId} ${move.field.x} ${move.field.y} ${weapon}`,
         ROOT
       );
+      let player = move.game.players[move.game.yourIndex];
+      if (player.selectedWeapon !== 0) {
+        context.commit("selectWeapon", {
+          player: player,
+          selectedWeapon: 0
+        });
+      }
     }
   }
 };

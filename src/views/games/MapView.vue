@@ -81,7 +81,10 @@ export default {
   computed: {
     highlightedFields() {
       let weapon = this.highlightWeapon;
-      let range = weapon == "P" ? 0 : 2;
+      let range = 0;
+      if (weapon !== null) {
+        range = weapon.key === "B" ? 2 : 0;
+      }
 
       let func = () => false;
       let field = this.highlightedField;
