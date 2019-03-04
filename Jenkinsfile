@@ -15,7 +15,7 @@ pipeline {
         stage('Validate branch name') {
           when {
             expression {
-              return !(env.GIT_BRANCH ==~ /\w+(\/\w+)?/)
+              return !(env.GIT_BRANCH ==~ /\w+(\/\w+)?[\w\d\-]+/)
             }
           }
           steps {
