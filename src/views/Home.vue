@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container fluid>
-      <v-layout column align-center justify-center class="login-options">
+      <v-layout column align-center justify-center>
         <h1>Minesweeper Flags Extreme</h1>
         <img class="logo" :src="require('@/assets/icon1024.png')" />
         <h2>Choose your login option</h2>
@@ -115,10 +115,6 @@ export default {
 .logo {
   width: 128px;
   height: 128px;
-}
-
-.login-options * {
-  margin: 10px;
 }
 
 .provider {
