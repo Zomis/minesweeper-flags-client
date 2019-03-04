@@ -40,7 +40,7 @@ export default {
           sortable: true,
           value: "player"
         },
-        { text: "Games player", value: "gamesPlayed" },
+        { text: "Games played", value: "gamesPlayed" },
         { text: "Player wins", value: "playerWins" },
         { text: "Opponent wins", value: "oppWins" },
         { text: "Win %", value: "winPercent" }

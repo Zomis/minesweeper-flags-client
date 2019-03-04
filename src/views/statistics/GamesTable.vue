@@ -1,6 +1,13 @@
 <template>
   <div>
-    <v-data-table :headers="headers" :items="data" class="elevation-1">
+    <v-data-table
+      :headers="headers"
+      :items="data"
+      :rows-per-page-items="[10, 15, 20, 25, 30, 40, 50, 100]"
+      :pagination.sync="pagination"
+      must-sort
+      class="elevation-1"
+    >
       <v-progress-linear
         slot="progress"
         color="blue"
@@ -16,13 +23,13 @@
       </template>
       <template slot="items" slot-scope="props">
         <td><GameIdField :gameId="props.item.gameid" /></td>
+        <td>{{ props.item.time }}</td>
         <td><PlayerField :player="props.item.player" :query="query" /></td>
         <td>{{ props.item.playerRating }}</td>
         <td>{{ props.item.playerResult }}</td>
         <td><PlayerField :player="props.item.opponent" :query="query" /></td>
         <td>{{ props.item.opponentRating }}</td>
         <td>{{ props.item.opponentResult }}</td>
-        <td>{{ props.item.time }}</td>
       </template>
     </v-data-table>
   </div>
@@ -37,15 +44,20 @@ export default {
   components: { GameIdField, PlayerField },
   data() {
     return {
+      pagination: {
+        descending: true,
+        sortBy: "time",
+        rowsPerPage: 100
+      },
       headers: [
         { text: "GameId", value: "gameid" },
+        { text: "Time", value: "time" },
         { text: "Player", value: "player" },
         { text: "Player Rating", value: "playerRating" },
         { text: "Player Result", value: "playerResult" },
         { text: "Opponent", value: "opponent" },
         { text: "Opponent Rating", value: "opponentRating" },
-        { text: "Opponent Result", value: "opponentResult" },
-        { text: "Time", value: "time" }
+        { text: "Opponent Result", value: "opponentResult" }
       ]
     };
   }

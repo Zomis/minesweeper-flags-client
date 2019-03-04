@@ -1,23 +1,30 @@
 <template>
-  <div>
-    <div>{{ query }}</div>
-    <div>{{ queryBody }}</div>
+  <v-container fluid>
+    <v-layout row wrap>
+      <v-flex xs10 offset-xs1>
+        <div>{{ query }}</div>
+        <div>{{ queryBody }}</div>
+      </v-flex>
 
-    <QueryEditor :query="query" />
+      <v-flex xs10 offset-xs1>
+        <QueryEditor :query="query" />
+      </v-flex>
 
-    <v-btn @click="request">Fetch</v-btn>
-
-    <SummaryTable
-      v-if="queryResult && queryResult.summary"
-      :data="queryResult.summary"
-      :query="lastQuery"
-    />
-    <GamesTable
-      v-if="queryResult && queryResult.games"
-      :data="queryResult.games"
-      :query="lastQuery"
-    />
-  </div>
+      <v-flex xs10 offset-xs1>
+        <v-btn @click="request">Fetch</v-btn>
+        <SummaryTable
+          v-if="queryResult && queryResult.summary"
+          :data="queryResult.summary"
+          :query="lastQuery"
+        />
+        <GamesTable
+          v-if="queryResult && queryResult.games"
+          :data="queryResult.games"
+          :query="lastQuery"
+        />
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 <script>
 import QueryEditor from "./QueryEditor";
@@ -35,6 +42,9 @@ export default {
     };
   },
   components: { QueryEditor, SummaryTable, GamesTable },
+  mounted() {
+    this.request();
+  },
   methods: {
     request() {
       this.$store.dispatch("statistics/query", this.queryBody);
