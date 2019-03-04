@@ -9,15 +9,20 @@
           <span>You need to use HTTPS to sign in with a login provider.</span>
         </v-alert>
         <v-alert type="warning" :value="currentVersion < latestVersion">
-          <span>There is a more recent version than the one you are using. Refresh your browser to use build {{ latestVersion }}</span>
+          <span>
+            There is a more recent version than the one you are using. Refresh
+            your browser to use build {{ latestVersion }}
+          </span>
         </v-alert>
         <v-alert type="error" :value="loginError !== null">{{
           loginError
         }}</v-alert>
-        <v-btn v-for="provider in ['google', 'facebook', 'github']"
-               class="provider"
+        <v-btn
+          v-for="provider in ['google', 'facebook', 'github']"
           :key="provider"
-               @click="authenticate(provider)">
+          class="provider"
+          @click="authenticate(provider)"
+        >
           <img
             height="30"
             width="30"
@@ -66,8 +71,8 @@ export default {
       }
     });
     axios
-      .get(process.env.VUE_APP_AUTH_REDIRECT_URL + '/version.json')
-      .then(response => (this.latestVersion = response.data))
+      .get(process.env.VUE_APP_AUTH_REDIRECT_URL + "/version.json")
+      .then(response => (this.latestVersion = response.data));
   },
   watch: {
     loggedIn(newValue) {
