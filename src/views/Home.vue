@@ -16,6 +16,7 @@
         }}</v-alert>
         <v-btn v-for="provider in ['google', 'facebook', 'github']"
                class="provider"
+          :key="provider"
                @click="authenticate(provider)">
           <img
             height="30"
