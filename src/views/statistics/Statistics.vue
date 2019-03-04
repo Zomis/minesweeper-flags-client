@@ -2,61 +2,73 @@
   <v-container fluid>
     <v-layout row wrap>
       <v-flex xs10 offset-xs1>
-        <div>{{ query }}</div>
-        <div>{{ queryBody }}</div>
-      </v-flex>
+        <v-tabs v-model="outerTab" color="cyan" dark slider-color="yellow">
+          <v-tab>Start</v-tab>
+          <v-tab-item>
+            Empty
+          </v-tab-item>
 
-      <v-flex xs10 offset-xs1>
-        <QueryEditor :query="query" />
-      </v-flex>
+          <v-tab>Recent</v-tab>
+          <v-tab-item lazy>
+            <StatisticsTable :pagination="false" queryKey="recent" />
+          </v-tab-item>
 
-      <v-flex xs10 offset-xs1>
-        <v-btn @click="request">Fetch</v-btn>
-        <SummaryTable
-          v-if="queryResult && queryResult.summary"
-          :data="queryResult.summary"
-          :query="lastQuery"
-        />
-        <GamesTable
-          v-if="queryResult && queryResult.games"
-          :data="queryResult.games"
-          :query="lastQuery"
-        />
+          <v-tab>AI Nightmare</v-tab>
+          <v-tab-item lazy>
+            <StatisticsTable :pagination="false" queryKey="aiNightmare" />
+          </v-tab-item>
+
+          <v-tab>Query</v-tab>
+          <v-tab-item lazy>
+            <!-- TODO: Dynamically create more queries? -->
+            <QueryEditor queryKey="query" />
+
+            <v-tabs v-model="innerTab" color="cyan" dark slider-color="yellow">
+              <v-tab>Summary</v-tab>
+              <v-tab-item lazy>
+                Summary
+              </v-tab-item>
+
+              <v-tab>Games</v-tab>
+              <v-tab-item lazy>
+                <StatisticsTable queryKey="query" />
+              </v-tab-item>
+
+              <v-tab>Tags</v-tab>
+              <v-tab-item lazy>
+                Tags
+              </v-tab-item>
+            </v-tabs>
+          </v-tab-item>
+        </v-tabs>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 <script>
 import QueryEditor from "./QueryEditor";
-import SummaryTable from "./SummaryTable";
-import GamesTable from "./GamesTable";
+import StatisticsTable from "./StatisticsTable";
 import { mapState } from "vuex";
-import statsQuery from "./statsQuery";
 
 export default {
   name: "Statistics",
   props: ["query2"],
   data() {
     return {
-      query: statsQuery.fromUrlParams(this.query2)
+      outerTab: 0,
+      innerTab: 0,
+      queryRecentGames: {
+        resultType: "games",
+        pageSize: 100
+      }
     };
   },
-  components: { QueryEditor, SummaryTable, GamesTable },
-  mounted() {
-    this.request();
-  },
-  methods: {
-    request() {
-      this.$store.dispatch("statistics/query", this.queryBody);
-    }
-  },
+  // query: statsQuery.fromUrlParams(this.query2)
+  components: { QueryEditor, StatisticsTable },
   computed: {
-    queryBody() {
-      return statsQuery.toServerRequestBody(this.query);
-    },
     ...mapState("statistics", {
-      queryResult: state => state.queryResult,
-      lastQuery: state => state.query
+      results: state => state.queryResult,
+      queries: state => state.query
     })
   }
 };

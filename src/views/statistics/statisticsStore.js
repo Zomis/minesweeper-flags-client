@@ -1,14 +1,38 @@
 import axios from "axios";
+import statsQuery from "./statsQuery";
+
+function createQuery(key, query) {
+  return {
+    loading: false,
+    query: query,
+    queryEdit: statsQuery.copyQuery(query),
+    key: key,
+    result: null
+  };
+}
 
 export default {
   namespaced: true,
   state: {
-    query: null,
-    queryResult: null
+    queries: {
+      recent: createQuery("recent", {
+        resultType: "games",
+        pageSize: 100
+      }),
+      aiNightmare: createQuery("aiNightmare", {
+        resultType: "summary"
+      }),
+      query: createQuery("query", {})
+    }
   },
   mutations: {
+    loading(state, data) {
+      let query = state.queries[data.queryKey];
+      query.loading = data.loading;
+    },
     queryResponse(state, data) {
-      state.query = data.query;
+      let query = state.queries[data.queryKey];
+      query.query = data.query;
       data = data.response;
       if (data.summary) {
         data.summary.forEach(it => {
@@ -33,17 +57,24 @@ export default {
         });
       }
 
-      state.queryResult = data;
+      query.result = data;
     }
   },
   actions: {
-    query(context, data) {
-      axios.post(process.env.VUE_APP_URL + "query", data).then(response =>
-        context.commit("queryResponse", {
-          query: data,
-          response: response.data
-        })
-      );
+    query(context, queryKey) {
+      context.commit("loading", { queryKey: queryKey, loading: true });
+      let query = statsQuery.copyQuery(context.state.queries[queryKey]);
+      let queryBody = statsQuery.toServerRequestBody(query.query);
+      axios
+        .post(process.env.VUE_APP_URL + "query", queryBody)
+        .then(response => {
+          context.commit("loading", { queryKey: queryKey, loading: false });
+          context.commit("queryResponse", {
+            query: query,
+            queryKey: queryKey,
+            response: response.data
+          });
+        });
     }
   }
 };
