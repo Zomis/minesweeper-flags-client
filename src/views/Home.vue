@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container fluid>
-      <v-layout column align-center justify-center class="login-options">
+      <v-layout column align-center justify-center>
         <h1>Minesweeper Flags Extreme</h1>
         <img class="logo" :src="require('@/assets/icon1024.png')" />
         <h2>Choose your login option</h2>
@@ -14,13 +14,21 @@
         <v-alert type="error" :value="loginError !== null">{{
           loginError
         }}</v-alert>
-        <img
-          v-for="provider in ['google', 'facebook', 'github']"
-          :key="provider"
-          class="auth-provider"
-          :src="require('@/assets/logos/' + provider + '.png')"
-          @click="authenticate(provider)"
-        />
+        <v-btn v-for="provider in ['google', 'facebook', 'github']"
+               class="provider"
+               @click="authenticate(provider)">
+          <img
+            height="30"
+            width="30"
+            :key="provider"
+            class="auth-provider"
+            :src="require('@/assets/logos/' + provider + '.svg')"
+            @click="authenticate(provider)"
+          />
+          &nbsp;&nbsp;Sign in with {{ provider }}
+        </v-btn>
+      </v-layout>
+      <v-layout justify-center row>
         <v-btn color="info" @click="authenticateGuest()">Guest</v-btn>
       </v-layout>
     </v-container>
@@ -120,7 +128,7 @@ export default {
   height: 128px;
 }
 
-.login-options * {
-  margin: 10px;
+.provider {
+  min-width: 300px;
 }
 </style>
