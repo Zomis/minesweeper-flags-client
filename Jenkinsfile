@@ -55,6 +55,7 @@ pipeline {
                   }
 
                   // Copy files
+                  sh "mkdir -p $path"
                   sh "cp -r \$(pwd)/dist/* $path"
                   writeFile file: path + '/version.json', text: "$env.BUILD_NUMBER"
 
