@@ -22,7 +22,7 @@
             :src="require('@/assets/logos/' + provider + '.svg')"
             @click="authenticate(provider)"
           />
-          &nbsp;&nbsp;Log in with {{ provider }}
+          &nbsp;&nbsp;Sign in with {{ provider }}
         </v-btn>
       </v-layout>
       <v-layout justify-center row>
