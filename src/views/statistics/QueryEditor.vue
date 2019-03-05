@@ -1,5 +1,7 @@
 <template>
   <div class="query-editor">
+    <div>{{ query }}</div>
+    <div>{{ queryBody }}</div>
     <v-text-field label="Player" v-model="anotherPlayer"></v-text-field>
     <v-btn @click="addPlayer()">Add</v-btn>
 
@@ -14,13 +16,25 @@
   </div>
 </template>
 <script>
+import statsQuery from "./statsQuery";
+import { mapState } from "vuex";
+
 export default {
   name: "QueryEditor",
-  props: ["query"],
+  props: ["queryKey"],
   data() {
     return {
       anotherPlayer: ""
     };
+  },
+  computed: {
+    queryBody() {
+      return statsQuery.toServerRequestBody(this.query);
+    },
+    ...mapState("statistics", {
+      query: state => state.queries[this.queryKey].query,
+      queryEdit: state => state.queries[this.queryKey].queryEdit
+    })
   },
   methods: {
     addPlayer() {

@@ -58,7 +58,11 @@ export default new Router({
       path: "/stats/:resultType",
       name: "stats",
       props: route => ({
-        query2: { ...route.query, resultType: route.params.resultType }
+        query2: {
+          ...route.query,
+          resultType: route.params.resultType,
+          pageSize: 100
+        }
       }),
       component: Statistics
     },

@@ -44,9 +44,6 @@ pipeline {
 
         stage('Docker') {
             steps {
-                // Stop running containers
-                sh 'docker ps -q --filter name="mfe_client" | xargs -r docker stop'
-
                 sh "rm -rf /home/zomis/jenkins/mfe/client/$env.GIT_BRANCH"
                 script {
                   def path = "/home/zomis/jenkins/mfe/client/$env.GIT_BRANCH"
@@ -55,14 +52,19 @@ pipeline {
                   }
 
                   // Copy files
+                  sh "mkdir -p $path"
                   sh "cp -r \$(pwd)/dist/* $path"
                   writeFile file: path + '/version.json', text: "$env.BUILD_NUMBER"
 
                   // The client is open source, let them be, but here we could move *.map files outside of client so that they are not visible
                   // sh "mv $path/js/*.map $path../mapfiles/" //
+
+                  // Start container if needed
+                  def runningContainers = sh(script: 'docker ps -q -f "name=mfe_client"', returnStdout: true).trim()
+                  if (runningContainers.isEmpty()) {
+                    sh 'docker run -d --rm --name mfe_client -v /home/zomis/jenkins/mfe/client:/usr/share/nginx/html:ro -p 64637:80 nginx'
+                  }
                 }
-                // Start docker container
-                sh 'docker run -d --rm --name mfe_client -v /home/zomis/jenkins/mfe/client:/usr/share/nginx/html:ro -p 64637:80 nginx'
             }
         }
     }

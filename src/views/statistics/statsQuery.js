@@ -4,6 +4,12 @@
 // convert to client URL query params
 
 function copyArray(value) {
+  if (typeof value === "undefined") {
+    return [];
+  }
+  if (value === null) {
+    return [];
+  }
   return value.slice();
 }
 
@@ -67,6 +73,9 @@ export default {
       page: query.page,
       pageSize: query.pageSize
     };
+  },
+  copyQuery(query) {
+    return deepCopy(query);
   },
   toRouterLink(query) {
     let clonedQuery = deepCopy(query);
