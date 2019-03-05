@@ -34,11 +34,16 @@
                       ></v-list-tile-title>
                     </v-list-tile-content>
                     <v-list-tile-action>
-                      <v-icon
-                        @click="invite(user)"
-                        v-if="user.userName !== loggedIn"
-                        >extension</v-icon
-                      >
+                      <v-tooltip left>
+                        <template v-slot:activator="{ on }">
+                          <v-icon
+                          @click="invite(user)"
+                          v-if="user.userName !== loggedIn"
+                          v-on="on"
+                          >extension</v-icon>
+                        </template>
+                        <span>Challenge!</span>
+                      </v-tooltip>
                     </v-list-tile-action>
                   </v-list-tile></v-list
                 >
