@@ -8,10 +8,21 @@
         <v-alert type="error" :value="usingHTTP">
           <span>You need to use HTTPS to sign in with a login provider.</span>
         </v-alert>
-        <v-alert type="warning" :value="currentVersion < latestVersion">
+        <v-alert type="warning" :value="currentVersion === 0">
           <span>
-            There is a more recent version than the one you are using. Refresh
-            your browser to use build {{ latestVersion }}
+            You are in a local development environment.<br />
+            Remember to synchronize with the remote repository sometimes.<br />
+            Feel free to create any issues in the GitHub repository.<br />
+            Happy sweeping!
+          </span>
+        </v-alert>
+        <v-alert
+          type="warning"
+          :value="currentVersion > 0 && currentVersion < latestVersion"
+        >
+          <span>
+            There is a more recent version than the one you are using.<br />
+            Refresh your browser to use build {{ latestVersion }}
           </span>
         </v-alert>
         <v-alert type="error" :value="loginError !== null">{{
@@ -84,7 +95,7 @@ export default {
   },
   computed: {
     currentVersion() {
-      return process.env.VUE_APP_BUILD_NUMBER;
+      return parseInt(process.env.VUE_APP_BUILD_NUMBER, 10);
     },
     usingHTTP() {
       return !document.location.protocol.toLowerCase().startsWith("https");
