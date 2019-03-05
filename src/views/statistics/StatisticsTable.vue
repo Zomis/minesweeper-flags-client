@@ -1,8 +1,18 @@
 <template>
   <div>
     <v-btn @click="request">Refresh</v-btn>
-    <SummaryTable v-if="summary" :data="dataResult" :query="lastQuery" />
-    <GamesTable v-if="games" :data="dataResult" :query="lastQuery" />
+    <SummaryTable
+      v-if="summary"
+      :data="dataResult"
+      :query="lastQuery"
+      :loading="loading"
+    />
+    <GamesTable
+      v-if="games"
+      :data="dataResult"
+      :query="lastQuery"
+      :loading="loading"
+    />
   </div>
 </template>
 <script>
@@ -42,6 +52,9 @@ export default {
     ...mapState("statistics", {
       lastQuery(state) {
         return state.queries[this.queryKey].query;
+      },
+      loading(state) {
+        return state.queries[this.queryKey].loading;
       },
       dataResult(state) {
         let data = state.queries[this.queryKey].result;

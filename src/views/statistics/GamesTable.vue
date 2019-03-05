@@ -5,6 +5,7 @@
       :items="data"
       :rows-per-page-items="[10, 15, 20, 25, 30, 40, 50, 100]"
       :pagination.sync="pagination"
+      :loading="loading"
       must-sort
       class="elevation-1"
     >
@@ -40,7 +41,7 @@ import PlayerField from "./PlayerField";
 
 export default {
   name: "GamesTable",
-  props: ["data", "query"],
+  props: ["data", "query", "loading"],
   components: { GameIdField, PlayerField },
   data() {
     return {

@@ -4,6 +4,7 @@
       :headers="headers"
       :items="data"
       :pagination="pagination"
+      :loading="loading"
       :rows-per-page-items="[10, 15, 20, 25, 30, 40, 50, 100]"
       class="elevation-1"
     >
@@ -35,7 +36,7 @@ import PlayerField from "./PlayerField";
 
 export default {
   name: "SummaryTable",
-  props: ["data", "query"],
+  props: ["data", "query", "loading"],
   components: { PlayerField },
   data() {
     return {
