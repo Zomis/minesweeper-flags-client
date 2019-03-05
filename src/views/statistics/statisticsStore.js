@@ -20,7 +20,8 @@ export default {
         pageSize: 100
       }),
       aiNightmare: createQuery("aiNightmare", {
-        resultType: "summary"
+        resultType: "summary",
+        players: ["#AI_Nightmare"]
       }),
       query: createQuery("query", {})
     }
@@ -63,8 +64,10 @@ export default {
   actions: {
     query(context, queryKey) {
       context.commit("loading", { queryKey: queryKey, loading: true });
-      let query = statsQuery.copyQuery(context.state.queries[queryKey]);
-      let queryBody = statsQuery.toServerRequestBody(query.query);
+      let query = statsQuery.copyQuery(context.state.queries[queryKey].query);
+      let queryBody = statsQuery.toServerRequestBody(query);
+      console.info("Query " + queryKey);
+      console.info(queryBody);
       axios
         .post(process.env.VUE_APP_URL + "query", queryBody)
         .then(response => {

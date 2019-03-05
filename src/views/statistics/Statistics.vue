@@ -10,12 +10,16 @@
 
           <v-tab>Recent</v-tab>
           <v-tab-item lazy>
-            <StatisticsTable :pagination="false" queryKey="recent" />
+            <StatisticsTable games :pagination="false" queryKey="recent" />
           </v-tab-item>
 
           <v-tab>AI Nightmare</v-tab>
           <v-tab-item lazy>
-            <StatisticsTable :pagination="false" queryKey="aiNightmare" />
+            <StatisticsTable
+              summary
+              :pagination="false"
+              queryKey="aiNightmare"
+            />
           </v-tab-item>
 
           <v-tab>Query</v-tab>
@@ -31,7 +35,7 @@
 
               <v-tab>Games</v-tab>
               <v-tab-item lazy>
-                <StatisticsTable queryKey="query" />
+                <StatisticsTable games queryKey="query" />
               </v-tab-item>
 
               <v-tab>Tags</v-tab>
@@ -56,11 +60,7 @@ export default {
   data() {
     return {
       outerTab: 0,
-      innerTab: 0,
-      queryRecentGames: {
-        resultType: "games",
-        pageSize: 100
-      }
+      innerTab: 0
     };
   },
   // query: statsQuery.fromUrlParams(this.query2)

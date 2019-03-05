@@ -1,6 +1,12 @@
 <template>
   <div>
-    <v-data-table :headers="headers" :items="data" class="elevation-1">
+    <v-data-table
+      :headers="headers"
+      :items="data"
+      :pagination="pagination"
+      :rows-per-page-items="[10, 15, 20, 25, 30, 40, 50, 100]"
+      class="elevation-1"
+    >
       <v-progress-linear
         slot="progress"
         color="blue"
@@ -33,6 +39,12 @@ export default {
   components: { PlayerField },
   data() {
     return {
+      pagination: {
+        page: 1,
+        descending: true,
+        sortBy: "gamesPlayed",
+        rowsPerPage: 100
+      },
       headers: [
         {
           text: "Player",

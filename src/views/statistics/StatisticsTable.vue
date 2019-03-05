@@ -1,16 +1,8 @@
 <template>
   <div>
     <v-btn @click="request">Refresh</v-btn>
-    <SummaryTable
-      v-if="queryResult && queryResult.summary"
-      :data="queryResult.summary"
-      :query="lastQuery"
-    />
-    <GamesTable
-      v-if="queryResult && queryResult.games"
-      :data="queryResult.games"
-      :query="lastQuery"
-    />
+    <SummaryTable v-if="summary" :data="dataResult" :query="lastQuery" />
+    <GamesTable v-if="games" :data="dataResult" :query="lastQuery" />
   </div>
 </template>
 <script>
@@ -28,6 +20,8 @@ detect changes of queryResult
 export default {
   name: "StatisticsTable",
   props: {
+    summary: Boolean,
+    games: Boolean,
     queryKey: {
       type: String,
       required: true
@@ -49,8 +43,12 @@ export default {
       lastQuery(state) {
         return state.queries[this.queryKey].query;
       },
-      queryResult(state) {
-        return state.queries[this.queryKey].result;
+      dataResult(state) {
+        let data = state.queries[this.queryKey].result;
+        if (data === null) {
+          return [];
+        }
+        return data.summary || data.games || [];
       }
     })
   }
