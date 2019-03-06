@@ -34,12 +34,16 @@
       <strong>{{ filter.name }}</strong>
     </v-chip>
 
-    <v-combobox
-      v-model="queryEdit.resultType"
-      :items="['summary', 'games']"
-      label="Result type"
-    >
-    </v-combobox>
+    <div>
+      <v-btn-toggle v-model="queryEdit.resultType" @change="changeResultType">
+        <v-btn flat value="summary">
+          Summary
+        </v-btn>
+        <v-btn flat value="games">
+          Played Games
+        </v-btn>
+      </v-btn-toggle>
+    </div>
   </div>
 </template>
 <script>
@@ -85,6 +89,12 @@ export default {
     })
   },
   methods: {
+    changeResultType(resultType) {
+      console.log(resultType);
+      let queryCopy = statsQuery.copyQuery(this.queryEdit);
+      queryCopy.resultType = resultType;
+      this.openQuery(queryCopy);
+    },
     removeFilter(filter) {
       let queryCopy = statsQuery.copyQuery(this.queryEdit);
       let filterTypeToObjectKey = {
@@ -95,7 +105,10 @@ export default {
       let objectKey = filterTypeToObjectKey[filter.type];
       let array = queryCopy[objectKey];
       array.splice(array.indexOf(filter.name), 1);
-      this.$store.dispatch("statistics/openQuery", queryCopy);
+      this.openQuery(queryCopy);
+    },
+    openQuery(query) {
+      this.$store.dispatch("statistics/openQuery", query);
     }
   }
 };
