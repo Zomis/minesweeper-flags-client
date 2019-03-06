@@ -1,8 +1,8 @@
 <template>
   <div>
-    <router-link :to="clonedQueryWithPlayer">
+    <a @click="clonedQueryWithPlayer()">
       {{ player }}
-    </router-link>
+    </a>
   </div>
 </template>
 <script>
@@ -11,17 +11,12 @@ import statsQuery from "./statsQuery";
 export default {
   name: "PlayerField",
   props: ["player", "query"],
-  computed: {
+  methods: {
     clonedQueryWithPlayer() {
-      let routerLink = statsQuery.toRouterLink(this.query);
-      if (routerLink.query.players === null) {
-        routerLink.query.players = [];
-      }
-      routerLink.query.players.push(this.player);
-      if (routerLink.query.players.length >= 2) {
-        routerLink.path = "/stats/games";
-      }
-      return routerLink;
+      let query = statsQuery.add(this.query, {
+        players: [this.player]
+      });
+      this.$store.dispatch("statistics/openQuery", query);
     }
   }
 };

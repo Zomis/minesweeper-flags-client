@@ -31,6 +31,10 @@ export default {
       let query = state.queries[data.queryKey];
       query.loading = data.loading;
     },
+    setQuery(state, query) {
+      let queryData = createQuery("query", query);
+      state.queries.query = queryData;
+    },
     queryResponse(state, data) {
       let query = state.queries[data.queryKey];
       query.query = data.query;
@@ -62,6 +66,10 @@ export default {
     }
   },
   actions: {
+    openQuery(context, query) {
+      context.commit("setQuery", query);
+      context.dispatch("query", "query");
+    },
     query(context, queryKey) {
       context.commit("loading", { queryKey: queryKey, loading: true });
       let query = statsQuery.copyQuery(context.state.queries[queryKey].query);

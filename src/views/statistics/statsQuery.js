@@ -46,6 +46,13 @@ function listify(value) {
 }
 
 export default {
+  add(query, data) {
+    let copy = deepCopy(query);
+    Object.keys(data).forEach(key => {
+      copy[key] = copy[key].concat(data[key]);
+    });
+    return copy;
+  },
   fromUrlParams(params) {
     return {
       resultType: nullIfEmpty(params.resultType),

@@ -5,7 +5,7 @@
         <v-tabs v-model="outerTab" color="cyan" dark slider-color="yellow">
           <v-tab>Start</v-tab>
           <v-tab-item>
-            Empty
+            TODO: Information about you, sort of like a 'profile page'
           </v-tab-item>
 
           <v-tab>Recent</v-tab>
@@ -28,6 +28,11 @@
             <QueryEditor queryKey="query" />
 
             <v-tabs v-model="innerTab" color="cyan" dark slider-color="yellow">
+              <v-tab>Query</v-tab>
+              <v-tab-item lazy>
+                <StatisticsTable auto queryKey="query" />
+              </v-tab-item>
+
               <v-tab>Summary</v-tab>
               <v-tab-item lazy>
                 Summary
@@ -65,10 +70,15 @@ export default {
   },
   // query: statsQuery.fromUrlParams(this.query2)
   components: { QueryEditor, StatisticsTable },
+  watch: {
+    query() {
+      this.outerTab = 3;
+      this.innerTab = 0;
+    }
+  },
   computed: {
     ...mapState("statistics", {
-      results: state => state.queryResult,
-      queries: state => state.query
+      query: state => state.queries.query
     })
   }
 };

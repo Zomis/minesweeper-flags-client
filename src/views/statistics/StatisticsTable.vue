@@ -2,13 +2,13 @@
   <div>
     <v-btn @click="request">Refresh</v-btn>
     <SummaryTable
-      v-if="summary"
+      v-if="summary || autoSummary"
       :data="dataResult"
       :query="lastQuery"
       :loading="loading"
     />
     <GamesTable
-      v-if="games"
+      v-if="games || autoGames"
       :data="dataResult"
       :query="lastQuery"
       :loading="loading"
@@ -32,6 +32,7 @@ export default {
   props: {
     summary: Boolean,
     games: Boolean,
+    auto: Boolean,
     queryKey: {
       type: String,
       required: true
@@ -49,6 +50,12 @@ export default {
     }
   },
   computed: {
+    autoSummary() {
+      return this.auto && this.lastQuery.resultType === "summary";
+    },
+    autoGames() {
+      return this.auto && this.lastQuery.resultType === "games";
+    },
     ...mapState("statistics", {
       lastQuery(state) {
         return state.queries[this.queryKey].query;
