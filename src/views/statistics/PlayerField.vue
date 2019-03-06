@@ -16,6 +16,9 @@ export default {
       let query = statsQuery.add(this.query, {
         players: [this.player]
       });
+      if (query.players.length >= 2 && query.resultType === "summary") {
+        query.resultType = "games";
+      }
       this.$store.dispatch("statistics/openQuery", query);
     }
   }
