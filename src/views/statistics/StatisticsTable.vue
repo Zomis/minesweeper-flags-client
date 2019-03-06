@@ -18,14 +18,7 @@
 <script>
 import SummaryTable from "./SummaryTable";
 import GamesTable from "./GamesTable";
-import statsQuery from "./statsQuery";
 import { mapState } from "vuex";
-
-/*
-auto-load property?
-detect changes of queryResult
-
-*/
 
 export default {
   name: "StatisticsTable",

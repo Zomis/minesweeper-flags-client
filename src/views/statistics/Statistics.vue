@@ -13,6 +13,11 @@
             <StatisticsTable games :pagination="false" queryKey="recent" />
           </v-tab-item>
 
+          <v-tab>Find player</v-tab>
+          <v-tab-item lazy>
+            TODO: Search player by player name.
+          </v-tab-item>
+
           <v-tab>AI Nightmare</v-tab>
           <v-tab-item lazy>
             <StatisticsTable
@@ -22,33 +27,15 @@
             />
           </v-tab-item>
 
-          <v-tab>Query</v-tab>
-          <v-tab-item lazy>
-            <!-- TODO: Dynamically create more queries? -->
-            <QueryEditor queryKey="query" />
+          <template v-if="query.query.resultType">
+            <v-tab>Query</v-tab>
+            <v-tab-item lazy>
+              <!-- TODO: Dynamically create more queries? -->
+              <QueryEditor queryKey="query" />
 
-            <v-tabs v-model="innerTab" color="cyan" dark slider-color="yellow">
-              <v-tab>Query</v-tab>
-              <v-tab-item lazy>
-                <StatisticsTable auto queryKey="query" />
-              </v-tab-item>
-
-              <v-tab>Summary</v-tab>
-              <v-tab-item lazy>
-                Summary
-              </v-tab-item>
-
-              <v-tab>Games</v-tab>
-              <v-tab-item lazy>
-                <StatisticsTable games queryKey="query" />
-              </v-tab-item>
-
-              <v-tab>Tags</v-tab>
-              <v-tab-item lazy>
-                Tags
-              </v-tab-item>
-            </v-tabs>
-          </v-tab-item>
+              <StatisticsTable auto queryKey="query" />
+            </v-tab-item>
+          </template>
         </v-tabs>
       </v-flex>
     </v-layout>
@@ -64,16 +51,14 @@ export default {
   props: ["query2"],
   data() {
     return {
-      outerTab: 0,
-      innerTab: 0
+      outerTab: 0
     };
   },
   // query: statsQuery.fromUrlParams(this.query2)
   components: { QueryEditor, StatisticsTable },
   watch: {
     query() {
-      this.outerTab = 3;
-      this.innerTab = 0;
+      this.outerTab = 4; // to the "Query" tab
     }
   },
   computed: {
