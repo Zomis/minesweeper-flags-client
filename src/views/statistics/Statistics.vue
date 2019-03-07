@@ -4,21 +4,23 @@
       <v-flex xs10 offset-xs1>
         <v-tabs v-model="outerTab" color="cyan" dark slider-color="yellow">
           <v-tab>Start</v-tab>
+          <v-tab>Recent</v-tab>
+          <v-tab>Find player</v-tab>
+          <v-tab>AI Nightmare</v-tab>
+          <template v-if="query.query.resultType">
+            <v-tab>Query</v-tab>
+          </template>
+        </v-tabs>
+        <v-tabs-items v-model="outerTab" touchless>
           <v-tab-item>
             TODO: Information about you, sort of like a 'profile page'
           </v-tab-item>
-
-          <v-tab>Recent</v-tab>
           <v-tab-item lazy>
             <StatisticsTable games :pagination="false" queryKey="recent" />
           </v-tab-item>
-
-          <v-tab>Find player</v-tab>
           <v-tab-item lazy>
             TODO: Search player by player name.
           </v-tab-item>
-
-          <v-tab>AI Nightmare</v-tab>
           <v-tab-item lazy>
             <StatisticsTable
               summary
@@ -28,7 +30,6 @@
           </v-tab-item>
 
           <template v-if="query.query.resultType">
-            <v-tab>Query</v-tab>
             <v-tab-item lazy>
               <!-- TODO: Dynamically create more queries? -->
               <QueryEditor queryKey="query" />
@@ -36,7 +37,7 @@
               <StatisticsTable auto queryKey="query" />
             </v-tab-item>
           </template>
-        </v-tabs>
+        </v-tabs-items>
       </v-flex>
     </v-layout>
   </v-container>
