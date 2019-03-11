@@ -1,7 +1,7 @@
 <template>
   <v-container fluid>
     <v-layout row wrap>
-      <v-flex xs10 offset-xs1>
+      <v-flex xs12 md10 offset-md1>
         <v-tabs v-model="outerTab" color="cyan" dark slider-color="yellow">
           <v-tab>Start</v-tab>
           <v-tab>Recent</v-tab>
