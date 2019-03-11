@@ -53,7 +53,7 @@ export default {
           it.opponentResult = it.p2result;
           it.playerRating = it.rating_before;
           it.playerResult = it.result;
-          it.time = new Date(it.time).toLocaleString();
+          it.timeString = new Date(it.time).toLocaleString();
           delete it.p2;
           delete it.p2rating;
           delete it.p2result;

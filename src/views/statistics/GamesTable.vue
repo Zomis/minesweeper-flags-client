@@ -24,7 +24,7 @@
       </template>
       <template slot="items" slot-scope="props">
         <td><GameIdField :gameId="props.item.gameid" /></td>
-        <td>{{ props.item.time }}</td>
+        <td>{{ props.item.timeString }}</td>
         <td><PlayerField :player="props.item.player" :query="query" /></td>
         <td>{{ props.item.playerRating }}</td>
         <td>{{ props.item.playerResult }}</td>
