@@ -37,6 +37,7 @@ pipeline {
         }
         stage('Build') {
             steps {
+                sh 'mkdir -p src/kotlin'
                 sh 'cp /home/zomis/jenkins/mfe/minesweeper-core.js src/kotlin/minesweeper-core.js'
                 sh 'npm install'
                 sh 'npm run build'
