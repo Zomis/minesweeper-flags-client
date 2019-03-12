@@ -57,7 +57,6 @@ export default {
           let mapField = this.replay.viewing.fields
             .get_za3lpa$(y)
             .get_za3lpa$(x);
-          console.log(mapField);
           field.blocked = mapField.blocked;
           field.clicked = mapField.isVisible();
           field.mine = mapField.isFoundMine();
