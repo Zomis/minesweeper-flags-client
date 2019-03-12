@@ -1,12 +1,7 @@
 <template>
   <Replay :gameId="gameId" :gameInfo="replayData" v-if="replayData !== null" />
-  <v-layout
-    v-else-if="responseCode === 204"
-    fill-height
-    justify-center
-    align-center
-  >
-    <h1>Game not found</h1>
+  <v-layout v-else-if="error" fill-height justify-center align-center>
+    <h1>{{ error }}</h1>
   </v-layout>
   <v-progress-circular indeterminate v-else />
 </template>
@@ -21,7 +16,7 @@ export default {
   data() {
     return {
       replayData: null,
-      responseCode: null
+      error: null
     };
   },
   mounted() {
@@ -30,9 +25,14 @@ export default {
       .then(response => {
         if (response.status === 200) {
           this.replayData = response.data;
+        } else if (response.status === 204) {
+          this.error = "Game not found";
         } else {
-          this.responseCode = response.status;
+          this.error = "HTTP Result " + response.status;
         }
+      })
+      .catch(err => {
+        this.error = err;
       });
   }
 };
