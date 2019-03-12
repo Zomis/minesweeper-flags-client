@@ -68,6 +68,9 @@ export default {
           field.blocked = mapField.blocked;
           field.clicked = mapField.isVisible();
           field.mine = mapField.isFoundMine();
+          field.clickedBy = mapField.whoClicked
+            ? mapField.whoClicked.index
+            : null;
           field.value =
             field.clicked && !field.mine ? mapField.getKnownValue() : 0;
         });
