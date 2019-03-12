@@ -1,5 +1,13 @@
 <template>
-  <Replay :gameId="gameId" :gameInfo="data" v-if="data !== null" />
+  <Replay :gameId="gameId" :gameInfo="replayData" v-if="replayData !== null" />
+  <v-layout
+    v-else-if="responseCode === 204"
+    fill-height
+    justify-center
+    align-center
+  >
+    <h1>Game not found</h1>
+  </v-layout>
   <v-progress-circular indeterminate v-else />
 </template>
 <script>
@@ -12,14 +20,19 @@ export default {
   components: { Replay },
   data() {
     return {
-      data: null
+      replayData: null,
+      responseCode: null
     };
   },
   mounted() {
     axios
       .get(process.env.VUE_APP_URL + "game/" + this.gameId)
       .then(response => {
-        this.data = response.data;
+        if (response.status === 200) {
+          this.replayData = response.data;
+        } else {
+          this.responseCode = response.status;
+        }
       });
   }
 };
