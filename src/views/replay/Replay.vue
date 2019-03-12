@@ -1,13 +1,15 @@
 <template>
   <v-container fluid>
-    <v-layout column>
+    <v-layout column fill-height>
       <v-layout row justify-center align-center>
         <v-flex xs1 text-xs-center>{{ position }}</v-flex>
         <v-flex xs10>
           <v-slider v-model="position" :max="max" :min="0"></v-slider>
         </v-flex>
       </v-layout>
-      <GameView xs12 :game="game" />
+      <v-flex grow>
+        <GameView xs12 :game="game" />
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
