@@ -1,8 +1,14 @@
 <template>
   <v-container fluid>
-    <span xs2 offset-xs1>{{ position }}</span>
-    <v-slider xs6 offset-xs1 v-model="position" :max="max" :min="0"></v-slider>
-    <GameView xs12 :game="game" />
+    <v-layout column>
+      <v-layout row justify-center align-center>
+        <v-flex xs1 text-xs-center>{{ position }}</v-flex>
+        <v-flex xs10>
+          <v-slider v-model="position" :max="max" :min="0"></v-slider>
+        </v-flex>
+      </v-layout>
+      <GameView xs12 :game="game" />
+    </v-layout>
   </v-container>
 </template>
 <script>
