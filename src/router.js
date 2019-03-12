@@ -4,6 +4,7 @@ import Home from "./views/Home.vue";
 import Lobby from "./views/Lobby";
 import Replay from "./views/replay/Replay";
 import ActiveGame from "./views/games/ActiveGame";
+import GameInfoView from "./views/statistics/GameInfoView";
 import Statistics from "./views/statistics/Statistics.vue";
 
 import VueAxios from "vue-axios";
@@ -76,9 +77,12 @@ export default new Router({
       component: ActiveGame
     },
     {
-      path: "/replay",
-      name: "replay",
-      component: Replay
+      path: "/stats/game/:gameId",
+      name: "game",
+      props: route => ({
+        gameId: route.params.gameId
+      }),
+      component: GameInfoView
     },
     {
       path: "/about",
