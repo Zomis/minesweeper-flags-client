@@ -26,10 +26,10 @@
         <td><GameIdField :gameId="props.item.gameid" /></td>
         <td>{{ props.item.timeString }}</td>
         <td><PlayerField :player="props.item.player" :query="query" /></td>
-        <td>{{ props.item.playerRating }}</td>
+        <!-- <td>{{ props.item.playerRating }}</td> -->
         <td>{{ props.item.playerResult }}</td>
         <td><PlayerField :player="props.item.opponent" :query="query" /></td>
-        <td>{{ props.item.opponentRating }}</td>
+        <!-- <td>{{ props.item.opponentRating }}</td> -->
         <td>{{ props.item.opponentResult }}</td>
       </template>
     </v-data-table>
@@ -51,13 +51,13 @@ export default {
         rowsPerPage: 100
       },
       headers: [
-        { text: "GameId", value: "gameid" },
+        { text: "Game", value: "gameid" },
         { text: "Time", value: "time" },
         { text: "Player", value: "player" },
-        { text: "Player Rating", value: "playerRating" },
+        // { text: "Player Rating", value: "playerRating" },
         { text: "Player Result", value: "playerResult" },
         { text: "Opponent", value: "opponent" },
-        { text: "Opponent Rating", value: "opponentRating" },
+        // { text: "Opponent Rating", value: "opponentRating" },
         { text: "Opponent Result", value: "opponentResult" }
       ]
     };
