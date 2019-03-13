@@ -1,6 +1,9 @@
 <template>
   <div>
-    <v-btn @click="request">Refresh</v-btn>
+    <v-toolbar flat color="white">
+      <v-toolbar-title>Statistics</v-toolbar-title>
+      <v-btn @click="request">Refresh</v-btn>
+    </v-toolbar>
     <SummaryTable
       v-if="summary || autoSummary"
       :data="dataResult"
