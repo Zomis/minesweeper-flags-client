@@ -1,20 +1,14 @@
 <template>
-  <div class="about fill-height">
-    <div class="resizable">
-      <GameView :game="game" class="minigame" :horizontal="false" />
-    </div>
-    <div class="resizable horizontal">
-      <GameView :game="game" class="minigame" :horizontal="true" />
-    </div>
-  </div>
+  <LocalGame />
 </template>
 <script>
 import GameView from "./games/GameView";
+import LocalGame from "./games/LocalGame";
 import gameTools from "./games/gameTools";
 
 export default {
   name: "About",
-  components: { GameView },
+  components: { GameView, LocalGame },
   data() {
     let game = gameTools.createGame({ gameId: 42, yourIndex: 0 });
     gameTools.addPlayers(game, ["Player1", "Player2"]);

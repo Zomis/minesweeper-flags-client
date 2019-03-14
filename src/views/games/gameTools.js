@@ -2,10 +2,10 @@ const createField = (x, y) => ({
   x: x,
   y: y,
   clicked: false,
-  value: 0,
-  mine: false,
+  neighboringMines: 0,
+  isFoundMine: false,
   blocked: false,
-  clickedBy: null
+  whoClicked: null
 });
 
 function addPlayers(game, players) {
@@ -19,7 +19,8 @@ function addPlayers(game, players) {
         key: "P",
         displayName: "Click",
         available: -1
-      }, {
+      },
+      {
         key: "B",
         displayName: "Bomb",
         available: 1

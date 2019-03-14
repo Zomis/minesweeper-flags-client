@@ -22,12 +22,12 @@
                 >
                   <PlayerView
                     :player="game.players[0]"
-                    :controllable="game.yourIndex == 0"
+                    :controllable="yourIndex[0]"
                   />
-                  <h1 class="mines-remaining">{{ minesRemaining }}</h1>
+                  <h1 class="mines-remaining">{{ game.minesLeft }}</h1>
                   <PlayerView
                     :player="game.players[1]"
-                    :controllable="game.yourIndex == 1"
+                    :controllable="yourIndex[1]"
                   />
                 </v-layout>
               </v-container>
@@ -48,44 +48,41 @@
 <script>
 import PlayerView from "./PlayerView";
 import MapView from "./MapView";
+import Kotlin from "kotlin";
+
+let coreLib = require("../../kotlin/minesweeper-core");
+let core = coreLib.default.net.zomis.minesweeper.core;
+console.log(core);
+let mapFactory = new core.MapFactory();
+let map = mapFactory.classic(16);
 
 export default {
-  name: "GameView",
-  props: ["game"],
+  name: "LocalGame",
+  props: [],
   components: { PlayerView, MapView },
+  data() {
+    console.log(Kotlin);
+    map.placeMines(51, Kotlin.kotlin.random.Random.Default);
+    map.recount();
+    console.log(map);
+    return {
+      yourIndex: { 0: true, 1: true },
+      game: map
+    };
+  },
   methods: {
     onClick(field) {
-      this.$store.dispatch("games/makeMove", {
-        game: this.game,
-        weapon: this.highlightWeapon,
-        field: field
-      });
+      let move = this.game.currentPlayer().createMove(80, field);
+      console.log(move);
+      let moveAllowed = this.game.performMove(move);
+      console.log(moveAllowed);
     }
   },
   computed: {
     highlightWeapon() {
-      let player = this.game.players[this.game.yourIndex];
+      let player = this.game.players[this.yourIndex[0]];
       return player ? player.weapons[player.selectedWeapon] : null;
-    },
-    minesRemaining() {
-      return (
-        this.game.minesCount -
-        this.game.players
-          .map(pl => pl.score)
-          .reduce((acc, value) => acc + value, 0)
-      );
     }
   }
 };
 </script>
-<style>
-.mines-remaining {
-  margin: 42px 0 42px 0;
-}
-.container {
-  height: 100%;
-}
-.map-flex {
-  height: 100%;
-}
-</style>

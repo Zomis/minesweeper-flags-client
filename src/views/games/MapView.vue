@@ -15,10 +15,9 @@
                 :onClick="clickedField"
                 :highlighted="highlightedFields[y - 1][x - 1]"
                 :onHighlight="onHighlight"
-                :field="game.fields[y - 1][x - 1]"
+                :field="fields[y - 1][x - 1]"
               />
             </template>
-
             <div
               v-for="selector in selectors"
               class="selector"
@@ -50,7 +49,7 @@ function ensureRange(low, value, high) {
 
 export default {
   name: "MapView",
-  props: ["game", "highlightWeapon"],
+  props: ["onClick", "game", "highlightWeapon"],
   components: { FieldView },
   data() {
     return {
@@ -71,14 +70,20 @@ export default {
       this.highlightedField = field;
     },
     clickedField(field) {
-      this.$store.dispatch("games/makeMove", {
-        game: this.game,
-        weapon: this.highlightWeapon,
-        field: field
-      });
+      if (this.onClick) {
+        this.onClick(field);
+      }
     }
   },
   computed: {
+    fields() {
+      console.log("compute fields");
+      return Array.apply(null, Array(this.game.height)).map((_, y) =>
+        Array.apply(null, Array(this.game.width)).map((_, x) =>
+          this.game.fieldAt(x, y)
+        )
+      );
+    },
     highlightedFields() {
       let weapon = this.highlightWeapon;
       let range = 0;
@@ -91,7 +96,7 @@ export default {
       if (field !== null) {
         let fieldX = ensureRange(range, field.x, this.game.width - range - 1);
         let fieldY = ensureRange(range, field.y, this.game.height - range - 1);
-        field = this.game.fields[fieldY][fieldX];
+        field = this.fields[fieldY][fieldX];
         func = (x, y) => {
           if (field == null) {
             return false;
@@ -107,7 +112,9 @@ export default {
       return result;
     },
     selectors() {
-      return this.game.players
+      return [];
+      /*
+      return this.game.players.array_hd7ov6$_0
         .map((player, index) => {
           if (player.lastClicked === null) {
             return null;
@@ -119,6 +126,7 @@ export default {
           };
         })
         .filter(s => s !== null);
+*/
     }
   }
 };

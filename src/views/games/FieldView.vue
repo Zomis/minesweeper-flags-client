@@ -40,11 +40,13 @@ export default {
       if (!this.field.clicked) {
         return "unknown";
       }
-      if (this.field.mine) {
-        let actualPlayer = this.field.clickedBy + 1;
+      if (this.field.isFoundMine) {
+        let actualPlayer = this.field.whoClicked
+          ? this.field.whoClicked.index + 1
+          : 0;
         return "m" + actualPlayer;
       }
-      return this.field.value;
+      return this.field.neighboringMines;
     }
   }
 };

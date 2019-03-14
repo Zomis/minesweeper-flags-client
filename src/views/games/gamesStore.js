@@ -84,9 +84,9 @@ export default {
 
         field.blocked = fieldType === 2;
         field.clicked = fieldType === 1;
-        field.mine = mine === 1;
-        field.clickedBy = playerIndex;
-        field.value = value;
+        field.isFoundMine = mine === 1;
+        field.clickedBy = game.players[playerIndex];
+        field.neighboringMines = value;
       } else {
         console.log("Unknown Player Data type: " + data.type);
       }
