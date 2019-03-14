@@ -30,10 +30,11 @@ export default {
   data() {
     let coreLib = require("../../kotlin/minesweeper-core");
     let core = coreLib.default.net.zomis.minesweeper.core;
+    console.log(core);
     let mapFactory = new core.MapFactory();
-    let map = mapFactory.classic_za3lpa$(16);
+    let map = mapFactory.classic(16);
     let replayFactory = new core.ReplayFactory();
-    let replay = replayFactory.fromSavedToMap_ld2mpi$(
+    let replay = replayFactory.fromSavedToMap(
       map,
       this.gameInfo.minePositions,
       this.gameInfo.clicksString
@@ -61,9 +62,7 @@ export default {
 
       this.game.fields.forEach((row, y) => {
         row.forEach((field, x) => {
-          let mapField = this.replay.viewing.fields
-            .get_za3lpa$(y)
-            .get_za3lpa$(x);
+          let mapField = this.replay.viewing.fieldAt(x, y);
           field.blocked = mapField.blocked;
           field.clicked = mapField.isVisible();
           field.mine = mapField.isFoundMine();
@@ -78,7 +77,7 @@ export default {
   },
   watch: {
     position(value) {
-      this.replay.setPosition_za3lpa$(value);
+      this.replay.setPosition(value);
       this.updateGame(this.replay.viewing);
     }
   }
