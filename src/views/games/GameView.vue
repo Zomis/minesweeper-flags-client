@@ -20,15 +20,9 @@
                   :fill-height="$vuetify.breakpoint.lgAndUp"
                   style="height: 100%"
                 >
-                  <PlayerView
-                    :player="game.players[0]"
-                    :controllable="game.yourIndex == 0"
-                  />
-                  <h1 class="mines-remaining">{{ minesRemaining }}</h1>
-                  <PlayerView
-                    :player="game.players[1]"
-                    :controllable="game.yourIndex == 1"
-                  />
+                  <PlayerView :playerData="game.playerData[0]" />
+                  <h1 class="mines-remaining">{{ game.minesLeft }}</h1>
+                  <PlayerView :playerData="game.playerData[1]" />
                 </v-layout>
               </v-container>
             </v-flex>
@@ -64,16 +58,11 @@ export default {
   },
   computed: {
     highlightWeapon() {
-      let player = this.game.players[this.game.yourIndex];
-      return player ? player.weapons[player.selectedWeapon] : null;
-    },
-    minesRemaining() {
-      return (
-        this.game.minesCount -
-        this.game.players
-          .map(pl => pl.score)
-          .reduce((acc, value) => acc + value, 0)
-      );
+      let playerIndex = this.game.map.currentPlayer.index;
+      let playerData = this.game.playerData[playerIndex];
+      let weapons = this.game.map.currentPlayer.weapons;
+      let weapon = weapons.toArray()[playerData.selectedWeapon];
+      return weapon;
     }
   }
 };

@@ -46,35 +46,33 @@ export default {
     mapData(state, data) {
       let game = state.activeGames[data.gameId];
       if (data.type === "turn") {
-        game.currentPlayer = parseInt(data.value, 10);
+        game.map.currentPlayerIndex = parseInt(data.value, 10);
       } else {
         console.log("Unknown Map Data type: " + data.type);
       }
     },
     playerData(state, data) {
       let game = state.activeGames[data.gameId];
-      let player = game.players[parseInt(data.playerIndex, 10)];
+      let player = game.map.players.toArray()[parseInt(data.playerIndex, 10)];
       if (data.type === "found") {
         player.score = parseInt(data.value, 10);
       } else {
-        console.log("Unknown Player Data type: " + data.type);
+        console.error("Unknown Player Data type: " + data.type);
       }
     },
     fieldData(state, data) {
       let game = state.activeGames[data.gameId];
-      let field = game.fields[parseInt(data.y, 10)][parseInt(data.x, 10)];
+      let field = game.map.fieldAt(parseInt(data.x, 10), parseInt(data.y, 10));
       if (data.type === "mark" || data.type === "play") {
         let playerIndex = parseInt(data.playerIndex, 10);
-        if (playerIndex >= game.players.length) {
+        if (playerIndex >= game.playerData.length) {
           playerIndex = -1;
         }
         if (data.type === "mark") {
-          let player = game.players[playerIndex];
-          player.lastClicked = {
-            x: data.x,
-            y: data.y,
-            width: 1,
-            height: 1
+          let player = game.playerData[playerIndex];
+          player.lastMove = {
+            field: { x: parseInt(data.x, 10), y: parseInt(data.y) },
+            player: { index: playerIndex }
           };
         }
 
@@ -84,8 +82,8 @@ export default {
 
         field.blocked = fieldType === 2;
         field.clicked = fieldType === 1;
-        field.isFoundMine = mine === 1;
-        field.clickedBy = game.players[playerIndex];
+        field.setMine(mine === 1);
+        field.whoClicked = game.map.players.toArray()[playerIndex];
         field.neighboringMines = value;
       } else {
         console.log("Unknown Player Data type: " + data.type);
@@ -101,7 +99,7 @@ export default {
     },
     setNames(state, data) {
       let game = state.activeGames[data.gameId];
-      gameTools.addPlayers(game, [data.player1, data.player2]);
+      gameTools.setPlayerNames(game, [data.player1, data.player2]);
     },
     newGame(state, gameInfo) {
       // Use gameId as String
@@ -122,6 +120,7 @@ export default {
         return;
       }
       console.log(move);
+      let gamePlayer = move.game.map.currentPlayer;
       let gameId = move.game.gameId;
       let weapon = move.weapon.key;
       context.dispatch(
@@ -129,7 +128,7 @@ export default {
         `WEAP ${gameId} ${move.field.x} ${move.field.y} ${weapon}`,
         ROOT
       );
-      let player = move.game.players[move.game.yourIndex];
+      let player = move.game.playerData[gamePlayer.index];
       if (player.selectedWeapon !== 0) {
         context.commit("selectWeapon", {
           player: player,

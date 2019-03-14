@@ -49,7 +49,7 @@ function ensureRange(low, value, high) {
 
 export default {
   name: "MapView",
-  props: ["lastMoves", "onClick", "game", "highlightWeapon"],
+  props: ["onClick", "game", "highlightWeapon"],
   components: { FieldView },
   data() {
     return {

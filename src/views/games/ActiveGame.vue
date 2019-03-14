@@ -1,7 +1,6 @@
 <template>
   <div class="fill-height">
-    <GameResult :game="activeGame" :yourIndex="activeGame.yourIndex" />
-
+    <GameResult :game="activeGame" />
     <GameView :game="activeGame" />
   </div>
 </template>

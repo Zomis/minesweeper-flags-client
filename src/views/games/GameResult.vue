@@ -2,7 +2,7 @@
   <v-dialog v-model="showResult" persistent width="30%">
     <v-card>
       <v-card-title class="headline">
-        <span class="you" v-if="yourIndex >= 0">You&nbsp;</span>
+        <span class="you" v-if="isPlaying">You&nbsp;</span>
         <span class="you" v-else>{{ winnerName }}&nbsp;</span>
         <span v-if="winner">won</span>
         <span v-if="!winner">
@@ -38,7 +38,7 @@ import { mapState } from "vuex";
 
 export default {
   name: "GameResult",
-  props: ["game", "yourIndex"],
+  props: ["game"],
   data() {
     return {
       showResult: false
@@ -63,16 +63,16 @@ export default {
     }
   },
   computed: {
+    isPlaying() {
+      return this.game.playerData.filter(pl => pl.controllable).length > 0;
+    },
     ...mapState("games", {
       yourResult(state) {
         return state.activeGames[this.game.gameId].yourResult;
-      },
-      eliminations(state) {
-        return state.activeGames[this.game.gameId].eliminations;
       }
     }),
     winnerName() {
-      let elimination = this.eliminations.find(e => e.winPosition === 1);
+      let elimination = this.game.eliminations.find(e => e.winPosition === 1);
       if (elimination !== null) {
         return elimination.name;
       }
