@@ -8,7 +8,7 @@
           <v-card-actions v-if="playerData.controllable">
             <v-btn-toggle v-model="activeWeaponIndex" mandatory>
               <v-btn v-for="(weapon, index) in playerWeapons" :key="index">{{
-                weapon.displayName
+                weaponNames[weapon.key.c]
               }}</v-btn>
             </v-btn-toggle>
           </v-card-actions>
@@ -23,13 +23,17 @@ export default {
   props: ["playerData"],
   data() {
     return {
+      weaponNames: {
+        80: "Click",
+        66: "Bomb"
+      },
       activeWeaponIndex: 0
     };
   },
   watch: {
     activeWeaponIndex(value) {
       this.$store.commit("games/selectWeapon", {
-        player: this.player,
+        player: this.playerData,
         selectedWeapon: value
       });
     }
