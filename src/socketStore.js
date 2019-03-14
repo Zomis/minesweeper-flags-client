@@ -109,7 +109,7 @@ const messageTypes = {
   },
   USER: {
     commit: "lobby/online",
-    params: ["userName", "rating", "country"]
+    params: ["userName", "rating", "country", "userId", "picture"]
   }
 };
 

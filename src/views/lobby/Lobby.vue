@@ -46,8 +46,8 @@
                 <v-layout row justify-center align-center>
                   <v-list-tile class="grow">
                     <v-list-tile-avatar>
-                      <!-- <img :src="user.avatar" /> -->
-                      <v-icon large>help</v-icon>
+                      <img :src="user.picture" v-if="user.picture" />
+                      <v-icon large v-else>help</v-icon>
                     </v-list-tile-avatar>
                     <v-list-tile-content>
                       <span>{{ user.userName }}</span>

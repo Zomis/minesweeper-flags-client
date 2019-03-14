@@ -2,9 +2,9 @@ let ROOT = { root: true };
 
 function setOnline(state, user) {
   state.onlineUsers[user.userName] = {
-    userId: user.userName,
+    userId: user.userId,
     userName: user.userName,
-    avatar: "",
+    picture: user.picture,
     rating: user.rating,
     country: user.country
   };
