@@ -5,9 +5,9 @@
         <v-layout align-center justify-center column>
           <h1>{{ name }}</h1>
           <h2>{{ score }}</h2>
-          <v-card-actions v-if="controllable">
+          <v-card-actions v-if="playerData.controllable">
             <v-btn-toggle v-model="activeWeaponIndex" mandatory>
-              <v-btn v-for="weapon in playerWeapons" :key="weapon.key">{{
+              <v-btn v-for="(weapon, index) in playerWeapons" :key="index">{{
                 weapon.displayName
               }}</v-btn>
             </v-btn-toggle>
@@ -20,7 +20,7 @@
 <script>
 export default {
   name: "PlayerView",
-  props: ["player", "controllable"],
+  props: ["playerData"],
   data() {
     return {
       activeWeaponIndex: 0
@@ -36,16 +36,16 @@ export default {
   },
   computed: {
     playerWeapons() {
-      return this.player ? this.player.weapons : [];
+      return this.playerData.player.weapons.toArray();
     },
     selectedWeapon() {
-      return this.player ? this.player.selectedWeapon : 0;
+      return this.playerData.selectedWeapon;
     },
     name() {
-      return this.player ? this.player.name : "???";
+      return this.playerData.player.controller.name;
     },
     score() {
-      return this.player ? this.player.score : 0;
+      return this.playerData.player.score;
     }
   }
 };

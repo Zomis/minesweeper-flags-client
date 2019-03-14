@@ -11,7 +11,7 @@ export default {
   components: { GameView, LocalGame },
   data() {
     let game = gameTools.createGame({ gameId: 42, yourIndex: 0 });
-    gameTools.addPlayers(game, ["Player1", "Player2"]);
+    gameTools.setPlayerNames(game, ["Player1", "Player2"]);
     return {
       game: game
     };

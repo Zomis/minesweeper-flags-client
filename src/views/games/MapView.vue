@@ -8,9 +8,9 @@
       <div class="map-reset">
         <div class="map">
           <div class="fields fields-bg field-views">
-            <template v-for="y in game.height">
+            <template v-for="y in game.map.height">
               <FieldView
-                v-for="x in game.width"
+                v-for="x in game.map.width"
                 :key="'field' + y + '-' + x"
                 :onClick="clickedField"
                 :highlighted="highlightedFields[y - 1][x - 1]"
@@ -19,8 +19,7 @@
               />
             </template>
             <div
-              v-for="move in lastMoves"
-              v-if="move !== null"
+              v-for="move in nonNullLastMoves"
               class="selector"
               :key="move.player.index"
               :class="'selector-' + move.player.index"
@@ -77,11 +76,16 @@ export default {
     }
   },
   computed: {
+    nonNullLastMoves() {
+      return this.game.playerData
+        .map(pl => pl.lastMove)
+        .filter(move => move !== null);
+    },
     fields() {
       console.log("compute fields");
-      return Array.apply(null, Array(this.game.height)).map((_, y) =>
-        Array.apply(null, Array(this.game.width)).map((_, x) =>
-          this.game.fieldAt(x, y)
+      return Array.apply(null, Array(this.game.map.height)).map((_, y) =>
+        Array.apply(null, Array(this.game.map.width)).map((_, x) =>
+          this.game.map.fieldAt(x, y)
         )
       );
     },
@@ -95,8 +99,16 @@ export default {
       let func = () => false;
       let field = this.highlightedField;
       if (field !== null) {
-        let fieldX = ensureRange(range, field.x, this.game.width - range - 1);
-        let fieldY = ensureRange(range, field.y, this.game.height - range - 1);
+        let fieldX = ensureRange(
+          range,
+          field.x,
+          this.game.map.width - range - 1
+        );
+        let fieldY = ensureRange(
+          range,
+          field.y,
+          this.game.map.height - range - 1
+        );
         field = this.fields[fieldY][fieldX];
         func = (x, y) => {
           if (field == null) {
@@ -107,8 +119,8 @@ export default {
         };
       }
 
-      let result = Array.apply(null, Array(this.game.height)).map((_, y) =>
-        Array.apply(null, Array(this.game.width)).map((_, x) => func(x, y))
+      let result = Array.apply(null, Array(this.game.map.height)).map((_, y) =>
+        Array.apply(null, Array(this.game.map.width)).map((_, x) => func(x, y))
       );
       return result;
     }
