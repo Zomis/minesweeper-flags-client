@@ -68,23 +68,30 @@ export default {
         if (playerIndex >= game.playerData.length) {
           playerIndex = -1;
         }
+        let move = {
+          field: { x: parseInt(data.x, 10), y: parseInt(data.y) },
+          player: game.map.players.toArray()[playerIndex]
+        };
         if (data.type === "mark") {
           let player = game.playerData[playerIndex];
-          player.lastMove = {
-            field: { x: parseInt(data.x, 10), y: parseInt(data.y) },
-            player: { index: playerIndex }
-          };
+          player.lastMove = move;
         }
 
         let fieldType = parseInt(data.values.substring(0, 1), 10);
         let mine = parseInt(data.values.substring(1, 2), 10);
         let value = parseInt(data.values.substring(2), 10);
 
+        let clicked = fieldType === 1;
         field.blocked = fieldType === 2;
-        field.clicked = fieldType === 1;
         field.setMine(mine === 1);
-        field.whoClicked = game.map.players.toArray()[playerIndex];
         field.neighboringMines = value;
+        field.clicked = clicked;
+        if (clicked) {
+          field.activate(move);
+        } else {
+          field.inactivate();
+        }
+        field.whoClicked = game.map.players.toArray()[playerIndex];
       } else {
         console.log("Unknown Player Data type: " + data.type);
       }

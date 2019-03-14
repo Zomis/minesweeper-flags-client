@@ -21,7 +21,7 @@
                   style="height: 100%"
                 >
                   <PlayerView :playerData="game.playerData[0]" />
-                  <h1 class="mines-remaining">{{ game.minesLeft }}</h1>
+                  <h1 class="mines-remaining">{{ game.map.minesLeft }}</h1>
                   <PlayerView :playerData="game.playerData[1]" />
                 </v-layout>
               </v-container>
