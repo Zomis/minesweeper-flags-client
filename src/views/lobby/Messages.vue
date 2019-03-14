@@ -1,12 +1,18 @@
 <template>
   <div>
-    <v-container ref="container" grid-list-md text-xs-left class="messages">
+    <v-container
+      ref="container"
+      grid-list-md
+      text-xs-left
+      fluid
+      class="messages"
+    >
       <v-layout id="message-content" row wrap>
         <template v-for="(item, index) in messages">
-          <v-flex xs2 :key="'time-' + index">
+          <v-flex xs4 lg2 :key="'time-' + index">
             {{ item.timestamp }}
           </v-flex>
-          <v-flex xs10 :key="'message-' + index">
+          <v-flex xs8 lg10 :key="'message-' + index">
             {{ item.message }}
           </v-flex>
         </template>
