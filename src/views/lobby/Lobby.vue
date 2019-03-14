@@ -37,10 +37,11 @@
                       <v-tooltip left>
                         <template v-slot:activator="{ on }">
                           <v-icon
-                          @click="invite(user)"
-                          v-if="user.userName !== loggedIn"
-                          v-on="on"
-                          >extension</v-icon>
+                            @click="invite(user)"
+                            v-if="user.userName !== loggedIn"
+                            v-on="on"
+                            >extension</v-icon
+                          >
                         </template>
                         <span>Challenge!</span>
                       </v-tooltip>
@@ -57,9 +58,9 @@
 </template>
 <script>
 import { mapState, mapGetters } from "vuex";
-import Messages from "./lobby/Messages";
-import Invites from "./lobby/Invites";
-import IncompleteGame from "./lobby/IncompleteGame";
+import Messages from "./Messages";
+import Invites from "./Invites";
+import IncompleteGame from "./IncompleteGame";
 
 export default {
   name: "Lobby",
