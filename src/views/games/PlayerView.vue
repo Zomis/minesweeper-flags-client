@@ -24,8 +24,8 @@ export default {
   data() {
     return {
       weaponNames: {
-        80: "Click",
-        66: "Bomb"
+        80: "Click", // 80 = char 'P' = 'Play' = Regular move
+        66: "Bomb" // 66 = char 'B' = 'Bomb'
       },
       activeWeaponIndex: 0
     };
