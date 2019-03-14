@@ -35,6 +35,7 @@
             <v-flex xs12 lg8 xl6 map-flex>
               <MapView
                 :onClick="onClick"
+                :lastMoves="lastMoves"
                 :game="game"
                 :highlightWeapon="highlightWeapon"
               />
@@ -66,6 +67,7 @@ export default {
     map.recount();
     console.log(map);
     return {
+      lastMoves: [null, null],
       yourIndex: { 0: true, 1: true },
       game: map
     };
@@ -73,9 +75,10 @@ export default {
   methods: {
     onClick(field) {
       let move = this.game.currentPlayer().createMove(80, field);
-      console.log(move);
       let moveAllowed = this.game.performMove(move);
-      console.log(moveAllowed);
+      if (moveAllowed.name === "OK") {
+        this.$set(this.lastMoves, move.player.index, move);
+      }
     }
   },
   computed: {

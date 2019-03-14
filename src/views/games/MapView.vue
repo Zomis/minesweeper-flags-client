@@ -19,12 +19,13 @@
               />
             </template>
             <div
-              v-for="selector in selectors"
+              v-for="move in lastMoves"
+              v-if="move !== null"
               class="selector"
-              :key="selector.playerIndex"
-              :class="'selector-' + selector.playerIndex"
+              :key="move.player.index"
+              :class="'selector-' + move.player.index"
               v-bind:style="{
-                gridArea: selector.y + 1 + '/' + (selector.x + 1)
+                gridArea: move.field.y + 1 + '/' + (move.field.x + 1)
               }"
             />
           </div>
@@ -49,7 +50,7 @@ function ensureRange(low, value, high) {
 
 export default {
   name: "MapView",
-  props: ["onClick", "game", "highlightWeapon"],
+  props: ["lastMoves", "onClick", "game", "highlightWeapon"],
   components: { FieldView },
   data() {
     return {
@@ -110,23 +111,6 @@ export default {
         Array.apply(null, Array(this.game.width)).map((_, x) => func(x, y))
       );
       return result;
-    },
-    selectors() {
-      return [];
-      /*
-      return this.game.players.array_hd7ov6$_0
-        .map((player, index) => {
-          if (player.lastClicked === null) {
-            return null;
-          }
-          return {
-            playerIndex: index,
-            x: parseInt(player.lastClicked.x, 10),
-            y: parseInt(player.lastClicked.y, 10)
-          };
-        })
-        .filter(s => s !== null);
-*/
     }
   }
 };
