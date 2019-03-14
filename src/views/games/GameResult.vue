@@ -13,9 +13,9 @@
       <v-card-text>
         <span>The match has ended with scores:</span>
         <table>
-          <tr v-for="(player, index) in game.players" :key="index">
-            <td>{{ player.name }}</td>
-            <td>{{ player.score }}</td>
+          <tr v-for="(player, index) in game.playerData" :key="index">
+            <td>{{ player.player.controller.name }}</td>
+            <td>{{ player.player.score }}</td>
           </tr>
         </table>
       </v-card-text>
