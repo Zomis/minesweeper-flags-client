@@ -1,7 +1,6 @@
 import Kotlin from "kotlin";
 let coreLib = require("../../kotlin/minesweeper-core");
 let core = coreLib.default.net.zomis.minesweeper.core;
-console.log(core);
 let mapFactory = new core.MapFactory();
 
 function setPlayerNames(game, players) {

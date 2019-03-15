@@ -48,7 +48,7 @@ export default {
       if (data.type === "turn") {
         game.map.currentPlayerIndex = parseInt(data.value, 10);
       } else {
-        console.log("Unknown Map Data type: " + data.type);
+        console.warn("Unknown Map Data type: " + data.type);
       }
     },
     playerData(state, data) {
@@ -57,7 +57,7 @@ export default {
       if (data.type === "found") {
         player.score = parseInt(data.value, 10);
       } else {
-        console.error("Unknown Player Data type: " + data.type);
+        console.warn("Unknown Player Data type: " + data.type);
       }
     },
     fieldData(state, data) {
@@ -93,7 +93,7 @@ export default {
         }
         field.whoClicked = game.map.players.toArray()[playerIndex];
       } else {
-        console.log("Unknown Player Data type: " + data.type);
+        console.warn("Unknown Player Data type: " + data.type);
       }
     },
     playerEliminated(state, data) {
