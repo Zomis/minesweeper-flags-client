@@ -48,9 +48,11 @@ export default {
       }
       if (data.message.startsWith("#Server: ")) {
         data.message = data.message.substring("#Server: ");
-        console.log("Notification: " + data.message);
         state.serverNotifications.push(data.message);
       }
+    },
+    notification(state, data) {
+      state.serverNotifications.push(data.message);
     },
     chatMessage(state, data) {
       state.messages.push(data);

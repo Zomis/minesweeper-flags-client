@@ -8,7 +8,7 @@ import gameTools from "./games/gameTools";
 
 export default {
   name: "About",
-  components: { GameView, LocalGame },
+  components: { LocalGame },
   data() {
     let game = gameTools.createGame({ gameId: 42, yourIndex: 0 });
     gameTools.setPlayerNames(game, ["Player1", "Player2"]);

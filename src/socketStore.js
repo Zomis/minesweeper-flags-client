@@ -31,6 +31,20 @@ const messageTypes = {
       message: e.fullParam
     })
   },
+  ALRT: {
+    commit: "lobby/notification",
+    extra: e => ({
+      timestamp: new Date().toLocaleString(),
+      message: e.fullParam
+    })
+  },
+  NOTI: {
+    commit: "lobby/notification",
+    extra: e => ({
+      timestamp: new Date().toLocaleString(),
+      message: e.fullParam
+    })
+  },
   PLAY: {
     commit: "lobby/chatMessage",
     extra: e => ({

@@ -53,7 +53,7 @@ export default {
     ...mapState("lobby", ["messages", "onlineUsers"])
   },
   watch: {
-    activeGame(value) {
+    activeGame() {
       this.$router.push("/activeGame");
     }
   },
