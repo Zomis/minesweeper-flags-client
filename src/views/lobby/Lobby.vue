@@ -41,7 +41,7 @@
                 xs6
                 lg6
                 v-for="user in onlineUsers"
-                :key="user.userId"
+                :key="user.userName"
               >
                 <v-layout row justify-center align-center>
                   <v-list-tile class="grow">
