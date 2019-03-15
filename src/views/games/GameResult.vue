@@ -47,7 +47,9 @@ export default {
   components: { Invites },
   methods: {
     playAgain() {
-      let opponent = this.game.players[1 - this.yourIndex].name;
+      this.showResult = false;
+      let opponent = this.game.playerData.find(pl => !pl.controllable).player
+        .controller.name;
 
       this.$store.dispatch("invites/sendInvite", {
         target: { userName: opponent },

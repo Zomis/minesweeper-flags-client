@@ -57,18 +57,21 @@ export default {
   },
   methods: {
     onClick(field) {
-      let move = this.game.map.currentPlayer.createMove(80, field);
+      let playerData = this.game.playerData[this.game.map.currentPlayerIndex];
+      let weapon = playerData.player.weapons.toArray()[
+        playerData.selectedWeapon
+      ];
+      let move = this.game.map.currentPlayer.createMove(weapon.key.c, field);
       let moveAllowed = this.game.map.performMove(move);
       if (moveAllowed.name === "OK") {
         this.game.playerData[move.player.index].lastMove = move;
+        this.$store.dispatch("games/resetSelectedWeapon", playerData);
       }
     }
   },
   computed: {
     players() {
-      let res = this.game.map.players.toArray();
-      console.log(res);
-      return res;
+      return this.game.map.players.toArray();
     },
     highlightWeapon() {
       let playerIndex = this.game.map.currentPlayer.index;

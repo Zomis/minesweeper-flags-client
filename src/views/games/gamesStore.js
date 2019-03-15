@@ -119,6 +119,14 @@ export default {
     }
   },
   actions: {
+    resetSelectedWeapon(context, playerData) {
+      if (playerData.selectedWeapon !== 0) {
+        context.commit("selectWeapon", {
+          player: playerData,
+          selectedWeapon: 0
+        });
+      }
+    },
     resume(context, gameId) {
       context.dispatch("socket/send", "RESU " + gameId, ROOT);
     },
@@ -126,7 +134,6 @@ export default {
       if (!move.game.clickable) {
         return;
       }
-      console.log(move);
       let gamePlayer = move.game.map.currentPlayer;
       let gameId = move.game.gameId;
       let weapon = move.weapon.key;
@@ -136,12 +143,7 @@ export default {
         ROOT
       );
       let player = move.game.playerData[gamePlayer.index];
-      if (player.selectedWeapon !== 0) {
-        context.commit("selectWeapon", {
-          player: player,
-          selectedWeapon: 0
-        });
-      }
+      context.dispatch("resetSelectedWeapon", player);
     }
   }
 };

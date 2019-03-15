@@ -93,7 +93,7 @@ export default {
       let weapon = this.highlightWeapon;
       let range = 0;
       if (weapon !== null) {
-        range = weapon.key === "B" ? 2 : 0;
+        range = weapon.key.c === 66 ? 2 : 0;
       }
 
       let func = () => false;

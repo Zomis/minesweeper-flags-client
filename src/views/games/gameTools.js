@@ -15,7 +15,7 @@ function createPlayer(map, playerIndex) {
     player: map.players.toArray()[playerIndex],
     lastMove: null,
     selectedWeapon: 0,
-    controllable: true
+    controllable: false
   };
 }
 
@@ -47,7 +47,7 @@ function createLocalGame() {
   let map = mapFactory.classic(16);
   map.placeMines(51, Kotlin.kotlin.random.Random.Default);
   map.recount();
-  return {
+  let game = {
     gameId: 0,
     playerData: [createPlayer(map, 0), createPlayer(map, 1)],
     clickable: true,
@@ -55,6 +55,8 @@ function createLocalGame() {
     yourResult: null,
     map: map
   };
+  game.playerData.forEach(pl => (pl.controllable = true));
+  return game;
 }
 
 export default {
