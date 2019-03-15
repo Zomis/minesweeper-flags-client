@@ -1,14 +1,15 @@
 <template>
-  <div class="incomplete-game">
-    GameId {{ game.gameId }}<br />
-    Clicks {{ game.clicks }}
+  <v-card color="#ddf9fd">
+    <span>GameId {{ game.gameId }}</span
+    ><br />
+    <span>Clicks {{ game.clicks }}</span>
     <div class="game-player-info">
       <div v-for="(info, index) in playerScores" :key="index">
         {{ info.player }} ({{ info.score }})
       </div>
     </div>
     <v-btn @click="resume()">Resume</v-btn>
-  </div>
+  </v-card>
 </template>
 <script>
 export default {
