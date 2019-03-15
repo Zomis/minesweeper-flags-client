@@ -13,7 +13,7 @@
           <v-btn @click="invite(user)" v-if="user.userName !== loggedIn"
             >Challenge</v-btn
           >
-          <v-tooltip left>
+          <v-tooltip left v-if="ratingFeature">
             <template v-slot:activator="{ on }">
               <v-icon>show_chart</v-icon>
               <span class="subheading mr-2">1542</span>
@@ -32,6 +32,9 @@ export default {
   name: "OnlineUser",
   props: ["user", "invite"],
   computed: {
+    ratingFeature() {
+      return process.env.VUE_APP_FEATURE_RATING;
+    },
     ...mapState("socket", ["loggedIn"])
   }
 };
