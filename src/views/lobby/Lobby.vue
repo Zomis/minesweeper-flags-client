@@ -54,7 +54,7 @@ export default {
   },
   watch: {
     activeGame(value) {
-      this.$router.push("/games/" + value.gameId);
+      this.$router.push("/activeGame");
     }
   },
   methods: {

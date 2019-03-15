@@ -4,6 +4,7 @@ import Home from "./views/Home.vue";
 import Lobby from "./views/lobby/Lobby";
 import Replay from "./views/replay/Replay";
 import ActiveGame from "./views/games/ActiveGame";
+import GameScreen from "./views/games/GameScreen";
 import GameInfoView from "./views/statistics/GameInfoView";
 import Statistics from "./views/statistics/Statistics.vue";
 
@@ -72,8 +73,13 @@ export default new Router({
       path: "/games/:gameId",
       name: "games",
       props: route => ({
-        gameInfo: { ...route.params }
+        gameId: { ...route.params }
       }),
+      component: GameScreen
+    },
+    {
+      path: "/activeGame",
+      name: "activeGame",
       component: ActiveGame
     },
     {

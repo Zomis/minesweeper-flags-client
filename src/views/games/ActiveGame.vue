@@ -1,19 +1,15 @@
 <template>
-  <div class="fill-height">
-    <GameResult :game="activeGame" />
-    <GameView :game="activeGame" />
-  </div>
+  <GameScreen :gameId="activeGameId" />
 </template>
 <script>
-import GameView from "./GameView";
-import GameResult from "./GameResult";
-import { mapGetters } from "vuex";
+import GameScreen from "./GameScreen";
+import { mapState } from "vuex";
 
 export default {
   name: "ActiveGame",
-  components: { GameView, GameResult },
+  components: { GameScreen },
   computed: {
-    ...mapGetters("games", ["activeGame"])
+    ...mapState("games", ["activeGameId"])
   }
 };
 </script>
