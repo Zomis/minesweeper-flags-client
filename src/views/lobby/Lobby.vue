@@ -12,14 +12,12 @@
         </SmallBox>
       </LobbyBox>
 
-      <LobbyBox class="xs12 lg6" title="Online Players">
-        <SmallBox
-          class="xs12 xl6"
-          v-for="user in onlineRealUsers"
-          :key="user.userName"
-        >
-          <OnlineUser :user="user" :invite="invite" />
-        </SmallBox>
+      <LobbyBox class="xs12 lg6" title="Online Players" transition="true">
+        <template v-for="(user, i) in onlineRealUsers">
+          <SmallBox class="xs12 xl6" :key="i">
+            <OnlineUser :user="user" :key="i" :invite="invite" />
+          </SmallBox>
+        </template>
       </LobbyBox>
 
       <LobbyBox class="xs12 lg6" title="Online AIs">
@@ -32,14 +30,12 @@
         </SmallBox>
       </LobbyBox>
 
-      <LobbyBox class="xs12 lg6" title="Other Games">
-        <SmallBox
-          class="xs12 md6 lg4"
-          v-for="game in lobbyGames"
-          :key="game.gameId"
-        >
-          <LobbyGame :game="game" />
-        </SmallBox>
+      <LobbyBox class="xs12 lg6" title="Other Games" transition="true">
+        <template v-for="(game, index) in lobbyGames">
+          <SmallBox class="xs12 md6 lg4" :key="index">
+            <LobbyGame :game="game" />
+          </SmallBox>
+        </template>
       </LobbyBox>
 
       <LobbyBox class="xs12" title="Chat">
@@ -104,3 +100,14 @@ export default {
   }
 };
 </script>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1.5s ease;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

@@ -8,7 +8,15 @@
               <span>{{ title }}</span>
             </v-toolbar-title>
           </v-toolbar>
-          <v-layout row wrap>
+          <transition-group
+            v-if="transition"
+            name="fade"
+            tag="div"
+            class="layout row wrap transition-tool"
+          >
+            <slot></slot>
+          </transition-group>
+          <v-layout v-else row wrap>
             <slot></slot>
           </v-layout>
         </v-card>
@@ -19,6 +27,6 @@
 <script>
 export default {
   name: "LobbyBox",
-  props: ["title"]
+  props: ["title", "transition"]
 };
 </script>
