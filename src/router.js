@@ -2,7 +2,6 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Lobby from "./views/lobby/Lobby";
-import Replay from "./views/replay/Replay";
 import ActiveGame from "./views/games/ActiveGame";
 import GameScreen from "./views/games/GameScreen";
 import GameInfoView from "./views/statistics/GameInfoView";

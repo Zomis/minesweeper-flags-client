@@ -25,8 +25,8 @@ function createGame(gameInfo) {
       .feature(core.plugins.StandardWeapons)
       .feature(core.plugins.ClassicNeighbors);
   });
-  map.addPlayer(new core.PlayerController("Nothing", m => null));
-  map.addPlayer(new core.PlayerController("Nothing", m => null));
+  map.addPlayer(new core.PlayerController("Nothing", () => null));
+  map.addPlayer(new core.PlayerController("Nothing", () => null));
   map.placeMines(51, Kotlin.kotlin.random.Random.Default);
   map.recount();
   let game = {
