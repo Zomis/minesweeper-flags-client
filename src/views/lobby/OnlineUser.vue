@@ -10,16 +10,16 @@
           <span>{{ user.userName }}</span>
         </v-list-tile-content>
         <v-layout align-center justify-end fill-height>
-          <v-btn @click="invite(user)" v-if="user.userName !== loggedIn"
-            >Challenge</v-btn
-          >
           <v-tooltip left v-if="ratingFeature">
             <template v-slot:activator="{ on }">
               <v-icon>show_chart</v-icon>
-              <span class="subheading mr-2">1542</span>
+              <span class="subheading mr-2">{{ user.rating }}</span>
             </template>
             <span>Rating</span>
           </v-tooltip>
+          <v-btn @click="invite(user)" v-if="user.userName !== loggedIn"
+            >Challenge</v-btn
+          >
         </v-layout>
       </v-list-tile>
     </v-layout>
