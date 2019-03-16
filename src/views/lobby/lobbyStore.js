@@ -52,7 +52,7 @@ export default {
       });
     },
     disconnected(state, data) {
-      delete state.onlineUsers[data.userName];
+      Vue.delete(state.onlineUsers, data.userName);
       state.messages.push({
         timestamp: new Date().toLocaleString(),
         message: data.userName + " is now offline"
