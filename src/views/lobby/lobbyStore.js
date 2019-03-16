@@ -3,13 +3,13 @@ import Vue from "vue";
 let ROOT = { root: true };
 
 function setOnline(state, user) {
-  state.onlineUsers[user.userName] = {
+  Vue.set(state.onlineUsers, user.userName, {
     userId: user.userId,
     userName: user.userName,
     picture: user.picture,
     rating: user.rating,
     country: user.country
-  };
+  });
 }
 
 export default {

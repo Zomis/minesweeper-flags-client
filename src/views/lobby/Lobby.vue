@@ -15,7 +15,17 @@
       <LobbyBox class="xs12 lg6" title="Online Players">
         <SmallBox
           class="xs12 xl6"
-          v-for="user in onlineUsers"
+          v-for="user in onlineRealUsers"
+          :key="user.userName"
+        >
+          <OnlineUser :user="user" :invite="invite" />
+        </SmallBox>
+      </LobbyBox>
+
+      <LobbyBox class="xs12 lg6" title="Online AIs">
+        <SmallBox
+          class="xs12 xl6"
+          v-for="user in onlineAIs"
           :key="user.userName"
         >
           <OnlineUser :user="user" :invite="invite" />
@@ -60,6 +70,18 @@ export default {
     OnlineUser
   },
   computed: {
+    onlineRealUsers() {
+      let users = this.onlineUsers;
+      return Object.keys(users)
+        .filter(userName => !userName.startsWith("#AI"))
+        .map(key => users[key]);
+    },
+    onlineAIs() {
+      let users = this.onlineUsers;
+      return Object.keys(users)
+        .filter(userName => userName.startsWith("#AI"))
+        .map(key => users[key]);
+    },
     ...mapState("games", ["incompleteGames"]),
     ...mapGetters("games", ["activeGame"]),
     ...mapState("lobby", ["messages", "onlineUsers", "lobbyGames"])
