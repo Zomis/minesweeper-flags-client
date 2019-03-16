@@ -2,6 +2,7 @@
   <transition name="fade">
     <img
       :src="require(`@/assets/images/classic_${fieldImage}.png`)"
+      :key="fieldImage"
       class="field"
       :class="{ highlighted: highlighted }"
       v-bind:style="{ gridArea: field.y + 1 + '/' + (field.x + 1) }"
@@ -52,6 +53,16 @@ export default {
 };
 </script>
 <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s linear;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
 .highlighted {
   opacity: 0.5;
 }
