@@ -75,7 +75,7 @@ export default {
     }),
     winnerName() {
       let elimination = this.game.eliminations.find(e => e.winPosition === 1);
-      if (elimination !== null) {
+      if (elimination) {
         return elimination.name;
       }
       return null;

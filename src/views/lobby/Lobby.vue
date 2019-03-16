@@ -22,6 +22,16 @@
         </SmallBox>
       </LobbyBox>
 
+      <LobbyBox class="xs12 lg6" title="Other Games">
+        <SmallBox
+          class="xs12 md6 lg4"
+          v-for="game in lobbyGames"
+          :key="game.gameId"
+        >
+          <LobbyGame :game="game" />
+        </SmallBox>
+      </LobbyBox>
+
       <LobbyBox class="xs12" title="Chat">
         <Messages @send="sendChat" :messages="messages" />
       </LobbyBox>
@@ -35,6 +45,7 @@ import Invites from "./Invites";
 import IncompleteGame from "./IncompleteGame";
 import LobbyBox from "./LobbyBox";
 import SmallBox from "./SmallBox";
+import LobbyGame from "./LobbyGame";
 import OnlineUser from "./OnlineUser";
 
 export default {
@@ -45,12 +56,13 @@ export default {
     IncompleteGame,
     LobbyBox,
     SmallBox,
+    LobbyGame,
     OnlineUser
   },
   computed: {
     ...mapState("games", ["incompleteGames"]),
     ...mapGetters("games", ["activeGame"]),
-    ...mapState("lobby", ["messages", "onlineUsers"])
+    ...mapState("lobby", ["messages", "onlineUsers", "lobbyGames"])
   },
   watch: {
     activeGame() {

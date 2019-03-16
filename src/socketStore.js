@@ -117,6 +117,12 @@ const messageTypes = {
     commit: "games/newGame",
     params: ["gameId", "yourIndex"]
   },
+  LIST: {
+    // players and scores are comma-separated
+    commit: "lobby/gameList",
+    params: ["gameId", "players", "scores", "currentPlayerIndex", "timestamp"],
+    extra: e => ({ paramsCount: e.params.length })
+  },
   SEND: {
     commit: "games/changeGameId",
     extra: e => e.fullParam

@@ -38,7 +38,9 @@ function createGame(gameInfo) {
     map: map
   };
   let index = parseInt(gameInfo.yourIndex, 10);
-  game.playerData[index].controllable = true;
+  if (index >= 0) {
+    game.playerData[index].controllable = true;
+  }
   return game;
 }
 
