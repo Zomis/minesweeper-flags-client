@@ -1,46 +1,51 @@
 <template>
   <v-container fluid>
+    <Invites />
     <v-layout row wrap align-space-around>
-      <Invites />
-      <LobbyBox class="xs12 lg6" title="Your Games">
-        <SmallBox
-          class="xs12 md6 lg4"
-          v-for="game in incompleteGames"
-          :key="game.gameId"
-        >
-          <IncompleteGame :game="game" />
-        </SmallBox>
-      </LobbyBox>
+      <v-flex xs12 lg6>
+        <v-layout row wrap align-space-around>
+          <LobbyBox class="xs12" title="Your Games">
+            <SmallBox
+              class="xs12"
+              v-for="game in incompleteGames"
+              :key="game.gameId"
+            >
+              <IncompleteGame :game="game" />
+            </SmallBox>
+          </LobbyBox>
 
-      <LobbyBox class="xs12 lg6" title="Online Players" transition="true">
-        <template v-for="(user, i) in onlineRealUsers">
-          <SmallBox class="xs12 xl6" :key="i">
-            <OnlineUser :user="user" :key="i" :invite="invite" />
-          </SmallBox>
-        </template>
-      </LobbyBox>
+          <LobbyBox class="xs12" title="Online Players" transition="true">
+            <template v-for="(user, i) in onlineRealUsers">
+              <SmallBox class="xs12 xl6" :key="i">
+                <OnlineUser :user="user" :key="i" :invite="invite" />
+              </SmallBox>
+            </template>
+          </LobbyBox>
 
-      <LobbyBox class="xs12 lg6" title="Online AIs">
-        <SmallBox
-          class="xs12 xl6"
-          v-for="user in onlineAIs"
-          :key="user.userName"
-        >
-          <OnlineUser :user="user" :invite="invite" />
-        </SmallBox>
-      </LobbyBox>
+          <LobbyBox class="xs12" title="Online AIs">
+            <SmallBox
+              class="xs12 xl6"
+              v-for="user in onlineAIs"
+              :key="user.userName"
+            >
+              <OnlineUser :user="user" :invite="invite" />
+            </SmallBox>
+          </LobbyBox>
 
-      <LobbyBox class="xs12 lg6" title="Other Games" transition="true">
-        <template v-for="(game, index) in lobbyGames">
-          <SmallBox class="xs12 md6 lg4" :key="index">
-            <LobbyGame :game="game" />
-          </SmallBox>
-        </template>
-      </LobbyBox>
-
-      <LobbyBox class="xs12" title="Chat">
-        <Messages @send="sendChat" :messages="messages" />
-      </LobbyBox>
+          <LobbyBox class="xs12" title="Other Games" transition="true">
+            <template v-for="(game, index) in lobbyGames">
+              <SmallBox class="xs12 md6 lg4" :key="index">
+                <LobbyGame :game="game" />
+              </SmallBox>
+            </template>
+          </LobbyBox>
+        </v-layout>
+      </v-flex>
+      <v-flex xs12 lg6>
+        <LobbyBox class="xs12" title="Chat">
+          <Messages @send="sendChat" :messages="messages" />
+        </LobbyBox>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
