@@ -1,23 +1,43 @@
 <template>
   <v-card class="player-view">
-    <v-card-title primary-title>
-      <v-container fluid>
-        <v-layout align-center justify-center column>
-          <h1>{{ name }}</h1>
-          <h2>{{ score }}</h2>
-          <v-card-actions v-if="playerData.controllable">
-            <v-btn-toggle v-model="activeWeaponIndex" mandatory>
-              <v-btn v-for="(weapon, index) in playerWeapons" :key="index">{{
-                weaponNames[weapon.key.c]
-              }}</v-btn>
-            </v-btn-toggle>
-          </v-card-actions>
+    <v-container fluid>
+      <v-layout align-center justify-center column>
+        <v-layout
+          class="container fluid"
+          row
+          align-center
+          justify-space-between
+        >
+          <v-list-tile-avatar>
+            <img
+              :src="userPicture"
+              width="64px"
+              height="64px"
+              v-if="userPicture"
+            />
+            <v-icon large v-else>help</v-icon>
+          </v-list-tile-avatar>
+          <v-list-tile-content>
+            <h1>{{ name }}</h1>
+          </v-list-tile-content>
+          <v-layout align-center justify-end fill-height>
+            <h2>{{ score }}</h2>
+          </v-layout>
         </v-layout>
-      </v-container>
-    </v-card-title>
+        <v-card-actions v-if="playerData.controllable">
+          <v-btn-toggle v-model="activeWeaponIndex" mandatory>
+            <v-btn v-for="(weapon, index) in playerWeapons" :key="index">{{
+              weaponNames[weapon.key.c]
+            }}</v-btn>
+          </v-btn-toggle>
+        </v-card-actions>
+      </v-layout>
+    </v-container>
   </v-card>
 </template>
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "PlayerView",
   props: ["playerData"],
@@ -39,6 +59,12 @@ export default {
     }
   },
   computed: {
+    ...mapState("lobby", {
+      userPicture(state) {
+        let user = state.onlineUsers[this.name];
+        return user ? user.picture : null;
+      }
+    }),
     playerWeapons() {
       return this.playerData.player.weapons.toArray();
     },
