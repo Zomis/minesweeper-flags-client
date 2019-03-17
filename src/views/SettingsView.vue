@@ -10,22 +10,37 @@
         prepend-icon="volume_up"
         @click:prepend="mute"
       />
+      <v-checkbox v-model="theme" value="dark" label="Dark theme" />
     </v-list>
   </v-menu>
 </template>
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "SettingsView",
   data() {
     let volume = parseInt(localStorage.volume || "42", 10);
     return {
-      previousVolume: volume,
-      volume: volume
+      previousVolume: volume
     };
   },
-  watch: {
-    volume(value) {
-      localStorage.volume = value.toString();
+  computed: {
+    volume: {
+      get() {
+        return this.$store.state.settings.volume;
+      },
+      set(value) {
+        this.$store.commit("settings/setVolume", value);
+      }
+    },
+    theme: {
+      get() {
+        return this.$store.state.settings.theme;
+      },
+      set(value) {
+        this.$store.commit("settings/setTheme", value);
+      }
     }
   },
   methods: {

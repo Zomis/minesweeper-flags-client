@@ -5,6 +5,7 @@ import socketStore from "./socketStore";
 import lobbyStore from "./views/lobby/lobbyStore";
 import inviteStore from "./views/lobby/inviteStore";
 import gameStore from "./views/games/gamesStore";
+import settingsStore from "./views/settingsStore";
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ export default new Vuex.Store({
     lobby: lobbyStore,
     invites: inviteStore,
     games: gameStore,
+    settings: settingsStore,
     socket: socketStore
   },
   state: {},

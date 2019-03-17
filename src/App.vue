@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :dark="theme === 'dark'">
     <v-toolbar app>
       <v-toolbar-title class="headline">
         <span class="text-uppercase">Minesweeper Flags Extreme</span>
@@ -92,6 +92,7 @@ export default {
     }
   },
   computed: {
+    ...mapState("settings", ["theme"]),
     ...mapState("socket", ["loggedIn", "connected"]),
     ...mapState("lobby", ["serverNotifications"]),
     statistics() {
