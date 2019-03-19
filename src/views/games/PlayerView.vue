@@ -1,5 +1,9 @@
 <template>
-  <v-card class="player-view">
+  <v-card
+    dark
+    class="player-view"
+    :class="[isMyTurn ? 'active' : '', 'player' + index]"
+  >
     <v-container fluid>
       <v-layout align-center justify-center column>
         <v-layout
@@ -59,6 +63,15 @@ export default {
     }
   },
   computed: {
+    index() {
+      return this.playerData.player.index;
+    },
+    isMyTurn() {
+      return (
+        this.playerData.player.index ==
+        this.playerData.player.map.currentPlayerIndex
+      );
+    },
     ...mapState("lobby", {
       userPicture(state) {
         let user = state.onlineUsers[this.name];
@@ -83,5 +96,26 @@ export default {
 <style scoped>
 .player-view {
   width: 100%;
+}
+
+.player0 {
+  background-color: blue;
+}
+
+.player1 {
+  background-color: red;
+}
+
+.active {
+  animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 10px -10px #aef4af;
+  }
+  to {
+    box-shadow: 0 0 10px 10px #aef4af;
+  }
 }
 </style>
