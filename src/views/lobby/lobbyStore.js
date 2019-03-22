@@ -22,7 +22,6 @@ export default {
   },
   mutations: {
     gameList(state, game) {
-      console.log(game);
       if (game.paramsCount === 1) {
         delete state.lobbyGames[game.gameId];
       } else {
