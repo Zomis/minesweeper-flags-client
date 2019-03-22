@@ -41,7 +41,14 @@ export default {
     },
     incomplete(state, data) {
       // params: ["gameId", "players", "scores", "clicks", "lastActive"]
-      state.incompleteGames.push(data);
+      let existingIndex = state.incompleteGames.indexOf(
+        game => game.gameId === data.gameId
+      );
+      if (existingIndex) {
+        state.incompleteGames[existingIndex] = data;
+      } else {
+        state.incompleteGames.push(data);
+      }
     },
     mapData(state, data) {
       let game = state.activeGames[data.gameId];
