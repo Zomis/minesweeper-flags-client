@@ -75,13 +75,15 @@ export default {
       let users = this.onlineUsers;
       return Object.keys(users)
         .filter(userName => !userName.startsWith("#AI"))
-        .map(key => users[key]);
+        .map(key => users[key])
+        .sort((user1, user2) => user1.rating - user2.rating);
     },
     onlineAIs() {
       let users = this.onlineUsers;
       return Object.keys(users)
         .filter(userName => userName.startsWith("#AI"))
-        .map(key => users[key]);
+        .map(key => users[key])
+        .sort((user1, user2) => user1.rating - user2.rating);
     },
     ...mapState("games", ["incompleteGames"]),
     ...mapGetters("games", ["activeGame"]),
