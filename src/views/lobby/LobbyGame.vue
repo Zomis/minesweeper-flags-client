@@ -27,16 +27,19 @@
           </template>
           <span>GameId {{ game.gameId }}</span>
         </v-tooltip>
+        <TimeAgo :timestamp="game.timestamp" />
       </v-flex>
     </v-layout>
   </v-card>
 </template>
 <script>
 import { mapState } from "vuex";
+import TimeAgo from "../TimeAgo";
 
 export default {
   name: "LobbyGame",
   props: ["game"],
+  components: { TimeAgo },
   methods: {
     observe() {
       this.$store.dispatch("lobby/observe", this.game.gameId);

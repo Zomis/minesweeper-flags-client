@@ -36,6 +36,7 @@ export default {
         Vue.set(state.lobbyGames, game.gameId, {
           gameId: game.gameId,
           players: players,
+          timestamp: parseInt(game.timestamp, 10),
           currentPlayerIndex: parseInt(game.currentPlayerIndex, 10)
         });
       }
