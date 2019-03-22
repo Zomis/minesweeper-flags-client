@@ -6,7 +6,7 @@
         <v-layout row wrap align-space-around>
           <LobbyBox class="xs12" title="Your Games">
             <SmallBox
-              class="xs12"
+              class="xs12 md6"
               v-for="game in incompleteGames"
               :key="game.gameId"
             >
@@ -34,7 +34,7 @@
 
           <LobbyBox class="xs12" title="Other Games" transition="true">
             <template v-for="(game, index) in lobbyGames">
-              <SmallBox class="xs12 md6 lg4" :key="index">
+              <SmallBox class="xs12 md6" :key="index">
                 <LobbyGame :game="game" />
               </SmallBox>
             </template>

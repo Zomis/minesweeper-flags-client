@@ -1,17 +1,15 @@
 <template>
   <v-card>
-    <v-layout column align-space-around justify-center>
-      <v-layout row align-center justify-center fill-height>
+    <v-layout row wrap align-center justify-center>
+      <v-flex xs6 v-for="(info, index) in game.players" :key="index">
         <v-layout
-          v-for="(info, index) in game.players"
-          :key="index"
           column
           align-center
           justify-center
           :class="{ currentPlayer: game.currentPlayerIndex === index }"
         >
           <img
-            style="width: 36px; height: 36px"
+            style="width: 36px; height: 36px; margin-top: 4px"
             :src="users[index].picture"
             v-if="users[index] && users[index].picture"
           />
@@ -19,13 +17,17 @@
           <span>{{ info.playerName }}</span>
           <span>{{ info.score }}</span>
         </v-layout>
-      </v-layout>
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on }">
-          <v-btn @click="observe()" v-on="on">Observe</v-btn>
-        </template>
-        <span>GameId {{ game.gameId }}</span>
-      </v-tooltip>
+      </v-flex>
+      <v-flex xs12>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn style="align-self: center" @click="observe()" v-on="on">
+              Observe
+            </v-btn>
+          </template>
+          <span>GameId {{ game.gameId }}</span>
+        </v-tooltip>
+      </v-flex>
     </v-layout>
   </v-card>
 </template>
