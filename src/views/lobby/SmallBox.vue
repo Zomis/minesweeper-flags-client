@@ -1,5 +1,5 @@
 <template>
-  <v-flex>
+  <v-flex class="small-box">
     <slot></slot>
   </v-flex>
 </template>

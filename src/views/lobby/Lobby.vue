@@ -108,13 +108,18 @@ export default {
 };
 </script>
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 1.5s ease;
+.small-box {
+  transition: all 1.5s;
+  display: inline-block;
 }
 
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+  transform: translateY(30px);
+}
+
+.fade-leave-active {
+  position: absolute;
 }
 </style>
