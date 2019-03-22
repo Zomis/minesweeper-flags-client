@@ -1,5 +1,10 @@
 <template>
-  <v-dialog v-model="showResult" persistent width="30%">
+  <v-dialog
+    v-model="showResult"
+    persistent
+    :fullscreen="$vuetify.breakpoint.xsOnly"
+    class="show-result-dialog"
+  >
     <v-card>
       <v-card-title class="headline">
         <span class="you" v-if="isPlaying">You&nbsp;</span>
@@ -93,3 +98,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.show-result-dialog {
+  width: 30%;
+}
+</style>
