@@ -25,7 +25,8 @@ export default {
     let coreLib = require("../../kotlin/minesweeper-core");
     let core = coreLib.default.net.zomis.minesweeper.core;
     let mapFactory = new core.MapFactory();
-    let map = mapFactory.classic(16);
+
+    let map = mapFactory.replay();
     let replayFactory = new core.ReplayFactory();
     let replay = replayFactory.fromSavedToMap(
       map,
