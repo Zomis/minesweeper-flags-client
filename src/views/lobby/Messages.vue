@@ -34,15 +34,21 @@ export default {
   data() {
     return { message: "" };
   },
+  mounted() {
+    this.scrollToBottom();
+  },
   watch: {
     messages() {
+      this.scrollToBottom();
+    }
+  },
+  methods: {
+    scrollToBottom() {
       this.$nextTick(() => {
         let container = this.$refs.container;
         container.scrollTop = container.scrollHeight;
       });
-    }
-  },
-  methods: {
+    },
     sendMessage() {
       if (this.message.trim().length === 0) {
         return;
