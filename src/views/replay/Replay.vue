@@ -1,11 +1,31 @@
 <template>
   <v-container fluid>
     <v-layout column fill-height>
-      <v-layout row justify-center align-center>
-        <v-flex xs1 text-xs-center>{{ position }}</v-flex>
+      <v-layout row wrap justify-center align-center>
+        <v-flex xs1 text-xs-center>{{ position }} / {{ replayLength }}</v-flex>
         <v-flex xs10>
           <v-slider v-model="position" :max="max" :min="0"></v-slider>
         </v-flex>
+      </v-layout>
+      <v-layout row justify-center align-center>
+        <v-btn @click="setPosition(0)">
+          <v-icon>skip_previous</v-icon>
+        </v-btn>
+        <v-btn @click="changePosition(-1)">
+          <v-icon>fast_rewind</v-icon>
+        </v-btn>
+        <v-btn v-if="!running" @click="setRunning(true)">
+          <v-icon>play_arrow</v-icon>
+        </v-btn>
+        <v-btn v-else @click="setRunning(false)">
+          <v-icon>pause</v-icon>
+        </v-btn>
+        <v-btn @click="changePosition(1)">
+          <v-icon>fast_forward</v-icon>
+        </v-btn>
+        <v-btn @click="setPosition(replayLength)">
+          <v-icon>skip_next</v-icon>
+        </v-btn>
       </v-layout>
       <v-flex grow>
         <GameView xs12 :game="game" />
@@ -42,14 +62,45 @@ export default {
       this.gameInfo.players.map(pl => pl.playerName)
     );
     return {
+      running: false,
+      timer: null,
       position: replay.replayPosition,
       max: replay.length(),
       game: game,
       replay: replay
     };
   },
-  mounted() {},
-  methods: {},
+  mounted() {
+    this.setRunning(true);
+  },
+  methods: {
+    setPosition(position) {
+      this.setRunning(false);
+      this.position = position;
+    },
+    changePosition(offset) {
+      this.setRunning(false);
+      this.position = this.position + offset;
+    },
+    setRunning(running) {
+      this.running = running;
+      if (running) {
+        this.timer = setInterval(() => {
+          this.position = this.position + 1;
+          if (this.position === this.replayLength) {
+            this.setRunning(false);
+          }
+        }, 750);
+      } else {
+        clearInterval(this.timer);
+      }
+    }
+  },
+  computed: {
+    replayLength() {
+      return this.replay.moveHistory.size;
+    }
+  },
   watch: {
     position(value) {
       this.replay.setPosition(value);
