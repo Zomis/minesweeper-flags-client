@@ -2,6 +2,7 @@
   <div class="query-editor">
     <div>{{ query }}</div>
     <div>{{ queryBody }}</div>
+    <div>{{ queryEdit }}</div>
     <div>{{ queryURL }}</div>
 
     <!--
@@ -35,7 +36,11 @@
     </v-chip>
 
     <div>
-      <v-btn-toggle v-model="queryEdit.resultType" @change="changeResultType">
+      <v-btn-toggle
+        mandatory
+        v-model="queryEdit.resultType"
+        @change="changeResultType"
+      >
         <v-btn flat value="summary">
           Summary
         </v-btn>
