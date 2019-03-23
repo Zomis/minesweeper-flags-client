@@ -115,6 +115,9 @@ export default {
       let game = state.activeGames[data.gameId];
       gameTools.setPlayerNames(game, [data.player1, data.player2]);
     },
+    leaveActiveGame(state) {
+      state.activeGameId = null;
+    },
     newGame(state, gameInfo) {
       // Use gameId as String
       Vue.set(

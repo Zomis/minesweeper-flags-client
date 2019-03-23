@@ -90,8 +90,10 @@ export default {
     ...mapState("lobby", ["messages", "onlineUsers", "lobbyGames"])
   },
   watch: {
-    activeGame() {
-      this.$router.push("/activeGame");
+    activeGame(value) {
+      if (value) {
+        this.$router.push("/activeGame");
+      }
     }
   },
   methods: {

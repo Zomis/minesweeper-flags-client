@@ -194,9 +194,11 @@ export default {
       };
 
       if (type === "ADIO") {
-        let audio = audios[param]();
-        audio.volume = parseInt(localStorage.volume, 10) / 100;
-        audio.play();
+        if (context.rootState.games.activeGameId !== null) {
+          let audio = audios[param]();
+          audio.volume = parseInt(localStorage.volume, 10) / 100;
+          audio.play();
+        }
         return;
       }
       if (type === "USRK") {
