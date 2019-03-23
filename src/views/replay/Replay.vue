@@ -53,6 +53,17 @@ export default {
   watch: {
     position(value) {
       this.replay.setPosition(value);
+      let moves = this.replay.moveHistory.toArray();
+      let lastMoves = this.replay.viewing.players.toArray().map(() => null);
+      for (let i = value - 1; i >= 0; i--) {
+        let move = moves[i];
+        let playerIndex = move.player.index;
+        if (lastMoves[playerIndex] === null) {
+          lastMoves[playerIndex] = move;
+          let playerData = this.game.playerData[playerIndex];
+          playerData.lastMove = move;
+        }
+      }
     }
   }
 };
