@@ -74,17 +74,26 @@ export default {
       context.commit("loading", { queryKey: queryKey, loading: true });
       let query = statsQuery.copyQuery(context.state.queries[queryKey].query);
       let queryBody = statsQuery.toServerRequestBody(query);
-      console.info("Query " + queryKey);
-      console.info(queryBody);
+      console.info("Query " + queryKey, queryBody);
       axios
         .post(process.env.VUE_APP_URL + "query", queryBody)
         .then(response => {
-          context.commit("loading", { queryKey: queryKey, loading: false });
           context.commit("queryResponse", {
             query: query,
             queryKey: queryKey,
             response: response.data
           });
+        })
+        .catch(e => {
+          context.commit("queryResponse", {
+            query: query,
+            queryKey: queryKey,
+            error: true,
+            response: e.response
+          });
+        })
+        .then(() => {
+          context.commit("loading", { queryKey: queryKey, loading: false });
         });
     }
   }

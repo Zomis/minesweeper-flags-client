@@ -2,7 +2,7 @@
   <div>
     <v-data-table
       :headers="headers"
-      :items="data"
+      :items="data.items"
       :pagination="pagination"
       :loading="loading"
       :rows-per-page-items="[10, 15, 20, 25, 30, 40, 50, 100]"
@@ -14,8 +14,8 @@
         indeterminate
       ></v-progress-linear>
       <template slot="no-data">
-        <v-alert :value="data.error" color="error" icon="warning">
-          An error occurred when retrieving data
+        <v-alert :value="data.status >= 400" color="error" icon="warning">
+          {{ data.data }}
         </v-alert>
         <v-alert :value="true" color="warning" icon="warning">
           No data found

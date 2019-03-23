@@ -64,7 +64,11 @@ export default {
         if (data === null) {
           return [];
         }
-        return data.summary || data.games || [];
+        if (data.summary || data.games) {
+          return { items: data.summary || data.games };
+        }
+        data.items = [];
+        return data;
       }
     })
   }
