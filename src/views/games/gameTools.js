@@ -18,6 +18,17 @@ function createPlayer(map, playerIndex) {
   };
 }
 
+function createGameFromMap(map) {
+  return {
+    gameId: -1,
+    playerData: [createPlayer(map, 0), createPlayer(map, 1)],
+    clickable: true,
+    eliminations: [],
+    yourResult: null,
+    map: map
+  };
+}
+
 function createGame(gameInfo) {
   let map = new core.Game(16, 16);
   map = map.plugin(events => {
@@ -29,14 +40,8 @@ function createGame(gameInfo) {
   map.addPlayer(new core.PlayerController("Nothing", () => null));
   map.placeMines(51, Kotlin.kotlin.random.Random.Default);
   map.recount();
-  let game = {
-    gameId: gameInfo.gameId,
-    playerData: [createPlayer(map, 0), createPlayer(map, 1)],
-    clickable: true,
-    eliminations: [],
-    yourResult: null,
-    map: map
-  };
+  let game = createGameFromMap(map);
+  game.gameId = gameInfo.gameId;
   let index = parseInt(gameInfo.yourIndex, 10);
   if (index >= 0) {
     game.playerData[index].controllable = true;
@@ -48,20 +53,14 @@ function createLocalGame() {
   let map = mapFactory.classic(16);
   map.placeMines(51, Kotlin.kotlin.random.Random.Default);
   map.recount();
-  let game = {
-    gameId: 0,
-    playerData: [createPlayer(map, 0), createPlayer(map, 1)],
-    clickable: true,
-    eliminations: [],
-    yourResult: null,
-    map: map
-  };
+  let game = createGameFromMap(map);
   game.playerData.forEach(pl => (pl.controllable = true));
   return game;
 }
 
 export default {
   createGame: createGame,
+  createGameFromMap: createGameFromMap,
   createLocalGame: createLocalGame,
   setPlayerNames: setPlayerNames
 };

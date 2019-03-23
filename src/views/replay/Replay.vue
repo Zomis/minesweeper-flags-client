@@ -17,12 +17,6 @@
 import GameView from "../games/GameView";
 import gameTools from "../games/gameTools";
 
-function createGame(gameId, playerNames) {
-  let game = gameTools.createGame({ gameId: gameId, yourIndex: -1 });
-  gameTools.addPlayers(game, playerNames);
-  return game;
-}
-
 export default {
   name: "Replay",
   props: ["gameId", "gameInfo"],
@@ -30,7 +24,6 @@ export default {
   data() {
     let coreLib = require("../../kotlin/minesweeper-core");
     let core = coreLib.default.net.zomis.minesweeper.core;
-    console.log(core);
     let mapFactory = new core.MapFactory();
     let map = mapFactory.classic(16);
     let replayFactory = new core.ReplayFactory();
@@ -39,46 +32,26 @@ export default {
       this.gameInfo.minePositions,
       this.gameInfo.clicksString
     );
+    replay.setPosition(0);
 
+    let game = gameTools.createGameFromMap(map);
+    game.gameId = this.gameId;
+    gameTools.setPlayerNames(
+      game,
+      this.gameInfo.players.map(pl => pl.playerName)
+    );
     return {
       position: replay.replayPosition,
       max: replay.length(),
-      game: createGame(
-        this.gameId,
-        this.gameInfo.players.map(pl => pl.playerName)
-      ),
+      game: game,
       replay: replay
     };
   },
-  mounted() {
-    this.updateGame(this.replay.viewing);
-  },
-  methods: {
-    updateGame(map) {
-      map.players.toArray().forEach(pl => {
-        let player = this.game.players[pl.index];
-        player.score = pl.score;
-      });
-
-      this.game.fields.forEach((row, y) => {
-        row.forEach((field, x) => {
-          let mapField = this.replay.viewing.fieldAt(x, y);
-          field.blocked = mapField.blocked;
-          field.clicked = mapField.isVisible();
-          field.mine = mapField.isFoundMine();
-          field.clickedBy = mapField.whoClicked
-            ? mapField.whoClicked.index
-            : null;
-          field.value =
-            field.clicked && !field.mine ? mapField.getKnownValue() : 0;
-        });
-      });
-    }
-  },
+  mounted() {},
+  methods: {},
   watch: {
     position(value) {
       this.replay.setPosition(value);
-      this.updateGame(this.replay.viewing);
     }
   }
 };
