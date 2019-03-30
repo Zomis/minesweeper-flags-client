@@ -44,7 +44,7 @@ export default {
       let existingIndex = state.incompleteGames.indexOf(
         game => game.gameId === data.gameId
       );
-      if (existingIndex) {
+      if (existingIndex >= 0) {
         state.incompleteGames[existingIndex] = data;
       } else {
         state.incompleteGames.push(data);

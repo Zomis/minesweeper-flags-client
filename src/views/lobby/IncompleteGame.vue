@@ -1,31 +1,36 @@
 <template>
   <v-card>
-    <v-layout column align-space-around justify-center>
-      <v-layout row align-center justify-center fill-height>
+    <v-layout row wrap align-center justify-center>
+      <v-flex xs6 v-for="(info, index) in playerScores" :key="index">
         <v-layout
-          v-for="(info, index) in playerScores"
-          :key="index"
           column
           align-center
           justify-center
           :class="{ currentPlayer: game.currentPlayerIndex === index }"
         >
           <img
-            style="width: 36px; height: 36px"
+            style="width: 36px; height: 36px; margin-top: 4px"
             :src="users[index].picture"
             v-if="users[index] && users[index].picture"
           />
           <v-icon large v-else>help</v-icon>
-          <span>{{ info.player }}</span>
+          <span>{{ info.playerName }}</span>
           <span>{{ info.score }}</span>
         </v-layout>
-      </v-layout>
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on }">
-          <v-btn @click="resume()" v-on="on">Resume</v-btn>
-        </template>
-        <span>GameId {{ game.gameId }}</span>
-      </v-tooltip>
+      </v-flex>
+      <v-flex xs12>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn style="align-self: center" @click="resume()" v-on="on">
+              Resume
+            </v-btn>
+          </template>
+          <span>GameId {{ game.gameId }}</span>
+        </v-tooltip>
+        <!--
+          <TimeAgo :timestamp="game.timestamp" />
+        -->
+      </v-flex>
     </v-layout>
   </v-card>
 </template>
@@ -42,8 +47,8 @@ export default {
   },
   computed: {
     playerScores() {
-      return this.players.map((player, index) => ({
-        player: player,
+      return this.players.map((playerName, index) => ({
+        playerName: playerName,
         score: this.scores[index]
       }));
     },
@@ -55,7 +60,7 @@ export default {
     },
     ...mapState("lobby", {
       users(state) {
-        return this.game.players.map(
+        return this.playerScores.map(
           player => state.onlineUsers[player.playerName]
         );
       }
