@@ -16,12 +16,14 @@
               class="fill-height"
               align-center
               justify-center
-              :column="$vuetify.breakpoint.lgAndUp"
+              column
               :fill-height="$vuetify.breakpoint.lgAndUp"
               style="height: 100%"
             >
               <PlayerView :playerData="game.playerData[0]" />
-              <h1 class="mines-remaining">{{ game.map.minesLeft }}</h1>
+              <h1 class="mines-remaining">
+                {{ game.map.minesLeft }} mines left
+              </h1>
               <PlayerView :playerData="game.playerData[1]" />
             </v-layout>
           </v-flex>
@@ -70,7 +72,7 @@ export default {
 </script>
 <style>
 .mines-remaining {
-  margin: 42px 0 42px 0;
+  margin: 20px 0 20px 0;
 }
 .container {
   height: 100%;

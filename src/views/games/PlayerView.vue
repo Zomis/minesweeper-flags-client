@@ -96,6 +96,8 @@ export default {
 <style scoped>
 .player-view {
   width: 100%;
+  margin-bottom: 10px;
+  margin-right: 10px;
 }
 
 .player0 {
