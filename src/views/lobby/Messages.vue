@@ -9,12 +9,17 @@
     >
       <v-layout id="message-content" row wrap>
         <template v-for="(item, index) in messages">
-          <v-flex xs4 lg2 :key="'time-' + index">
-            {{ item.timestamp }}
-          </v-flex>
-          <v-flex xs8 lg10 :key="'message-' + index">
-            {{ item.message }}
-          </v-flex>
+          <div v-if="singleElement">
+            [{{ item.timestamp }}] {{ item.message }}
+          </div>
+          <template v-else>
+            <v-flex xs4 lg2 :key="'time-' + index">
+              {{ item.timestamp }}
+            </v-flex>
+            <v-flex xs8 lg10 :key="'message-' + index">
+              {{ item.message }}
+            </v-flex>
+          </template>
         </template>
       </v-layout>
     </v-container>
@@ -30,7 +35,7 @@
 <script>
 export default {
   name: "Messages",
-  props: ["messages"],
+  props: ["messages", "singleElement"],
   data() {
     return { message: "" };
   },

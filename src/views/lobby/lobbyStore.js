@@ -18,6 +18,7 @@ export default {
     lobbyGames: {},
     serverNotifications: [],
     onlineUsers: {},
+    ingameMessages: [],
     messages: []
   },
   mutations: {
@@ -68,10 +69,7 @@ export default {
       if (data.message.startsWith('<font color="#ff8000">')) {
         data.message = data.message.substring('<font color="#ff8000">'.length);
       }
-      if (data.message.startsWith("#Server: ")) {
-        data.message = data.message.substring("#Server: ");
-        state.serverNotifications.push(data.message);
-      }
+      state.ingameMessages.push(data);
     },
     notification(state, data) {
       state.serverNotifications.push(data.message);

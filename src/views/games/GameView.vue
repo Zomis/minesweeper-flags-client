@@ -35,7 +35,11 @@
             />
           </v-flex>
           <v-flex xs12 lg3 xl2>
-            In-game chat
+            <Messages
+              :singleElement="true"
+              @send="sendChat"
+              :messages="messages"
+            />
           </v-flex>
         </v-layout>
       </v-layout>
@@ -45,12 +49,20 @@
 <script>
 import PlayerView from "./PlayerView";
 import MapView from "./MapView";
+import Messages from "../lobby/Messages";
+import { mapState } from "vuex";
 
 export default {
   name: "GameView",
   props: ["game"],
-  components: { PlayerView, MapView },
+  components: { PlayerView, MapView, Messages },
   methods: {
+    sendChat(message) {
+      this.$store.dispatch(
+        "socket/send",
+        `NMSS #${this.game.gameId} me: ${message}`
+      );
+    },
     onClick(field) {
       this.$store.dispatch("games/makeMove", {
         game: this.game,
@@ -60,6 +72,11 @@ export default {
     }
   },
   computed: {
+    ...mapState("lobby", {
+      messages(state) {
+        return state.ingameMessages;
+      }
+    }),
     highlightWeapon() {
       let playerIndex = this.game.map.currentPlayer.index;
       let playerData = this.game.playerData[playerIndex];
