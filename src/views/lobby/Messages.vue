@@ -24,6 +24,7 @@
       </v-layout>
     </v-container>
     <v-text-field
+      class="message-input"
       label="Message"
       v-model="message"
       placeholder="Write a message"
@@ -69,5 +70,10 @@ export default {
   height: 600px;
   overflow-y: scroll;
   overflow-x: hidden;
+  margin-left: -5px;
+}
+.message-input {
+  margin-left: 15px;
+  margin-right: 15px;
 }
 </style>
