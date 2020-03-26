@@ -245,7 +245,12 @@ export default {
       }
     },
     connect(context) {
-      let url = process.env.VUE_APP_URL + "websocket";
+      let baseURL = process.env.VUE_APP_URL;
+      let urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('server')) {
+        baseURL = urlParams.get('server');
+      }
+      let url = baseURL + "websocket";
       url = url.replace(/^http/g, "ws");
       socket = new WebSocket(url);
       socket.onopen = e => {
