@@ -51,7 +51,7 @@
     </v-content>
     <v-footer fixed app>
       <span
-        >&copy; 2019 Simon Forsberg -
+        >&copy; 2019-2022 Simon Forsberg -
         <a href="https://github.com/Zomis/minesweeper-flags-client" target="_blank">GitHub</a> -
         {{ buildProps.environment }} - {{ buildProps.gitBranch }} - build
         {{ buildProps.buildNumber }} - commit {{ buildProps.commitHash }} -
