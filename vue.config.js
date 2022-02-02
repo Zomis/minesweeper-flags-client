@@ -1,5 +1,5 @@
 let branch = process.env.VUE_APP_GIT_BRANCH;
-if (branch === "master") {
+if (branch === "main") {
   branch = "";
 }
 if (process.env.NODE_ENV === "development") {

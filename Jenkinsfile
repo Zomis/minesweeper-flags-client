@@ -49,7 +49,7 @@ pipeline {
                 sh "rm -rf /home/zomis/jenkins/mfe/client/$env.GIT_BRANCH"
                 script {
                   def path = "/home/zomis/jenkins/mfe/client/$env.GIT_BRANCH"
-                  if (env.GIT_BRANCH == 'master') {
+                  if (env.GIT_BRANCH == 'main') {
                     path = '/home/zomis/jenkins/mfe/client'
                   }
 
