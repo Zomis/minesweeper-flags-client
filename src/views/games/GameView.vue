@@ -1,51 +1,28 @@
 <template>
-  <div class="map-flex">
-    <v-container fluid>
-      <v-layout map-flex align-center justify-center column fill-height>
-        <h1>Game {{ game.gameId }}</h1>
-        <v-layout
-          class="fill-height"
-          map-flex
-          align-space-around
-          justify-center
-          :fill-height="$vuetify.breakpoint.lgAndUp"
-          :column="$vuetify.breakpoint.mdAndDown"
-        >
-          <v-flex xs12 lg3 xl4>
-            <v-layout
-              class="fill-height"
-              align-center
-              justify-center
-              column
-              :fill-height="$vuetify.breakpoint.lgAndUp"
-              style="height: 100%"
-            >
-              <PlayerView :playerData="game.playerData[0]" />
-              <h1 class="mines-remaining">
-                {{ game.map.minesLeft }} mines left
-              </h1>
-              <PlayerView :playerData="game.playerData[1]" />
-            </v-layout>
-          </v-flex>
-          <v-flex xs12 lg6 xl6 map-flex>
-            <MapView
-              :onClick="onClick"
-              :game="game"
-              :highlightWeapon="highlightWeapon"
-            />
-          </v-flex>
-          <v-flex xs12 lg3 xl2>
-            <Messages
-              :singleElement="true"
-              @send="sendChat"
-              :messages="messages"
-            />
-          </v-flex>
-        </v-layout>
-      </v-layout>
-    </v-container>
-  </div>
+  <v-container fluid class="pa-2">
+    <div class="pa-2 mb-2 container-display">
+      <div class="game-div">
+        <div class="game-grid pb-2">
+          <div>Game {{ game.gameId }}</div>
+          <div>{{ game.map.minesLeft }} mines left</div>
+        </div>
+        <PlayerView :playerData="game.playerData[0]" />
+        <PlayerView :playerData="game.playerData[1]" />
+      </div>
+      <div>
+        <MapView
+          :onClick="onClick"
+          :game="game"
+          :highlightWeapon="highlightWeapon"
+        />
+      </div>
+      <div>
+        <Messages :singleElement="true" @send="sendChat" :messages="messages" />
+      </div>
+    </div>
+  </v-container>
 </template>
+
 <script>
 import PlayerView from "./PlayerView";
 import MapView from "./MapView";
@@ -67,15 +44,15 @@ export default {
       this.$store.dispatch("games/makeMove", {
         game: this.game,
         weapon: this.highlightWeapon,
-        field: field
+        field: field,
       });
-    }
+    },
   },
   computed: {
     ...mapState("lobby", {
       messages(state) {
         return state.ingameMessages;
-      }
+      },
     }),
     highlightWeapon() {
       let playerIndex = this.game.map.currentPlayer.index;
@@ -83,19 +60,25 @@ export default {
       let weapons = this.game.map.currentPlayer.weapons;
       let weapon = weapons.toArray()[playerData.selectedWeapon];
       return weapon;
-    }
-  }
+    },
+  },
 };
 </script>
 <style>
-.mines-remaining {
-  margin: 20px 0 20px 0;
+.game-grid {
+  display: grid;
+  grid-template-columns: 60% 40%;
 }
-.container {
-  height: 100%;
-}
-.map-flex {
-  width: 100%;
-  height: 100%;
+
+@media (min-width: 768px) {
+  .container-display {
+    display: grid;
+    grid-template-columns: 30% 40% 25%;
+    gap: 30px;
+  }
+
+  .game-div {
+    align-self: center;
+  }
 }
 </style>

@@ -1,42 +1,32 @@
 <template>
-  <v-card
-    dark
-    class="player-view"
-    :class="[isMyTurn ? 'active' : '', 'player' + index]"
-  >
-    <v-container fluid>
-      <v-layout align-center justify-center column>
-        <v-layout
-          class="container fluid"
-          row
-          align-center
-          justify-space-between
-        >
-          <v-list-tile-avatar>
-            <img
-              :src="userPicture"
-              width="64px"
-              height="64px"
-              v-if="userPicture"
-            />
-            <v-icon large v-else>help</v-icon>
-          </v-list-tile-avatar>
-          <v-list-tile-content>
-            <h1>{{ name }}</h1>
-          </v-list-tile-content>
-          <v-layout align-center justify-end fill-height>
-            <h2>{{ score }}</h2>
-          </v-layout>
-        </v-layout>
-        <v-card-actions v-if="playerData.controllable">
+  <v-card dark>
+    <v-container
+      fluid
+      class="player-view pa-0"
+      :class="[isMyTurn ? 'active' : '', 'player' + index]"
+    >
+      <div class="pa-2 display-grid">
+        <div>
+          <img
+            :src="userPicture"
+            style="border-radius: 50px"
+            width="24px"
+            height="24px"
+            v-if="userPicture"
+          />
+          <v-icon large v-else>help</v-icon>
+          <span> {{ name }} - {{ score }} </span>
+        </div>
+        <div v-if="playerData.controllable">
           <v-btn-toggle v-model="activeWeaponIndex" mandatory>
-            <v-btn v-for="(weapon, index) in playerWeapons" :key="index">{{
-              weaponNames[weapon.key.c]
-            }}</v-btn>
+            <v-btn v-for="(weapon, index) in playerWeapons" :key="index">
+              {{ weaponNames[weapon.key.c] }}
+            </v-btn>
           </v-btn-toggle>
-        </v-card-actions>
-      </v-layout>
+        </div>
+      </div>
     </v-container>
+    <div></div>
   </v-card>
 </template>
 <script>
@@ -49,18 +39,18 @@ export default {
     return {
       weaponNames: {
         80: "Click", // 80 = char 'P' = 'Play' = Regular move
-        66: "Bomb" // 66 = char 'B' = 'Bomb'
+        66: "Bomb", // 66 = char 'B' = 'Bomb'
       },
-      activeWeaponIndex: 0
+      activeWeaponIndex: 0,
     };
   },
   watch: {
     activeWeaponIndex(value) {
       this.$store.commit("games/selectWeapon", {
         player: this.playerData,
-        selectedWeapon: value
+        selectedWeapon: value,
       });
-    }
+    },
   },
   computed: {
     index() {
@@ -76,7 +66,7 @@ export default {
       userPicture(state) {
         let user = state.onlineUsers[this.name];
         return user ? user.picture : null;
-      }
+      },
     }),
     playerWeapons() {
       return this.playerData.player.weapons.toArray();
@@ -89,8 +79,8 @@ export default {
     },
     score() {
       return this.playerData.player.score;
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -119,5 +109,10 @@ export default {
   to {
     box-shadow: 0 0 10px 10px #aef4af;
   }
+}
+
+.display-grid {
+  display: grid;
+  grid-template-columns: 60% 40%;
 }
 </style>

@@ -1,33 +1,28 @@
 <template>
   <div class="map-rect">
     <resize-observer @notify="updateMapRect" />
-    <div
-      class="map-square"
-      :style="{ height: mapRect + 'px', width: mapRect + 'px' }"
-    >
-      <div class="map-reset">
-        <div class="map">
-          <div class="fields fields-bg field-views">
-            <template v-for="y in game.map.height">
-              <FieldView
-                v-for="x in game.map.width"
-                :key="'field' + y + '-' + x"
-                :onClick="clickedField"
-                :highlighted="highlightedFields[y - 1][x - 1]"
-                :onHighlight="onHighlight"
-                :field="fields[y - 1][x - 1]"
-              />
-            </template>
-            <div
-              v-for="move in nonNullLastMoves"
-              class="selector"
-              :key="move.player.index"
-              :class="'selector-' + move.player.index"
-              v-bind:style="{
-                gridArea: move.field.y + 1 + '/' + (move.field.x + 1)
-              }"
+    <div class="map-reset">
+      <div class="map">
+        <div class="fields fields-bg field-views">
+          <template v-for="y in game.map.height">
+            <FieldView
+              v-for="x in game.map.width"
+              :key="'field' + y + '-' + x"
+              :onClick="clickedField"
+              :highlighted="highlightedFields[y - 1][x - 1]"
+              :onHighlight="onHighlight"
+              :field="fields[y - 1][x - 1]"
             />
-          </div>
+          </template>
+          <div
+            v-for="move in nonNullLastMoves"
+            class="selector"
+            :key="move.player.index"
+            :class="'selector-' + move.player.index"
+            v-bind:style="{
+              gridArea: move.field.y + 1 + '/' + (move.field.x + 1),
+            }"
+          />
         </div>
       </div>
     </div>
@@ -54,7 +49,7 @@ export default {
   data() {
     return {
       highlightedField: null,
-      mapRect: 280
+      mapRect: 280,
     };
   },
   mounted() {
@@ -73,13 +68,13 @@ export default {
       if (this.onClick) {
         this.onClick(field);
       }
-    }
+    },
   },
   computed: {
     nonNullLastMoves() {
       return this.game.playerData
-        .map(pl => pl.lastMove)
-        .filter(move => move !== null);
+        .map((pl) => pl.lastMove)
+        .filter((move) => move !== null);
     },
     fields() {
       console.log("compute fields");
@@ -123,8 +118,8 @@ export default {
         Array.apply(null, Array(this.game.map.width)).map((_, x) => func(x, y))
       );
       return result;
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -180,14 +175,7 @@ This class is in charge of two things:
 */
 .map-rect {
   width: 100%;
-  height: 100%;
-  min-width: 280px;
-  min-height: 280px;
-  max-width: 100%;
-  max-height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 80%;
 }
 
 /*
@@ -198,10 +186,6 @@ If only there were a way to do this in CSS. :(
 I've asked a question to see if there is a nicer way to do this:
 https://stackoverflow.com/q/54858625
 */
-.map-square {
-  width: 280px; /* map-rect.min */
-  height: 280px; /* map-rect.min */
-}
 
 /*
 The following is using a mix between the following two answers:
@@ -214,19 +198,7 @@ https://stackoverflow.com/a/20117454
   width: 100%;
 }
 
-.map-reset:before {
-  content: "";
-  display: block;
-  padding-top: 100%;
-}
-
 .map {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-
   /* normal box settings here */
   height: 100%;
   border: 12px solid #6d5720;
