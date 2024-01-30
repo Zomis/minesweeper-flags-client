@@ -2,21 +2,20 @@
   <v-card dark>
     <v-container
       fluid
-      class="player-view pa-0"
+      class="player-view"
       :class="[isMyTurn ? 'active' : '', 'player' + index]"
     >
       <div class="pa-2 display-grid">
         <div>
           <img
             :src="userPicture"
-            style="border-radius: 50px"
-            width="24px"
-            height="24px"
+            style="border-radius: 50%"
+            class="avatar-img"
             v-if="userPicture"
           />
           <v-icon large v-else>help</v-icon>
-          <span> {{ name }} - {{ score }} </span>
         </div>
+        <div>{{ name }} - {{ score }}</div>
         <div v-if="playerData.controllable">
           <v-btn-toggle v-model="activeWeaponIndex" mandatory>
             <v-btn v-for="(weapon, index) in playerWeapons" :key="index">
@@ -26,7 +25,6 @@
         </div>
       </div>
     </v-container>
-    <div></div>
   </v-card>
 </template>
 <script>
@@ -88,6 +86,7 @@ export default {
   width: 100%;
   margin-bottom: 10px;
   margin-right: 10px;
+  padding: 16px;
 }
 
 .player0 {
@@ -113,6 +112,23 @@ export default {
 
 .display-grid {
   display: grid;
-  grid-template-columns: 60% 40%;
+  grid-template-columns: 15% 50% 40%;
+  align-items: center;
+}
+
+.avatar-img {
+  width: 36px;
+  height: 36px;
+}
+
+@media (max-width: 767px) {
+  .player-view {
+    padding: 0;
+  }
+
+  .avatar-img {
+    width: 24px;
+    height: 24px;
+  }
 }
 </style>
