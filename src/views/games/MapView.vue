@@ -138,6 +138,20 @@ export default {
   border-color: #ff0000;
 }
 
+@media (max-width: 767px) {
+  .selector {
+    border: 2px solid #000000;
+  }
+
+  .selector-0 {
+    border-color: #0000ff;
+  }
+
+  .selector-1 {
+    border-color: #ff0000;
+  }
+}
+
 .fields {
   display: grid;
   top: 0;
