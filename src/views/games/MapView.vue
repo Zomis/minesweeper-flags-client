@@ -178,6 +178,12 @@ This class is in charge of two things:
   height: 80%;
 }
 
+@media (max-width: 767px) {
+  .map-rect {
+    margin-bottom: 1rem;
+  }
+}
+
 /*
 Build a square that map will be relative to.
 I've not implemented the JS to do this.

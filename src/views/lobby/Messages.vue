@@ -1,35 +1,39 @@
 <template>
   <div>
-    <v-container ref="container" class="messages">
+    <v-container
+      ref="container"
+      class="messages"
+      :style="theme === 'dark' ? 'background: #37474F' : 'background: #e0e0e0'"
+    >
       <template v-for="(item, index) in messages">
         <div
           :key="index"
           :class="!singleElement ? 'class-left' : 'class-right'"
         >
-          <div
-            v-if="!singleElement"
-            class="class-message"
-            :class="theme === 'dark' ? 'dark-player' : 'light-player'"
-          >
-            <div>
-              <span style="font-size: 12px">[{{ item.timestamp }}]</span>
-              <span> {{ breakMessage(item.message).player }}:</span>
+          <div v-if="!singleElement">
+            <b>{{ breakMessage(item.message).player }}</b>
+            <div
+              class="class-message"
+              :class="theme === 'dark' ? 'dark-player' : 'light-player'"
+            >
+              <span> {{ breakMessage(item.message).message }}</span>
             </div>
-            <div>
-              <b>{{ breakMessage(item.message).message }}</b>
+            <div style="font-size: 12px">
+              {{ item.timestamp.split(",")[1] }}
             </div>
           </div>
-          <div
-            v-else
-            class="class-message"
-            :class="theme === 'dark' ? 'dark-enemy' : 'light-enemy'"
-          >
-            <div>
-              <span style="font-size: 12px">[{{ item.timestamp }}]</span>
-              <span> {{ breakMessage(item.message).player }}:</span>
+          <div v-else>
+            <b>{{ breakMessage(item.message).player }}</b>
+            <div
+              class="class-message"
+              :class="
+                theme === 'dark' ? 'dark-enemy black--text' : 'light-enemy'
+              "
+            >
+              <span> {{ breakMessage(item.message).message }}</span>
             </div>
-            <div>
-              <b>{{ breakMessage(item.message).message }}</b>
+            <div style="font-size: 12px">
+              {{ item.timestamp.split(",")[1] }}
             </div>
           </div>
         </div>
@@ -37,18 +41,19 @@
     </v-container>
 
     <v-textarea
-      class="message-input pa-2"
+      class="pa-1"
       label="Write a message"
       v-model="message"
       @keyup.native.enter="sendMessage"
-      style="color: white"
-      :style="theme === 'dark' ? 'background: #546e7a' : 'background: #1e88e5'"
+      style="color: black"
+      :style="theme === 'dark' ? 'background: #37474F' : 'background: #E0E0E0'"
       hide-details
     ></v-textarea>
-    <v-btn @click="sendMessage">Send</v-btn>
+    <v-btn block @click="sendMessage">Send</v-btn>
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 export default {
   name: "Messages",
   props: ["messages", "singleElement"],
@@ -72,6 +77,12 @@ export default {
         this.$store.commit("settings/setTheme", value);
       },
     },
+    ...mapState("lobby", {
+      userPicture(state) {
+        let user = state.onlineUsers[this.name];
+        return user ? user.picture : null;
+      },
+    }),
   },
   methods: {
     breakMessage(item) {
@@ -106,7 +117,7 @@ export default {
   height: 450px;
   line-height: 1.6;
   width: 100%;
-  border: 4px solid blue;
+  /* border: 4px solid blue; */
   word-break: break-all;
   padding: 12px;
   margin-bottom: 12px;
@@ -127,21 +138,22 @@ export default {
 }
 
 .light-player {
-  background: #1e88e5;
-  color: white;
+  background: #fff;
+  color: black;
 }
 
 .dark-player {
-  background: #1e88e5;
+  background: #1c85fe;
+  color: white;
 }
 
 .light-enemy {
-  background: #90a4ae;
-  /* color: white; */
+  background: #1c85fe;
+  color: white;
 }
 
 .dark-enemy {
-  background: #546e7a;
+  background: #e0e0e0;
 }
 
 .class-right {
@@ -149,18 +161,13 @@ export default {
 }
 
 .class-message {
-  width: 80%;
-  margin: 6px 0;
+  width: fit-content;
   padding: 8px;
   border-radius: 16px;
   text-align: start;
 }
 
-::v-deep .v-label {
-  color: #fff;
-}
-
-::v-deep .v-text-field__slot textarea {
-  color: #fff !important;
-}
+/* ::v-deep .v-label {
+  color: black;
+} */
 </style>
