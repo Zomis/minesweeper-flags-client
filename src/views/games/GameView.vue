@@ -17,7 +17,7 @@
         />
       </div>
       <div>
-        <Messages :singleElement="true" @send="sendChat" :messages="messages" />
+        <Messages @send="sendChat" :messages="messages" />
       </div>
     </div>
   </v-container>

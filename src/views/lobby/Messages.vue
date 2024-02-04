@@ -8,9 +8,9 @@
       <template v-for="(item, index) in messages">
         <div
           :key="index"
-          :class="!singleElement ? 'class-left' : 'class-right'"
+          :class="!checkYourUser(item) ? 'class-left' : 'class-right'"
         >
-          <div v-if="!singleElement">
+          <div v-if="!checkYourUser(item)">
             <b>{{ breakMessage(item.message).player }}</b>
             <div
               class="class-message"
@@ -26,9 +26,7 @@
             <b>{{ breakMessage(item.message).player }}</b>
             <div
               class="class-message"
-              :class="
-                theme === 'dark' ? 'dark-enemy black--text' : 'light-enemy'
-              "
+              :class="theme === 'dark' ? 'dark-enemy' : 'light-enemy'"
             >
               <span> {{ breakMessage(item.message).message }}</span>
             </div>
@@ -52,11 +50,12 @@
     <v-btn block @click="sendMessage">Send</v-btn>
   </div>
 </template>
+
 <script>
 import { mapState } from "vuex";
 export default {
   name: "Messages",
-  props: ["messages", "singleElement"],
+  props: ["messages"],
   data() {
     return { message: "" };
   },
@@ -85,6 +84,10 @@ export default {
     }),
   },
   methods: {
+    checkYourUser(item) {
+      const checkYourName = this.$store.state.socket.loggedIn;
+      return checkYourName === this.breakMessage(item.message).player;
+    },
     breakMessage(item) {
       const colonIndex = item.indexOf(":");
       if (colonIndex !== -1) {
@@ -117,7 +120,6 @@ export default {
   height: 450px;
   line-height: 1.6;
   width: 100%;
-  /* border: 4px solid blue; */
   word-break: break-all;
   padding: 12px;
   margin-bottom: 12px;
@@ -143,8 +145,8 @@ export default {
 }
 
 .dark-player {
-  background: #1c85fe;
-  color: white;
+  background: #e0e0e0;
+  color: black;
 }
 
 .light-enemy {
@@ -153,7 +155,7 @@ export default {
 }
 
 .dark-enemy {
-  background: #e0e0e0;
+  background: #1c85fe;
 }
 
 .class-right {
