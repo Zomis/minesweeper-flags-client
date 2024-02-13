@@ -1,5 +1,5 @@
 <template>
-  <v-card dark>
+  <v-card dark style="width: 98%">
     <v-container
       fluid
       class="player-view"

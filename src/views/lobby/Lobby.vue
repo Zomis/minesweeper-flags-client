@@ -6,8 +6,8 @@
         <LobbyBox title="Your Games">
           <div
             class="incomplete-game"
-            v-for="game in incompleteGames"
-            :key="game.gameId"
+            v-for="(game, index) in incompleteGames"
+            :key="index"
           >
             <IncompleteGame :game="game" />
           </div>

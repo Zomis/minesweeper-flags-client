@@ -1,28 +1,33 @@
 <template>
   <div class="map-rect">
     <resize-observer @notify="updateMapRect" />
-    <div class="map-reset">
-      <div class="map">
-        <div class="fields fields-bg field-views">
-          <template v-for="y in game.map.height">
-            <FieldView
-              v-for="x in game.map.width"
-              :key="'field' + y + '-' + x"
-              :onClick="clickedField"
-              :highlighted="highlightedFields[y - 1][x - 1]"
-              :onHighlight="onHighlight"
-              :field="fields[y - 1][x - 1]"
+    <div
+      class="map-square"
+      :style="{ height: mapRect + 'px', width: mapRect + 'px' }"
+    >
+      <div class="map-reset">
+        <div class="map">
+          <div class="fields fields-bg field-views">
+            <template v-for="y in game.map.height">
+              <FieldView
+                v-for="x in game.map.width"
+                :key="'field' + y + '-' + x"
+                :onClick="clickedField"
+                :highlighted="highlightedFields[y - 1][x - 1]"
+                :onHighlight="onHighlight"
+                :field="fields[y - 1][x - 1]"
+              />
+            </template>
+            <div
+              v-for="move in nonNullLastMoves"
+              class="selector"
+              :key="move.player.index"
+              :class="'selector-' + move.player.index"
+              v-bind:style="{
+                gridArea: move.field.y + 1 + '/' + (move.field.x + 1),
+              }"
             />
-          </template>
-          <div
-            v-for="move in nonNullLastMoves"
-            class="selector"
-            :key="move.player.index"
-            :class="'selector-' + move.player.index"
-            v-bind:style="{
-              gridArea: move.field.y + 1 + '/' + (move.field.x + 1),
-            }"
-          />
+          </div>
         </div>
       </div>
     </div>
@@ -158,9 +163,6 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-}
-
-.fields {
   grid-template-columns: repeat(16, minmax(16px, 1fr));
   grid-template-rows: repeat(16, minmax(16px, 1fr));
 }
@@ -189,7 +191,14 @@ This class is in charge of two things:
 */
 .map-rect {
   width: 100%;
-  height: 80%;
+  height: 100%;
+  min-width: 280px;
+  min-height: 280px;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (max-width: 767px) {
@@ -220,8 +229,19 @@ https://stackoverflow.com/a/20117454
 
 .map {
   /* normal box settings here */
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   height: 100%;
   border: 12px solid #6d5720;
   border-radius: 12px;
+}
+
+.map-reset:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
 }
 </style>

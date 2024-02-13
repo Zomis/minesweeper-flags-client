@@ -5,9 +5,9 @@
       class="messages"
       :style="theme === 'dark' ? 'background: #37474F' : 'background: #e0e0e0'"
     >
-      <template v-for="(item, index) in messages">
+      <div v-for="(item, index) in messages" :key="index">
         <div
-          :key="index"
+          v-if="singleElement"
           :class="!checkYourUser(item) ? 'class-left' : 'class-right'"
         >
           <div v-if="!checkYourUser(item)">
@@ -35,7 +35,13 @@
             </div>
           </div>
         </div>
-      </template>
+        <div v-else>
+          <div v-if="checkYourUserLobby(item)">
+            <b>{{ item.timestamp }}: {{ item.message }}</b>
+          </div>
+          <div v-else>{{ item.timestamp }}: {{ item.message }}</div>
+        </div>
+      </div>
     </v-container>
 
     <v-textarea
@@ -55,7 +61,7 @@
 import { mapState } from "vuex";
 export default {
   name: "Messages",
-  props: ["messages"],
+  props: ["messages", "singleElement"],
   data() {
     return { message: "" };
   },
@@ -84,15 +90,22 @@ export default {
     }),
   },
   methods: {
+    checkYourUserLobby(item) {
+      const checkYourName = this.$store.state.socket.loggedIn;
+      const match = item.message.match(/(\S+):/);
+      const playerNameFromMessage = match ? match[1] : null;
+      return checkYourName === playerNameFromMessage;
+    },
     checkYourUser(item) {
       const checkYourName = this.$store.state.socket.loggedIn;
       return checkYourName === this.breakMessage(item.message).player;
     },
     breakMessage(item) {
-      const colonIndex = item.indexOf(":");
+      const cleanedMessage = item.replace(/\[|\]/g, "");
+      const colonIndex = cleanedMessage.indexOf(":");
       if (colonIndex !== -1) {
-        const player = item.substring(0, colonIndex).trim();
-        const message = item.substring(colonIndex + 1).trim();
+        const player = cleanedMessage.substring(0, colonIndex).trim();
+        const message = cleanedMessage.substring(colonIndex + 1).trim();
         return { player: player, message: message };
       } else {
         console.log("Invalid message");
@@ -115,6 +128,11 @@ export default {
 };
 </script>
 <style scoped>
+span,
+div {
+  word-break: normal;
+}
+
 .messages {
   overflow-y: auto;
   height: 450px;
@@ -168,8 +186,4 @@ export default {
   border-radius: 16px;
   text-align: start;
 }
-
-/* ::v-deep .v-label {
-  color: black;
-} */
 </style>

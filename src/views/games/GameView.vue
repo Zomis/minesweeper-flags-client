@@ -1,25 +1,50 @@
 <template>
   <v-container fluid class="pa-2">
-    <div class="pa-2 mb-2 container-display">
-      <div class="game-div">
-        <div class="game-grid pb-2">
-          <div>Game {{ game.gameId }}</div>
-          <div>{{ game.map.minesLeft }} mines left</div>
-        </div>
-        <PlayerView :playerData="game.playerData[0]" />
-        <PlayerView :playerData="game.playerData[1]" />
-      </div>
-      <div>
-        <MapView
-          :onClick="onClick"
-          :game="game"
-          :highlightWeapon="highlightWeapon"
-        />
-      </div>
-      <div>
-        <Messages @send="sendChat" :messages="messages" />
-      </div>
-    </div>
+    <v-layout map-flex align-center justify-center column fill-height>
+      <v-layout
+        class="fill-height"
+        map-flex
+        align-space-around
+        justify-center
+        :fill-height="$vuetify.breakpoint.lgAndUp"
+        :column="$vuetify.breakpoint.mdAndDown"
+      >
+        <v-flex xs12 lg3 xl4>
+          <v-layout
+            class="fill-height"
+            align-center
+            justify-center
+            column
+            :fill-height="$vuetify.breakpoint.lgAndUp"
+            style="height: 100%"
+          >
+            <div class="mb-2">
+              <span>Game {{ game.gameId }}</span>
+              <span> / </span>
+              <b>{{ game.map.minesLeft }} mines left</b>
+            </div>
+            <PlayerView :playerData="game.playerData[0]" />
+            <PlayerView class="my-2" :playerData="game.playerData[1]" />
+          </v-layout>
+        </v-flex>
+        <v-flex xs12 lg6 xl6 map-flex>
+          <MapView
+            class="px-1"
+            :onClick="onClick"
+            :game="game"
+            :highlightWeapon="highlightWeapon"
+          />
+        </v-flex>
+        <v-flex xs12 lg3 xl2>
+          <Messages
+            class="px-1"
+            @send="sendChat"
+            :messages="messages"
+            :singleElement="true"
+          />
+        </v-flex>
+      </v-layout>
+    </v-layout>
   </v-container>
 </template>
 
@@ -65,20 +90,11 @@ export default {
 };
 </script>
 <style>
-.game-grid {
-  display: grid;
-  grid-template-columns: 60% 40%;
+.container {
+  height: 100%;
 }
-
-@media (min-width: 768px) {
-  .container-display {
-    display: grid;
-    grid-template-columns: 30% 40% 25%;
-    gap: 30px;
-  }
-
-  .game-div {
-    align-self: center;
-  }
+.map-flex {
+  width: 100%;
+  height: 100%;
 }
 </style>
