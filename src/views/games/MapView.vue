@@ -24,7 +24,7 @@
               :key="move.player.index"
               :class="'selector-' + move.player.index"
               v-bind:style="{
-                gridArea: move.field.y + 1 + '/' + (move.field.x + 1)
+                gridArea: move.field.y + 1 + '/' + (move.field.x + 1),
               }"
             />
           </div>
@@ -54,7 +54,7 @@ export default {
   data() {
     return {
       highlightedField: null,
-      mapRect: 280
+      mapRect: 280,
     };
   },
   mounted() {
@@ -73,13 +73,13 @@ export default {
       if (this.onClick) {
         this.onClick(field);
       }
-    }
+    },
   },
   computed: {
     nonNullLastMoves() {
       return this.game.playerData
-        .map(pl => pl.lastMove)
-        .filter(move => move !== null);
+        .map((pl) => pl.lastMove)
+        .filter((move) => move !== null);
     },
     fields() {
       console.log("compute fields");
@@ -123,8 +123,8 @@ export default {
         Array.apply(null, Array(this.game.map.width)).map((_, x) => func(x, y))
       );
       return result;
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -143,15 +143,26 @@ export default {
   border-color: #ff0000;
 }
 
+@media (max-width: 767px) {
+  .selector {
+    border: 2px solid #000000;
+  }
+
+  .selector-0 {
+    border-color: #0000ff;
+  }
+
+  .selector-1 {
+    border-color: #ff0000;
+  }
+}
+
 .fields {
   display: grid;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-}
-
-.fields {
   grid-template-columns: repeat(16, minmax(16px, 1fr));
   grid-template-rows: repeat(16, minmax(16px, 1fr));
 }
@@ -190,6 +201,12 @@ This class is in charge of two things:
   align-items: center;
 }
 
+@media (max-width: 767px) {
+  .map-rect {
+    margin-bottom: 1rem;
+  }
+}
+
 /*
 Build a square that map will be relative to.
 I've not implemented the JS to do this.
@@ -198,10 +215,6 @@ If only there were a way to do this in CSS. :(
 I've asked a question to see if there is a nicer way to do this:
 https://stackoverflow.com/q/54858625
 */
-.map-square {
-  width: 280px; /* map-rect.min */
-  height: 280px; /* map-rect.min */
-}
 
 /*
 The following is using a mix between the following two answers:
@@ -214,22 +227,21 @@ https://stackoverflow.com/a/20117454
   width: 100%;
 }
 
-.map-reset:before {
-  content: "";
-  display: block;
-  padding-top: 100%;
-}
-
 .map {
+  /* normal box settings here */
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-
-  /* normal box settings here */
   height: 100%;
   border: 12px solid #6d5720;
   border-radius: 12px;
+}
+
+.map-reset:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
 }
 </style>
