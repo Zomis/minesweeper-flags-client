@@ -9,7 +9,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "kotlin": "^1.3.21",
     "vue": "^2.6.9",
     "vue-authenticate": "^1.3.4",
