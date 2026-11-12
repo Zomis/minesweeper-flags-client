@@ -160,6 +160,7 @@ export default {
   },
   actions: {
     login(context, auth) {
+      context.dispatch("connect", auth);
       console.log("login");
       console.log(auth);
       if (auth.provider === "guest") {

@@ -73,11 +73,9 @@ export default {
   mounted() {
     this.$nextTick(() => {
       if (!this.logout) {
-        this.$store.dispatch("socket/connect");
         this.autoLogin();
       } else {
         this.$store.dispatch("socket/disconnect");
-        this.$store.dispatch("socket/connect");
         delete localStorage.lastUsedProvider;
       }
     });
