@@ -245,13 +245,13 @@ export default {
         socket.close();
       }
     },
-    connect(context) {
+    connect(context, auth) {
       let baseURL = process.env.VUE_APP_URL;
       let urlParams = new URLSearchParams(window.location.search);
       if (urlParams.get('server')) {
         baseURL = urlParams.get('server');
       }
-      let url = baseURL + "websocket";
+      let url = baseURL + `websocket?key=${auth.token}`;
       url = url.replace(/^http/g, "ws");
       socket = new WebSocket(url);
       socket.onopen = e => {
